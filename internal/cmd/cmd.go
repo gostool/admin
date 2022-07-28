@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"admin/internal/middleware"
 	"context"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -45,7 +46,10 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Middleware(
+					middleware.HandlerResponse,
+					ghttp.MiddlewareCORS,
+				)
 				group.GET("/doc/", func(r *ghttp.Request) {
 					r.Response.Write(swaggerUIPageContent)
 				})
