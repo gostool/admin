@@ -1,5 +1,5 @@
 module admin
 
-go 1.15
+go 1.18
 
-require github.com/gogf/gf/v2 v2.0.6
+require github.com/gogf/gf/v2 v2.1.2
