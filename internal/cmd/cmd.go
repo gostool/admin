@@ -26,7 +26,7 @@ const (
 <script>
 	window.onload = () => {
 		window.ui = SwaggerUIBundle({
-			url:    '/api.yaml',
+			url:    '/api.yaml.tpl',
 			dom_id: '#swagger-ui',
 		});
 	};
