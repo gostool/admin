@@ -20,6 +20,6 @@ func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes,
 	res = &v1.HelloRes{
 		Reply: fmt.Sprintf(`Hi %s`, req.Name),
 	}
-	err = gerror.New("未知错误，hello api")
+	err = gerror.New("未知错误，Hello api")
 	return
 }
