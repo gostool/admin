@@ -27,5 +27,21 @@ func TestOrmUserInsert(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(r)
+	uid, err := r.LastInsertId()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(uid)
+}
+
+func TestList(t *testing.T) {
+	ctx := gctx.New()
+	query := g.Map{
+		"is_deleted": 0,
+	}
+	res, err := dao.Users.Ctx(ctx).Page(0, 1000).Where(query).All()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(res)
 }
