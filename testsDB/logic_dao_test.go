@@ -2,11 +2,11 @@ package testsDB
 
 import (
 	"admin/internal/dao"
+	"admin/internal/model"
 	"admin/internal/model/entity"
-	"context"
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/gogf/gf/v2/util/gconv"
 	"testing"
 )
 
@@ -27,14 +27,15 @@ func TestOrmUserInsert(t *testing.T) {
 	//	"update_time": gtime.Now(),
 	//	"is_deleted":  0,
 	//}
-	err := dao.Users.Transaction(ctx, func(ctx context.Context, tx *gdb.TX) error {
-		user := &entity.Users{}
-		user.Password = "123"
-		// 自动生成头像
-		r, err := dao.Users.Ctx(ctx).Data(user).OmitEmpty().Save()
-		t.Log(r)
-		return err
-	})
-	t.Log(err)
-	//r, err := dao.Users.Ctx(ctx).Data(data).Insert()
+	in := model.UserRegisterInput{}
+	user := &entity.Users{}
+	if err := gconv.Struct(in, &user); err != nil {
+		t.Fatal(err)
+	}
+	user.Password = "123"
+	r, err := dao.Users.Ctx(ctx).Data(user).Insert()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(r)
 }
