@@ -1,6 +1,7 @@
 package testsDB
 
 import (
+	"admin/internal/consts"
 	"admin/internal/dao"
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/frame/g"
@@ -34,14 +35,14 @@ func TestOrmUserInsert(t *testing.T) {
 	t.Log(uid)
 }
 
-func TestList(t *testing.T) {
+func TestOrmUserList(t *testing.T) {
 	ctx := gctx.New()
 	query := g.Map{
-		"is_deleted": 0,
+		"is_deleted": consts.CREATED,
 	}
 	res, err := dao.Users.Ctx(ctx).Page(0, 1000).Where(query).All()
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(res)
+	g.Dump(res)
 }
