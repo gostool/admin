@@ -5,6 +5,7 @@ import (
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/gogf/gf/v2/os/gtime"
 	"testing"
 )
 
@@ -18,7 +19,13 @@ func TestOrmUser(t *testing.T) {
 }
 func TestOrmUserInsert(t *testing.T) {
 	ctx := gctx.New()
-	data := g.Map{"name": "john", "password": "123"}
+	data := g.Map{
+		"name":        "john",
+		"password":    "123",
+		"create_time": gtime.Now(),
+		"update_time": gtime.Now(),
+		"is_deleted":  0,
+	}
 	r, err := dao.Users.Ctx(ctx).Data(data).Insert()
 	if err != nil {
 		t.Fatal(err)
