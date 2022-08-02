@@ -46,3 +46,15 @@ func TestOrmUserList(t *testing.T) {
 	}
 	g.Dump(res)
 }
+
+func TestOrmUserDelete(t *testing.T) {
+	ctx := gctx.New()
+	query := g.Map{
+		"id": 2,
+	}
+	res, err := dao.Users.Ctx(ctx).Where(query).Delete()
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(res)
+}
