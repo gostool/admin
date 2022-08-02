@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestOrmUser(t *testing.T) {
+func TestOrmUserCount(t *testing.T) {
 	ctx := gctx.New()
 	n, err := dao.Users.Ctx(ctx).Where(dao.Users.Columns().Id, 1).Count()
 	if err != nil {
