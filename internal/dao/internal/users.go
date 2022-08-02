@@ -20,24 +20,26 @@ type UsersDao struct {
 
 // UsersColumns defines and stores column names for table users.
 type UsersColumns struct {
-	Id         string //
-	CreateTime string // 创建时间
-	UpdateTime string // 修改时间
-	IsDeleted  string // 数据的逻辑删除
-	Name       string //
-	Password   string //
-	Nickname   string //
+	Id        string //
+	CreatedAt string // 创建时间
+	UpdatedAt string // 修改时间
+	DeletedAt string // 删除时间
+	IsDeleted string // 数据的逻辑删除
+	Name      string //
+	Password  string //
+	Nickname  string //
 }
 
 //  usersColumns holds the columns for table users.
 var usersColumns = UsersColumns{
-	Id:         "id",
-	CreateTime: "create_time",
-	UpdateTime: "update_time",
-	IsDeleted:  "is_deleted",
-	Name:       "name",
-	Password:   "password",
-	Nickname:   "nickname",
+	Id:        "id",
+	CreatedAt: "created_at",
+	UpdatedAt: "updated_at",
+	DeletedAt: "deleted_at",
+	IsDeleted: "is_deleted",
+	Name:      "name",
+	Password:  "password",
+	Nickname:  "nickname",
 }
 
 // NewUsersDao creates and returns a new DAO object for table data access.

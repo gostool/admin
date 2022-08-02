@@ -10,11 +10,12 @@ import (
 
 // Users is the golang structure for table users.
 type Users struct {
-	Id         int         `json:"id"         ` //
-	CreateTime *gtime.Time `json:"createTime" ` // 创建时间
-	UpdateTime *gtime.Time `json:"updateTime" ` // 修改时间
-	IsDeleted  int         `json:"isDeleted"  ` // 数据的逻辑删除
-	Name       string      `json:"name"       ` //
-	Password   string      `json:"password"   ` //
-	Nickname   string      `json:"nickname"   ` //
+	Id        int         `json:"id"        ` //
+	CreatedAt *gtime.Time `json:"createdAt" ` // 创建时间
+	UpdatedAt *gtime.Time `json:"updatedAt" ` // 修改时间
+	DeletedAt *gtime.Time `json:"deletedAt" ` // 删除时间
+	IsDeleted int         `json:"isDeleted" ` // 数据的逻辑删除
+	Name      string      `json:"name"      ` //
+	Password  string      `json:"password"  ` //
+	Nickname  string      `json:"nickname"  ` //
 }
