@@ -52,7 +52,7 @@ func TestOrmUserDelete(t *testing.T) {
 	query := g.Map{
 		"id": 2,
 	}
-	res, err := dao.Users.Ctx(ctx).Where(query).Delete()
+	res, err := dao.Users.Ctx(ctx).Unscoped().Where(query).Delete()
 	if err != nil {
 		t.Fatal(err)
 	}
