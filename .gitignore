@@ -21,3 +21,4 @@ temp/
 **/*.yaml
 **/*.yml
 **/*.toml
+logs/
