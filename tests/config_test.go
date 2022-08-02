@@ -1,11 +1,20 @@
 package tests
 
 import (
+	"context"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gcfg"
+	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/gogf/gf/v2/test/gtest"
 	"testing"
-
-	"github.com/gogf/gf/frame/g"
-	"github.com/gogf/gf/test/gtest"
 )
+
+var ctx context.Context
+
+func init() {
+	ctx = gctx.New()
+	g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName("manifest/config/config.yaml")
+}
 
 // 测试针对: config_tpl.toml 进行测试.
 // 项目中真实使用.config.toml.
@@ -13,37 +22,17 @@ import (
 // 更新config_tpl.toml 需要更新本测试文件. git action会进行测试
 // 本地测试: go test -v ./config
 
-func TestCfgSetPath(t *testing.T) {
-	g.Cfg().SetFileName("config_tpl.toml")
-	v := g.Config().GetVar("server.Address")
-	gtest.C(t, func(t *gtest.T) {
-		t.AssertEQ(v.String(), ":8299")
-	})
-}
-
 func TestLogger(t *testing.T) {
-	g.Cfg().SetFileName("config_tpl.toml")
+	//g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName("manifest/config/config.yaml")
 	// 多个日志实例
 	// 1.默认日志
-	g.Log().Info("i am in logger default")
-	g.Log("debug").Info("i am in logger debug")
-	g.Log("test").Info("i am in logger test")
+	g.Log().Info(ctx, "i am in logger default")
+	g.Log("debug").Info(ctx, "i am in logger debug")
+	g.Log("test").Info(ctx, "i am in logger test")
 }
 
-// add redis conf test
-func TestCfgRedis(t *testing.T) {
-	g.Cfg().SetFileName("config_tpl.toml")
-	v := g.Config().GetVar("redis")
-	redis := v.MapStrStr()
-	gtest.C(t, func(t *gtest.T) {
-		t.AssertEQ(redis["default"], "127.0.0.1:6379,0")
-		t.AssertEQ(redis["cache"], "127.0.0.1:6379,1,123456?idleTimeout=600")
-	})
-}
-
-func TestSnowAppConf(t *testing.T) {
-	g.Cfg().SetFileName("manifest/config/config.yaml")
-	v := g.Config().GetVar("app")
+func TestAppConf(t *testing.T) {
+	v := g.Cfg().MustGet(ctx, "app")
 	conf := v.MapStrVar()
 	t.Log(conf)
 	gtest.C(t, func(t *gtest.T) {
