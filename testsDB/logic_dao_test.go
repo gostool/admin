@@ -58,3 +58,17 @@ func TestOrmUserDelete(t *testing.T) {
 	}
 	g.Dump(res)
 }
+
+func TestOrmUserUpdate(t *testing.T) {
+	ctx := gctx.New()
+	//dao.User.Data(g.Map{"is_deleted": model.DELETED}).Where("id=?", pk).Update()
+	query := g.Map{
+		"id": 6,
+	}
+	update := g.Map{"is_deleted": consts.DELETED}
+	res, err := dao.Users.Ctx(ctx).Where(query).Update(update)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(res)
+}
