@@ -16,6 +16,7 @@ logger:
 database:
   default:
     link:  "mysql:root:mysecretpassword@tcp(127.0.0.1:3306)/godb"
+    debug:   true
   logger:
     Path:  /tmp/log/admin/sq
     Level: all
