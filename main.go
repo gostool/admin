@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "admin/internal/logic"
 	_ "admin/internal/packed"
 
 	"github.com/gogf/gf/v2/os/gctx"

@@ -26,7 +26,7 @@ const (
 <script>
 	window.onload = () => {
 		window.ui = SwaggerUIBundle({
-			url:    '/api.yaml.tpl',
+			url:    '/api.json',
 			dom_id: '#swagger-ui',
 		});
 	};
@@ -68,6 +68,9 @@ var (
 				group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
 					apiGroup.Bind(
 						controller.Hello,
+					)
+					apiGroup.Bind(
+						controller.User,
 					)
 					//apiGroup.Group("/v1", func(apiV1Group *ghttp.RouterGroup) {
 					//	apiV1Group.Bind(

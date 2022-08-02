@@ -4,10 +4,10 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-type HelloReq struct {
-	g.Meta `path:"/hello" method:"get"`
+type UserReq struct {
+	g.Meta `path:"/login" method:"get"`
 	Name   string `v:"required" dc:"Your name"`
 }
-type HelloRes struct {
+type UserRes struct {
 	Reply string `dc:"Reply content"`
 }
