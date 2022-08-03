@@ -14,12 +14,15 @@ var (
 type cUser struct{}
 
 func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, err error) {
-	err = service.User().Login(ctx, model.UserLoginInput{
-		Name:     "12",
-		Password: "34",
+	uid, err := service.User().Login(ctx, model.UserLoginInput{
+		Name:     req.Name,
+		Password: req.Password,
 	})
+	if err != nil {
+		return res, err
+	}
 	res = &v1.UserRes{
-		Id:    1,
+		Id:    uid,
 		Role:  1,
 		Token: "faf",
 	}

@@ -20,8 +20,8 @@ func TestOrmUserCount(t *testing.T) {
 func TestOrmUserInsert(t *testing.T) {
 	ctx := gctx.New()
 	data := g.Map{
-		"name":       "john",
-		"password":   "123",
+		"name":       "johnsen",
+		"password":   "123456",
 		"is_deleted": 0,
 	}
 	r, err := dao.Users.Ctx(ctx).Data(data).Insert()
