@@ -3,6 +3,7 @@ package testsDB
 import (
 	"admin/internal/consts"
 	"admin/internal/dao"
+	"admin/internal/model"
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -40,7 +41,7 @@ func TestOrmUserList(t *testing.T) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	res, err := dao.Users.Ctx(ctx).Page(0, 1000).Where(query).All()
+	res, err := dao.Users.Ctx(ctx).Fields(model.UserFields).Page(0, 1000).Where(query).All()
 	if err != nil {
 		t.Fatal(err)
 	}

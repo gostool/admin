@@ -35,7 +35,7 @@ func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, 
 		"is_deleted": consts.CREATED,
 	}
 	var data *entity.Users
-	err = dao.Users.Ctx(ctx).Unscoped().Where(query).Scan(&data)
+	err = dao.Users.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
 	if err != nil {
 		return uid, err
 	}
