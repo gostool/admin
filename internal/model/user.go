@@ -6,9 +6,21 @@ type UserLoginInput struct {
 	Password string // 密码(明文)
 }
 
-// UserRegisterInput 创建用户
-type UserRegisterInput struct {
+// UserCreateInput UserRegisterInput 创建用户
+type UserCreateInput struct {
 	Name     string // 账号
 	Password string // 密码(明文)
 	Nickname string // 昵称
+}
+
+type UserDetailInput struct {
+	Id int64
+}
+
+type UserDeleteInput struct {
+	Id int64
+}
+
+type UserUpdateInput struct {
+	Id int64
 }

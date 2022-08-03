@@ -6,11 +6,18 @@ package service
 
 import (
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"context"
+	"database/sql"
 )
 
 type IUser interface {
 	Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error)
+	Register(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
+	Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
+	Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error)
+	Detail(ctx context.Context, in model.UserDetailInput) (data *entity.Users, err error)
+	Delete(ctx context.Context, in model.UserDeleteInput) (result sql.Result, err error)
 	Logout(ctx context.Context) error
 }
 
