@@ -31,9 +31,13 @@ func New() *sUser {
 
 // Login 执行登录
 func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error) {
+	password, err := gmd5.EncryptString(in.Password)
+	if err != nil {
+		return uid, err
+	}
 	query := g.Map{
 		"name":       in.Name,
-		"password":   in.Password,
+		"password":   password,
 		"is_deleted": consts.CREATED,
 	}
 	var data *entity.Users
