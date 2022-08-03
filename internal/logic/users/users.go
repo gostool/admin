@@ -27,7 +27,7 @@ func New() *sUser {
 	return &sUser{}
 }
 
-// 执行登录
+// Login 执行登录
 func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error) {
 	query := g.Map{
 		"name":       in.Name,
@@ -46,7 +46,7 @@ func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, 
 	return uid, nil
 }
 
-// 注销
+// Logout 注销
 func (s *sUser) Logout(ctx context.Context) error {
 	//return service.Session().RemoveUser(ctx)
 	return nil
