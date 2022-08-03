@@ -1,9 +1,13 @@
 package users
 
 import (
+	"admin/internal/consts"
+	"admin/internal/dao"
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"admin/internal/service"
 	"context"
+	"errors"
 	"fmt"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -24,30 +28,22 @@ func New() *sUser {
 }
 
 // 执行登录
-func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (err error) {
-	//userEntity, err := s.GetUserByPassportAndPassword(
-	//	ctx,
-	//	in.Passport,
-	//	s.EncryptPassword(in.Passport, in.Password),
-	//)
-	g.Log().Info(ctx, "logic login")
-	if err != nil {
-		return err
+func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error) {
+	query := g.Map{
+		"name":       in.Name,
+		"password":   in.Password,
+		"is_deleted": consts.CREATED,
 	}
-	//if userEntity == nil {
-	//	return gerror.New(`账号或密码错误`)
-	//}
-	//if err := service.Session().SetUser(ctx, userEntity); err != nil {
-	//	return err
-	//}
-	// 自动更新上线
-	//service.BizCtx().SetUser(ctx, &model.ContextUser{
-	//	Id:       userEntity.Id,
-	//	Passport: userEntity.Passport,
-	//	Nickname: userEntity.Nickname,
-	//	Avatar:   userEntity.Avatar,
-	//})
-	return nil
+	var data *entity.Users
+	err = dao.Users.Ctx(ctx).Unscoped().Where(query).Scan(&data)
+	if err != nil {
+		return uid, err
+	}
+	if data == nil {
+		return uid, errors.New("no data found")
+	}
+	uid = int64(data.Id)
+	return uid, nil
 }
 
 // 注销

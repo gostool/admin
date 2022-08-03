@@ -5,9 +5,12 @@ import (
 )
 
 type UserReq struct {
-	g.Meta `path:"/login" method:"get"`
-	Name   string `v:"required" dc:"Your name"`
+	g.Meta   `path:"/login" method:"post" tags:"UserService" summary:"login an account"`
+	Name     string `v:"required|length:6,16#请输入用户名|用户名称长度应当在:6到:16之间" dc:"Your name"`
+	Password string `v:"required|length:6,16#请输入确认密码|密码长度应当在:6到:16之间" dc:"Your password"`
 }
 type UserRes struct {
-	Reply string `dc:"Reply content"`
+	Id    int64  `json:"id""`
+	Role  int64  `json:"role"`
+	Token string `json:"token"`
 }

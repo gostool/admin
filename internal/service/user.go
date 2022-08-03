@@ -10,7 +10,7 @@ import (
 )
 
 type IUser interface {
-	Login(ctx context.Context, in model.UserLoginInput) (err error)
+	Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error)
 	Logout(ctx context.Context) error
 }
 

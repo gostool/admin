@@ -15,8 +15,13 @@ type cUser struct{}
 
 func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, err error) {
 	err = service.User().Login(ctx, model.UserLoginInput{
-		Passport: "12",
+		Name:     "12",
 		Password: "34",
 	})
-	return nil, err
+	res = &v1.UserRes{
+		Id:    1,
+		Role:  1,
+		Token: "faf",
+	}
+	return res, err
 }
