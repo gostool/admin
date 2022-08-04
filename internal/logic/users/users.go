@@ -46,7 +46,7 @@ func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, 
 		return uid, err
 	}
 	if data == nil {
-		return uid, errors.New("no data found")
+		return uid, errors.New("账号或密码错误，请重试")
 	}
 	uid = int64(data.Id)
 	return uid, nil
