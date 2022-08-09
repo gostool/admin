@@ -5,5 +5,7 @@
 package logic
 
 import (
+	_ "admin/internal/logic/tokens"
+	_ "admin/internal/logic/tpl"
 	_ "admin/internal/logic/users"
 )
