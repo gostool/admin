@@ -22,5 +22,5 @@ type UserRegisterReq struct {
 type UserRes struct {
 	Id    int64  `json:"id""`
 	Role  int64  `json:"role"`
-	Token string `json:"token"`
+	Token string `json:"tokens"`
 }
