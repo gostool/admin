@@ -1,7 +1,6 @@
 package tokens
 
 import (
-	conf "admin/internal/conf"
 	"admin/internal/model"
 	"admin/internal/service"
 	"admin/library/jwt"
@@ -35,10 +34,10 @@ func New() *sToken {
 
 func (t *sToken) GenAccessToken(ctx context.Context, r *model.TokenServiceGenTokenReq) (token string, err error) {
 	secret := jwt.SecSecret(r.Uid, jwtSalt)
-	conf.Logger.Debugf(ctx, "uid:%v secret:%v exp:%v", r.Uid, secret, r.Exp)
+	logger.Debugf(ctx, "uid:%v secret:%v exp:%v", r.Uid, secret, r.Exp)
 	token, err = jwt.CreateToken(r.Uid, secret, r.Exp)
 	if err != nil {
-		conf.Logger.Errorf(ctx, "req:%v err:%v tokens:%v", r, err, token)
+		logger.Errorf(ctx, "req:%v err:%v tokens:%v", r, err, token)
 		return "", err
 	}
 	return token, nil
@@ -58,14 +57,14 @@ func (t *sToken) GenToken(ctx context.Context, uid string, exp int64) (token str
 func (t *sToken) CheckToken(ctx context.Context, token string) (uid string, err error) {
 	uid, err = jwt.GetUid(token)
 	if err != nil {
-		conf.Logger.Error(ctx, err)
+		logger.Error(ctx, err)
 		return uid, errors.New("token格式错误")
 	}
 	secret := jwt.SecSecret(uid, jwtSalt)
 	// 覆盖uid
 	uid, err = jwt.AuthToken(token, secret)
 	if err != nil {
-		conf.Logger.Errorf(ctx, "req:%v err:%v uid:%v", token, err, uid)
+		logger.Errorf(ctx, "req:%v err:%v uid:%v", token, err, uid)
 		return uid, errors.New("token认证失败, 请重新登陆")
 	}
 	return uid, nil
