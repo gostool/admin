@@ -26,8 +26,8 @@ func TestLogicUserRegister(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserCreateInput{
-		Name:     "john123",
-		Password: "123456",
+		Name:     "guest",
+		Password: "guest",
 		Nickname: "hanhan",
 	}
 	uid, err := user.Register(ctx, in)
@@ -69,7 +69,7 @@ func TestLogicUserDelete(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserDeleteInput{
-		Id: 9,
+		Id: 12,
 	}
 	data, err := user.Delete(ctx, in)
 	if err != nil {
