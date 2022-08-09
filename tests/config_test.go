@@ -38,7 +38,7 @@ func TestAppConf(t *testing.T) {
 	gtest.C(t, func(t *gtest.T) {
 		//t.AssertEQ(conf["shareLink"].String(), "http://192.168.0.100:9000/preview/#/index")
 		//t.AssertEQ(conf["machineId"].Uint16(), uint16(1))
-		//// jwt
+		//// tpl
 		//t.AssertEQ(conf["jwtSalt"].String(), "testsalt")
 		//t.AssertEQ(conf["jwtExp"].Int64(), int64(604800))
 		//// shp
