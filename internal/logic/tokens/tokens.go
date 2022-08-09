@@ -12,20 +12,19 @@ import (
 	"time"
 )
 
-const jwtSalt = "test"
-
-const jwtExp = 604800 //单位s(60*60*24*7)
-
 type sToken struct {
 }
 
 var logger *glog.Logger
 
+const jwtSalt = "test"
+const jwtExp = 604800 // 单位s(60*60*24*7)
+
 func init() {
-	logger = g.Log("logic")
-	token := New()
-	fmt.Println(token)
-	service.RegisterToken(token)
+	logger = g.Log("debug")
+	instance := New()
+	fmt.Println(instance)
+	service.RegisterToken(instance)
 }
 
 func New() *sToken {
@@ -37,7 +36,7 @@ func (t *sToken) GenAccessToken(ctx context.Context, r *model.TokenServiceGenTok
 	logger.Debugf(ctx, "uid:%v secret:%v exp:%v", r.Uid, secret, r.Exp)
 	token, err = jwt.CreateToken(r.Uid, secret, r.Exp)
 	if err != nil {
-		logger.Errorf(ctx, "req:%v err:%v tokens:%v", r, err, token)
+		logger.Errorf(ctx, "req:%v err:%v token:%v", r, err, token)
 		return "", err
 	}
 	return token, nil
