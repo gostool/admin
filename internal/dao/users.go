@@ -11,14 +11,14 @@ import (
 // internalUsersDao is internal type for wrapping internal DAO implements.
 type internalUsersDao = *internal.UsersDao
 
-// usersDao is the data access object for table users.
+// usersDao is the data access object for table user.
 // You can define custom methods on it to extend its functionality as you wish.
 type usersDao struct {
 	internalUsersDao
 }
 
 var (
-	// Users is globally public accessible object for table users operations.
+	// Users is globally public accessible object for table user operations.
 	Users = usersDao{
 		internal.NewUsersDao(),
 	}

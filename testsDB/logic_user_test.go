@@ -1,7 +1,7 @@
 package testsDB
 
 import (
-	"admin/internal/logic/users"
+	"admin/internal/logic/user"
 	"admin/internal/model"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -10,7 +10,7 @@ import (
 
 func TestLogicUserLogin(t *testing.T) {
 	ctx := gctx.New()
-	user := users.New()
+	user := user.New()
 	in := model.UserLoginInput{
 		Name:     "john",
 		Password: "123",
@@ -24,7 +24,7 @@ func TestLogicUserLogin(t *testing.T) {
 
 func TestLogicUserRegister(t *testing.T) {
 	ctx := gctx.New()
-	user := users.New()
+	user := user.New()
 	in := model.UserCreateInput{
 		Name:     "john123",
 		Password: "123456",
@@ -39,7 +39,7 @@ func TestLogicUserRegister(t *testing.T) {
 
 func TestLogicUserCreate(t *testing.T) {
 	ctx := gctx.New()
-	user := users.New()
+	user := user.New()
 	in := model.UserCreateInput{
 		Name:     "john123",
 		Password: "123456",
@@ -54,7 +54,7 @@ func TestLogicUserCreate(t *testing.T) {
 
 func TestLogicUserDetail(t *testing.T) {
 	ctx := gctx.New()
-	user := users.New()
+	user := user.New()
 	in := model.UserDetailInput{
 		Id: 9,
 	}
@@ -67,7 +67,7 @@ func TestLogicUserDetail(t *testing.T) {
 
 func TestLogicUserDelete(t *testing.T) {
 	ctx := gctx.New()
-	user := users.New()
+	user := user.New()
 	in := model.UserDeleteInput{
 		Id: 9,
 	}
