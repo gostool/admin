@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Users is the golang structure for table user.
-type Users struct {
+// User is the golang structure for table user.
+type User struct {
 	Id        int         `json:"id"        ` //
 	CreatedAt *gtime.Time `json:"createdAt" ` // 创建时间
 	UpdatedAt *gtime.Time `json:"updatedAt" ` // 修改时间

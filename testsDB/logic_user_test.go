@@ -41,8 +41,8 @@ func TestLogicUserCreate(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserCreateInput{
-		Name:     "john123",
-		Password: "123456",
+		Name:     "guest",
+		Password: "guest",
 		Nickname: "hanhan",
 	}
 	uid, err := user.Create(ctx, in)

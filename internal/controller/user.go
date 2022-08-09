@@ -5,6 +5,7 @@ import (
 	"admin/internal/model"
 	"admin/internal/service"
 	"context"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 var (
@@ -21,10 +22,14 @@ func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, er
 	if err != nil {
 		return res, err
 	}
+	token, err := service.Token().GenToken(ctx, gconv.String(uid), 0)
+	if err != nil {
+		return res, err
+	}
 	res = &v1.UserRes{
 		Id:    uid,
 		Role:  1,
-		Token: "faf",
+		Token: token,
 	}
 	return res, err
 }

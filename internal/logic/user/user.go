@@ -40,8 +40,8 @@ func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, 
 		"password":   password,
 		"is_deleted": consts.CREATED,
 	}
-	var data *entity.Users
-	err = dao.Users.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
+	var data *entity.User
+	err = dao.User.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
 	if err != nil {
 		return uid, err
 	}
@@ -78,7 +78,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 		"nickname":   in.Nickname,
 		"is_deleted": consts.CREATED,
 	}
-	r, err := dao.Users.Ctx(ctx).Data(data).Insert()
+	r, err := dao.User.Ctx(ctx).Data(data).Insert()
 	if err != nil {
 		return uid, nil
 	}
@@ -95,12 +95,12 @@ func (s *sUser) Update(ctx context.Context, in model.UserUpdateInput) (uid int64
 }
 
 // Detail 执行详情
-func (s *sUser) Detail(ctx context.Context, in model.UserDetailInput) (data *entity.Users, err error) {
+func (s *sUser) Detail(ctx context.Context, in model.UserDetailInput) (data *entity.User, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.Users.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
+	err = dao.User.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
 	if err != nil {
 		return data, err
 	}
@@ -113,7 +113,7 @@ func (s *sUser) Delete(ctx context.Context, in model.UserDeleteInput) (result sq
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
 	}
-	result, err = dao.Users.Ctx(ctx).Unscoped().Where(query).Delete()
+	result, err = dao.User.Ctx(ctx).Unscoped().Where(query).Delete()
 	if err != nil {
 		return result, err
 	}
