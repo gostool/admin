@@ -10,10 +10,8 @@ import (
 )
 
 func TestEncodeB64Header(t *testing.T) {
-	//data := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
-	data := "{\"alg\":\"none\",\"typ\":\"JWT\"}"
+	data := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
 	header := base64.StdEncoding.EncodeToString([]byte(data))
-	fmt.Println(header)
 	if header != "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" {
 		t.Fatal("encode err")
 	}
@@ -119,7 +117,7 @@ func TestCreateToken(t *testing.T) {
 func TestAuthToken(t *testing.T) {
 	type args struct {
 		signedToken string
-		secret      interface{}
+		secret      string
 	}
 	tests := []struct {
 		name    string
@@ -130,9 +128,8 @@ func TestAuthToken(t *testing.T) {
 		{
 			name: "authToken ",
 			args: args{
-				//signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
-				signedToken: "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0=.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.",
-				secret:      jwt.UnsafeAllowNoneSignatureType,
+				signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
+				secret:      "test",
 			},
 			want:    "1",
 			wantErr: false,
@@ -150,9 +147,10 @@ func TestAuthToken(t *testing.T) {
 	}
 	for index, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			//secret := SecSecret(tt.want, tt.args.secret)
-			//t.Logf("secret:%v", secret)
-			got, err := AuthToken(tt.args.signedToken, tt.args.secret)
+			secret := SecSecret(tt.want, tt.args.secret)
+			t.Logf("secret:%v", secret)
+			header := strings.Split(tt.args.signedToken, ".")[0]
+			got, err := SafeAuthToken(tt.args.signedToken, header, secret)
 			t.Log("index:", index, "err:", err, "got:", got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AuthToken() error = %v, wantErr %v", err, tt.wantErr)
@@ -193,7 +191,7 @@ func TestGetUid(t *testing.T) {
 	}
 	for index, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetUid(tt.args.signedToken)
+			_, got, err := GetHeaderAndUid(tt.args.signedToken)
 			t.Log("index:", index, "err:", err, "got:", got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AuthToken() error = %v, wantErr %v", err, tt.wantErr)

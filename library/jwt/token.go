@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"strings"
@@ -80,28 +81,42 @@ func AuthToken(signedToken string, secret interface{}) (string, error) {
 	return "", err
 }
 
+func SafeAuthToken(signedToken string, header string, secret interface{}) (string, error) {
+	if !IsSupport(header) {
+		return "", errors.New("token格式错误")
+	}
+	return AuthToken(signedToken, secret)
+}
+
+func GetHeaderAndClaims(token string) (header string, ob Claims, err error) {
+	parts := strings.Split(token, ".")
+	if len(parts) != 3 {
+		return "", ob, jwt.NewValidationError("tokens contains an invalid number of segments", jwt.ValidationErrorMalformed)
+	}
+
+	payload := parts[1]
+	data, err := jwt.DecodeSegment(payload)
+	if err != nil {
+		return "", ob, err
+	}
+	ob = Claims{}
+	err = json.Unmarshal(data, &ob)
+	if err != nil {
+		return "", ob, err
+	}
+	return parts[0], ob, nil
+}
+
 /*
 tpl:
 header: part[0]
 payload: part[1]
 sign: part[2]
 */
-func GetUid(token string) (string, error) {
-	parts := strings.Split(token, ".")
-	if len(parts) != 3 {
-		return "", jwt.NewValidationError("tokens contains an invalid number of segments", jwt.ValidationErrorMalformed)
-	}
-
-	payload := parts[1]
-	data, err := jwt.DecodeSegment(payload)
+func GetHeaderAndUid(signedToken string) (header string, uid string, err error) {
+	header, ob, err := GetHeaderAndClaims(signedToken)
 	if err != nil {
-		return "", err
+		return header, uid, err
 	}
-	ob := Claims{}
-	err = json.Unmarshal(data, &ob)
-	if err != nil {
-		return "", err
-	}
-
-	return ob.Uid, nil
+	return header, ob.Uid, nil
 }

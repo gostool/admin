@@ -54,14 +54,14 @@ func (t *sToken) GenToken(ctx context.Context, uid string, exp int64) (token str
 }
 
 func (t *sToken) CheckToken(ctx context.Context, token string) (uid string, err error) {
-	uid, err = jwt.GetUid(token)
+	header, uid, err := jwt.GetHeaderAndUid(token)
 	if err != nil {
 		logger.Error(ctx, err)
 		return uid, errors.New("token格式错误")
 	}
 	secret := jwt.SecSecret(uid, jwtSalt)
 	// 覆盖uid
-	uid, err = jwt.AuthToken(token, secret)
+	uid, err = jwt.SafeAuthToken(token, header, secret)
 	if err != nil {
 		logger.Errorf(ctx, "req:%v err:%v uid:%v", token, err, uid)
 		return uid, errors.New("token认证失败, 请重新登陆")
