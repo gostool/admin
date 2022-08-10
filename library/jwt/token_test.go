@@ -4,12 +4,16 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
+	"strings"
 	"testing"
 )
 
 func TestEncodeB64Header(t *testing.T) {
-	data := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
+	//data := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
+	data := "{\"alg\":\"none\",\"typ\":\"JWT\"}"
 	header := base64.StdEncoding.EncodeToString([]byte(data))
+	fmt.Println(header)
 	if header != "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" {
 		t.Fatal("encode err")
 	}
@@ -115,7 +119,7 @@ func TestCreateToken(t *testing.T) {
 func TestAuthToken(t *testing.T) {
 	type args struct {
 		signedToken string
-		secret      string
+		secret      interface{}
 	}
 	tests := []struct {
 		name    string
@@ -126,8 +130,9 @@ func TestAuthToken(t *testing.T) {
 		{
 			name: "authToken ",
 			args: args{
-				signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
-				secret:      "test",
+				//signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
+				signedToken: "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0=.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.",
+				secret:      jwt.UnsafeAllowNoneSignatureType,
 			},
 			want:    "1",
 			wantErr: false,
@@ -145,9 +150,9 @@ func TestAuthToken(t *testing.T) {
 	}
 	for index, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			secret := SecSecret(tt.want, tt.args.secret)
-			t.Logf("secret:%v", secret)
-			got, err := AuthToken(tt.args.signedToken, secret)
+			//secret := SecSecret(tt.want, tt.args.secret)
+			//t.Logf("secret:%v", secret)
+			got, err := AuthToken(tt.args.signedToken, tt.args.secret)
 			t.Log("index:", index, "err:", err, "got:", got)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AuthToken() error = %v, wantErr %v", err, tt.wantErr)
@@ -198,5 +203,46 @@ func TestGetUid(t *testing.T) {
 				t.Errorf("AuthToken() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+var noneTestData = []struct {
+	name        string
+	tokenString string
+	alg         string
+	key         interface{}
+	claims      map[string]interface{}
+	valid       bool
+}{
+	{
+		"Basic",
+		"eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0=.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.",
+		"none",
+		jwt.UnsafeAllowNoneSignatureType,
+		map[string]interface{}{"foo": "bar"},
+		true,
+	},
+	{
+		"Basic - no key",
+		"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJmb28iOiJiYXIifQ.",
+		"none",
+		nil,
+		map[string]interface{}{"foo": "bar"},
+		false,
+	},
+}
+
+func TestNoneVerify(t *testing.T) {
+	for _, data := range noneTestData {
+		parts := strings.Split(data.tokenString, ".")
+
+		method := jwt.GetSigningMethod(data.alg)
+		err := method.Verify(strings.Join(parts[0:2], "."), parts[2], data.key)
+		if data.valid && err != nil {
+			t.Errorf("[%v] Error while verifying key: %v", data.name, err)
+		}
+		if !data.valid && err == nil {
+			t.Errorf("[%v] Invalid key passed validation", data.name)
+		}
 	}
 }

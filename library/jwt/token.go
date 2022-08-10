@@ -65,10 +65,10 @@ before AuthToken:
 	secret = SecSecret(uid, secret)
 then AuthToken(signedToken, secret)
 */
-func AuthToken(signedToken, secret string) (string, error) {
+func AuthToken(signedToken string, secret interface{}) (string, error) {
 	// 1.tpl decode by tokens & secret
 	token, err := jwt.ParseWithClaims(signedToken, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(secret), nil
+		return secret, nil
 	})
 	if err != nil {
 		return "", fmt.Errorf("AuthToken src.err:%v sercret:%v signedToken:%v", err, secret, signedToken)
