@@ -12,6 +12,7 @@ import (
 func TestEncodeB64Header(t *testing.T) {
 	data := "{\"alg\":\"HS256\",\"typ\":\"JWT\"}"
 	header := base64.StdEncoding.EncodeToString([]byte(data))
+	fmt.Println(header)
 	if header != "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" {
 		t.Fatal("encode err")
 	}

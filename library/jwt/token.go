@@ -83,7 +83,7 @@ func AuthToken(signedToken string, secret interface{}) (string, error) {
 
 func SafeAuthToken(signedToken string, header string, secret string) (string, error) {
 	if !IsSupport(header) {
-		return "", errors.New("token格式错误")
+		return "", errors.New("token error, header alg only support hmac")
 	}
 	return AuthToken(signedToken, []byte(secret))
 }
