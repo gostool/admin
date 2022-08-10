@@ -82,11 +82,11 @@ func TestCreateToken(t *testing.T) {
 		{
 			name: "test ok",
 			args: args{
-				uid:    "1",
+				uid:    "2",
 				secret: "test",
 				exp:    33179538730,
 			},
-			want: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
+			want: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMiJ9.7EbMK2poLiyXwr512Oj1puYivvMKax8X_0U_fHWd5w0",
 		},
 		{
 			name: "test exp",
@@ -128,10 +128,10 @@ func TestAuthToken(t *testing.T) {
 		{
 			name: "authToken ",
 			args: args{
-				signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMSJ9.NCAkDlRtG4uqI3SlTtrnGn_SrnsUttzO_AHa6WvZAoA",
+				signedToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyIiwiZXhwIjozMzE3OTUzODczMCwiaXNzIjoiMiJ9.7EbMK2poLiyXwr512Oj1puYivvMKax8X_0U_fHWd5w0",
 				secret:      "test",
 			},
-			want:    "1",
+			want:    "2",
 			wantErr: false,
 		},
 		{
