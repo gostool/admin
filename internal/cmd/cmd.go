@@ -72,12 +72,11 @@ var (
 					apiGroup.Bind(
 						controller.User,
 					)
-					apiGroup.Group("/tools", func(apiGroup *ghttp.RouterGroup) {
-						apiGroup.Bind(
+					apiGroup.Group("/tools", func(apiGroupTools *ghttp.RouterGroup) {
+						apiGroupTools.Bind(
 							controller.Tools,
 						)
 					})
-
 				})
 			})
 			s.SetOpenApiPath("/api.json")

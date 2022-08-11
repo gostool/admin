@@ -7,10 +7,10 @@ import (
 	"testing"
 )
 
-func TestLogicToolsCapture(t *testing.T) {
+func TestLogicToolsCaptcha(t *testing.T) {
 	ctx := gctx.New()
-	s := tools.New()
-	id, b64s, err := s.Captcha(ctx)
+	instance := tools.New()
+	id, b64s, err := instance.Captcha(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
