@@ -6,7 +6,7 @@ import (
 
 type UserReq struct {
 	g.Meta   `path:"/login" method:"post" tags:"UserService" summary:"login an account"`
-	Name     string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"name"`
+	Passport string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"passport"`
 	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
 }
 

@@ -16,7 +16,7 @@ type cUser struct{}
 
 func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, err error) {
 	uid, err := service.User().Login(ctx, model.UserLoginInput{
-		Name:     req.Name,
+		Name:     req.Passport,
 		Password: req.Password,
 	})
 	if err != nil {
