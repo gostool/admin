@@ -72,11 +72,11 @@ var (
 					apiGroup.Bind(
 						controller.User,
 					)
-					//apiGroup.Group("/v1", func(apiV1Group *ghttp.RouterGroup) {
-					//	apiV1Group.Bind(
-					//		controller.Hello,
-					//	)
-					//})
+					apiGroup.Group("/tools", func(apiGroup *ghttp.RouterGroup) {
+						apiGroup.Bind(
+							controller.Tools,
+						)
+					})
 
 				})
 			})
