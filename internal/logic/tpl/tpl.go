@@ -1,8 +1,8 @@
 package tpl
 
 import (
+	"admin/internal/service"
 	"context"
-	"fmt"
 )
 
 type sTpl struct {
@@ -10,8 +10,7 @@ type sTpl struct {
 
 func init() {
 	instance := New()
-	fmt.Println(instance)
-	//service.RegisterTpl(instance)
+	service.RegisterTpl(instance)
 }
 
 func New() *sTpl {

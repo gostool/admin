@@ -3,7 +3,6 @@ package tools
 import (
 	"admin/internal/service"
 	"context"
-	"fmt"
 	"github.com/mojocn/base64Captcha"
 )
 
@@ -20,7 +19,6 @@ type sTools struct {
 
 func init() {
 	instance := New()
-	fmt.Println(instance)
 	service.RegisterTools(instance)
 }
 

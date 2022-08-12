@@ -9,7 +9,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -21,7 +20,6 @@ type sUser struct {
 
 func init() {
 	user := New()
-	fmt.Println(user)
 	service.RegisterUser(user)
 }
 

@@ -6,7 +6,6 @@ import (
 	"admin/library/jwt"
 	"context"
 	"errors"
-	"fmt"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 	"time"
@@ -23,7 +22,6 @@ const jwtExp = 604800 // 单位s(60*60*24*7)
 func init() {
 	logger = g.Log("debug")
 	instance := New()
-	fmt.Println(instance)
 	service.RegisterToken(instance)
 }
 
