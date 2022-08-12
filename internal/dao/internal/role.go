@@ -25,7 +25,6 @@ type RoleColumns struct {
 	UpdatedAt string // 修改时间
 	DeletedAt string // 删除时间
 	IsDeleted string // 数据的逻辑删除
-	Rid       string //
 	Name      string // 角色名称
 	Pid       string // 父角色id
 	Router    string // 默认路由
@@ -38,7 +37,6 @@ var roleColumns = RoleColumns{
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
 	IsDeleted: "is_deleted",
-	Rid:       "rid",
 	Name:      "name",
 	Pid:       "pid",
 	Router:    "router",

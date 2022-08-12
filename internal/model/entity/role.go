@@ -15,8 +15,7 @@ type Role struct {
 	UpdatedAt *gtime.Time `json:"updatedAt" ` // 修改时间
 	DeletedAt *gtime.Time `json:"deletedAt" ` // 删除时间
 	IsDeleted int         `json:"isDeleted" ` // 数据的逻辑删除
-	Rid       int64       `json:"rid"       ` //
 	Name      string      `json:"name"      ` // 角色名称
-	Pid       int64       `json:"pid"       ` // 父角色id
+	Pid       int         `json:"pid"       ` // 父角色id
 	Router    string      `json:"router"    ` // 默认路由
 }

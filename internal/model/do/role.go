@@ -17,7 +17,6 @@ type Role struct {
 	UpdatedAt *gtime.Time // 修改时间
 	DeletedAt *gtime.Time // 删除时间
 	IsDeleted interface{} // 数据的逻辑删除
-	Rid       interface{} //
 	Name      interface{} // 角色名称
 	Pid       interface{} // 父角色id
 	Router    interface{} // 默认路由
