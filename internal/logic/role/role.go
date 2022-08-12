@@ -8,7 +8,6 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
-	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 )
@@ -20,7 +19,7 @@ var logger *glog.Logger
 
 func init() {
 	instance := New()
-	logger = g.Log("debug")
+	logger = g.Log(consts.LoggerDebug)
 	service.RegisterRole(instance)
 }
 
@@ -59,7 +58,7 @@ func (s *sRole) Create(ctx context.Context, in *model.RoleCreateInput) (id int64
 }
 
 func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err error) {
-	logger.Infof(ctx, "data:%v\n", data)
+	logger.Debugf(ctx, "data:%v\n", data)
 	result, err := dao.Role.Ctx(ctx).Where(query).Update(data)
 	if err != nil {
 		return 0, err
@@ -69,14 +68,13 @@ func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err e
 		return row, err
 	}
 	if row == 0 {
-		return 0, errors.New("update fail")
+		return 0, consts.ErrUpdate
 	}
 	return row, err
 }
 
 // Update 执行更新
 func (s *sRole) Update(ctx context.Context, in model.RoleUpdateInput) (row int64, err error) {
-	logger.Infof(ctx, "in:%v\n", in)
 	return s.update(ctx, in.ToWhereMap(), in.ToMap())
 }
 

@@ -1,8 +1,11 @@
 package tools
 
 import (
+	"admin/internal/consts"
 	"admin/internal/service"
 	"context"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/glog"
 	"github.com/mojocn/base64Captcha"
 )
 
@@ -17,7 +20,10 @@ var Store = base64Captcha.DefaultMemStore
 type sTools struct {
 }
 
+var logger *glog.Logger
+
 func init() {
+	logger = g.Log(consts.LoggerDebug)
 	instance := New()
 	service.RegisterTools(instance)
 }

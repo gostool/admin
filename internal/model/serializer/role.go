@@ -2,6 +2,7 @@ package serializer
 
 import "github.com/gogf/gf/v2/os/gtime"
 
+// Role 参考entity
 type Role struct {
 	Id        int         `json:"id"     dc:"id"   `    //
 	CreatedAt *gtime.Time `json:"createdAt" dc:"创建时间" ` // 创建时间

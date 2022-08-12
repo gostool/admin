@@ -1,6 +1,7 @@
 package token
 
 import (
+	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/service"
 	"admin/library/jwt"
@@ -20,7 +21,7 @@ const jwtSalt = "test"
 const jwtExp = 604800 // 单位s(60*60*24*7)
 
 func init() {
-	logger = g.Log("debug")
+	logger = g.Log(consts.LoggerDebug)
 	instance := New()
 	service.RegisterToken(instance)
 }

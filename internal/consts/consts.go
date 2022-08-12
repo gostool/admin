@@ -3,8 +3,9 @@ package consts
 import "errors"
 
 const (
-	DELETED = 1
-	CREATED = 0
+	DELETED     = 1
+	CREATED     = 0
+	LoggerDebug = "debug"
 )
 
 var (

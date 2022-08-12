@@ -1,14 +1,20 @@
 package tpl
 
 import (
+	"admin/internal/consts"
 	"admin/internal/service"
 	"context"
+	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 type sTpl struct {
 }
 
+var logger *glog.Logger
+
 func init() {
+	logger = g.Log(consts.LoggerDebug)
 	instance := New()
 	service.RegisterTpl(instance)
 }

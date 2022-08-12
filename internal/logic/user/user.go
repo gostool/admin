@@ -11,6 +11,7 @@ import (
 	"errors"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 type sUser struct {
@@ -18,7 +19,10 @@ type sUser struct {
 	avatarUploadUrlPrefix string // 头像上传对应的URL前缀
 }
 
+var logger *glog.Logger
+
 func init() {
+	logger = g.Log(consts.LoggerDebug)
 	user := New()
 	service.RegisterUser(user)
 }
