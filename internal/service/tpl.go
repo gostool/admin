@@ -5,11 +5,18 @@
 package service
 
 import (
+	"admin/internal/model"
+	"admin/internal/model/entity"
 	"context"
+	"database/sql"
 )
 
 type ITpl interface {
 	Logout(ctx context.Context) error
+	Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
+	Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error)
+	Detail(ctx context.Context, in model.UserDetailInput) (data *entity.User, err error)
+	Delete(ctx context.Context, in model.UserDeleteInput) (result sql.Result, err error)
 }
 
 var localTpl ITpl

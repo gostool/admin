@@ -1,12 +1,18 @@
 package v1
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"admin/internal/model/entity"
+	"database/sql"
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
+)
 
 type RoleListReq struct {
 	g.Meta `path:"/role/list" method:"get" tags:"RoleService"`
 	PageReq
 }
 type RoleListRes struct {
+	Data gdb.Result
 }
 
 type RoleDetailReq struct {
@@ -14,13 +20,18 @@ type RoleDetailReq struct {
 	OrmIdReq
 }
 type RoleDetailRes struct {
+	Data *entity.Role
 }
 
 type RoleUpdateReq struct {
 	g.Meta `path:"/role/update" method:"post" tags:"RoleService"`
 	OrmIdReq
+	Name   string `json:"name" dc:"name"`
+	Router string `json:"router" dc:"router"`
+	Pid    int    `json:"pid" dc:"pid"`
 }
 type RoleUpdateRes struct {
+	Id string `json:"name"`
 }
 
 type RoleDeleteReq struct {
@@ -28,4 +39,5 @@ type RoleDeleteReq struct {
 	OrmIdReq
 }
 type RoleDeleteRes struct {
+	Data sql.Result
 }

@@ -7,3 +7,12 @@ var UserFields = g.ArrayStr{
 	"name",
 	"created_at",
 }
+
+var RoleFields = g.ArrayStr{
+	"id",
+	"name",
+	"pid",
+	"router",
+	"created_at",
+	"updated_at",
+}
