@@ -66,16 +66,9 @@ var (
 				})
 				// api
 				group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
-					apiGroup.Bind(
-						controller.Hello,
-					)
-					apiGroup.Bind(
-						controller.User,
-					)
-					apiGroup.Group("/tools", func(apiGroupTools *ghttp.RouterGroup) {
-						apiGroupTools.Bind(
-							controller.Tools,
-						)
+					apiGroup.ALLMap(g.Map{
+						"/api/user/": controller.User,  // user
+						"/api/tools": controller.Tools, // tools
 					})
 				})
 			})
