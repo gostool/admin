@@ -67,8 +67,8 @@ var (
 				// api
 				group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
 					apiGroup.ALLMap(g.Map{
-						"/user/": controller.User,  // user
-						"/tools": controller.Tools, // tools
+						"/api/user/": controller.User,  // user
+						"/tools":     controller.Tools, // tools
 					})
 				})
 			})
