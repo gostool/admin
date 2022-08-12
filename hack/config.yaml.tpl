@@ -5,5 +5,5 @@ gfcli:
   gen:
     dao:
       - link:     "mysql:admin:123456@tcp(127.0.0.1:3306)/db"
-        tables:   "user"
+        tables:   "user,menu,role"
         jsonCase: "CamelLower
