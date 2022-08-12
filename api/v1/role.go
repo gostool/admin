@@ -11,21 +11,21 @@ type RoleListRes struct {
 
 type RoleDetailReq struct {
 	g.Meta `path:"/role/detail" method:"post" tags:"RoleService"`
-	Id     int `json:"id"`
+	OrmIdReq
 }
 type RoleDetailRes struct {
 }
 
 type RoleUpdateReq struct {
 	g.Meta `path:"/role/update" method:"post" tags:"RoleService"`
-	Id     int `json:"id"`
+	OrmIdReq
 }
 type RoleUpdateRes struct {
 }
 
 type RoleDeleteReq struct {
 	g.Meta `path:"/role/delete" method:"post" tags:"RoleService"`
-	Id     int `json:"id"`
+	OrmIdReq
 }
 type RoleDeleteRes struct {
 }
