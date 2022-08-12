@@ -1,12 +1,10 @@
 package controller
 
 import (
+	"admin/api/v1"
 	"context"
 	"fmt"
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/frame/g"
-
-	"admin/api/v1"
 )
 
 var (
@@ -16,7 +14,7 @@ var (
 type cHello struct{}
 
 func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes, err error) {
-	g.Log().Debugf(ctx, `receive say: %+v`, req)
+	logger.Debugf(ctx, `receive say: %+v`, req)
 	res = &v1.HelloRes{
 		Reply: fmt.Sprintf(`Hi %s`, req.Name),
 	}

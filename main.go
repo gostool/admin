@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "admin/internal/controller"
 	_ "admin/internal/logic"
 	_ "admin/internal/packed"
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"

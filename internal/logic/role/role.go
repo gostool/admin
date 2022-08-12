@@ -4,22 +4,23 @@ import (
 	"admin/internal/consts"
 	"admin/internal/dao"
 	"admin/internal/model"
-	"admin/internal/model/entity"
+	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 type sRole struct {
 }
 
+var logger *glog.Logger
+
 func init() {
 	instance := New()
-	fmt.Println(instance)
+	logger = g.Log("debug")
 	service.RegisterRole(instance)
 }
 
@@ -34,11 +35,15 @@ func (s *sRole) Count(ctx context.Context) (data int, err error) {
 	return dao.Role.Ctx(ctx).Count(query)
 }
 
-func (s *sRole) List(ctx context.Context, in model.RoleListInput) (data gdb.Result, err error) {
+func (s *sRole) List(ctx context.Context, in model.RoleListInput) (items []*serializer.Role, err error) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	return dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).All()
+	err = dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 func (s *sRole) InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error) {
@@ -54,6 +59,7 @@ func (s *sRole) Create(ctx context.Context, in *model.RoleCreateInput) (id int64
 }
 
 func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err error) {
+	logger.Infof(ctx, "data:%v\n", data)
 	result, err := dao.Role.Ctx(ctx).Where(query).Update(data)
 	if err != nil {
 		return 0, err
@@ -69,12 +75,13 @@ func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err e
 }
 
 // Update 执行更新
-func (s *sRole) Update(ctx context.Context, in model.RoleUpdateInput) (id int64, err error) {
+func (s *sRole) Update(ctx context.Context, in model.RoleUpdateInput) (row int64, err error) {
+	logger.Infof(ctx, "in:%v\n", in)
 	return s.update(ctx, in.ToWhereMap(), in.ToMap())
 }
 
 // Detail 执行详情
-func (s *sRole) Detail(ctx context.Context, in model.RoleDetailInput) (data *entity.Role, err error) {
+func (s *sRole) Detail(ctx context.Context, in model.RoleDetailInput) (data *serializer.Role, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
@@ -97,4 +104,13 @@ func (s *sRole) Delete(ctx context.Context, in model.RoleDeleteInput) (result sq
 		return result, err
 	}
 	return result, nil
+}
+
+func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error) {
+	row, err = s.update(ctx, r.ToWhereMap(), r.ToMap())
+	if err != nil {
+		logger.Error(ctx, err)
+		return 0, consts.ErrDel
+	}
+	return row, nil
 }

@@ -1,9 +1,8 @@
 package v1
 
 import (
-	"admin/internal/model/entity"
+	"admin/internal/model/serializer"
 	"database/sql"
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -12,7 +11,8 @@ type RoleListReq struct {
 	PageReq
 }
 type RoleListRes struct {
-	Data gdb.Result
+	Count int                `json:"count"`
+	Items []*serializer.Role `json:"items"`
 }
 
 type RoleDetailReq struct {
@@ -20,7 +20,7 @@ type RoleDetailReq struct {
 	OrmIdReq
 }
 type RoleDetailRes struct {
-	Data *entity.Role
+	*serializer.Role
 }
 
 type RoleUpdateReq struct {
