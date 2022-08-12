@@ -26,9 +26,7 @@ type RoleDetailRes struct {
 type RoleUpdateReq struct {
 	g.Meta `path:"/role/update" method:"post" tags:"RoleService"`
 	OrmIdReq
-	Name   string `json:"name" dc:"name"`
-	Router string `json:"router" dc:"router"`
-	Pid    int    `json:"pid" dc:"pid"`
+	RoleAttrReq
 }
 type RoleUpdateRes struct {
 	Id string `json:"name"`
@@ -40,4 +38,19 @@ type RoleDeleteReq struct {
 }
 type RoleDeleteRes struct {
 	Data sql.Result
+}
+
+type RoleCreateReq struct {
+	g.Meta `path:"/role/create" method:"post" tags:"RoleService"`
+	RoleAttrReq
+}
+
+type RoleCreateRes struct {
+	OrmIdReq
+}
+
+type RoleAttrReq struct {
+	Name   string `json:"name" dc:"name"`
+	Router string `json:"router" dc:"router"`
+	Pid    int    `json:"pid" dc:"pid"`
 }

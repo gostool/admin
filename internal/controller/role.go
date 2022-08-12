@@ -77,3 +77,21 @@ func (c *cRole) Delete(ctx context.Context, req *v1.RoleDeleteReq) (res *v1.OrmD
 	res = &v1.OrmDeleteRes{}
 	return res, nil
 }
+
+func (c *cRole) Create(ctx context.Context, req *v1.RoleCreateReq) (res *v1.RoleCreateRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	in := model.RoleCreateInput{
+		RoleAttr: model.RoleAttr{
+			Name:   req.Name,
+			Router: req.Router,
+			Pid:    req.Pid,
+		},
+	}
+	id, err := service.Role().Create(ctx, &in)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.RoleCreateRes{}
+	res.Id = int(id)
+	return res, nil
+}
