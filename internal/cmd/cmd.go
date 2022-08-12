@@ -71,6 +71,13 @@ var (
 						"/tools/": controller.Tools, // tools
 					})
 				})
+				// auth
+				group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
+					apiGroup.ALLMap(g.Map{
+						"/role/": controller.Role, // role
+						"/menu/": controller.Menu, // menu
+					})
+				})
 			})
 			s.SetOpenApiPath("/api.json")
 			s.Run()
