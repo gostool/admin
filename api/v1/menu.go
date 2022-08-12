@@ -3,7 +3,7 @@ package v1
 import "github.com/gogf/gf/v2/frame/g"
 
 type MenuListReq struct {
-	g.Meta `path:"/menu/list" method:"get"`
+	g.Meta `path:"/menu/list" method:"get" tags:"MenuService"`
 }
 type MenuListRes struct {
 }
