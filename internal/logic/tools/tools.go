@@ -9,18 +9,11 @@ import (
 	"github.com/mojocn/base64Captcha"
 )
 
-const (
-	keyLong   = 6
-	imgWidth  = 240
-	imgHeight = 80
+var (
+	captchaStore  = base64Captcha.DefaultMemStore
+	captchaDriver = newDriver()
+	logger        *glog.Logger
 )
-
-var Store = base64Captcha.DefaultMemStore
-
-type sTools struct {
-}
-
-var logger *glog.Logger
 
 func init() {
 	logger = g.Log(consts.LoggerDebug)
@@ -28,16 +21,30 @@ func init() {
 	service.RegisterTools(instance)
 }
 
+type sTools struct{}
+
 func New() *sTools {
 	return &sTools{}
 }
 
+func newDriver() *base64Captcha.DriverString {
+	driver := &base64Captcha.DriverString{
+		Height:          44,
+		Width:           126,
+		NoiseCount:      5,
+		ShowLineOptions: base64Captcha.OptionShowSineLine | base64Captcha.OptionShowSlimeLine | base64Captcha.OptionShowHollowLine,
+		Length:          4,
+		Source:          "1234567890",
+		Fonts:           []string{"wqy-microhei.ttc"},
+	}
+	return driver.ConvertFonts()
+}
+
 func (s *sTools) Captcha(ctx context.Context) (id, b64s string, err error) {
-	var driver = base64Captcha.NewDriverDigit(imgHeight, imgWidth, keyLong, 0.7, 80) // 字符,公式,验证码配置, 生成默认数字的driver
-	var captcha = base64Captcha.NewCaptcha(driver, Store)
+	var captcha = base64Captcha.NewCaptcha(captchaDriver, captchaStore)
 	return captcha.Generate()
 }
 
 func (s *sTools) Verify(ctx context.Context, captchaId, captcha string, clear bool) (ok bool) {
-	return Store.Verify(captchaId, captcha, clear)
+	return captchaStore.Verify(captchaId, captcha, clear)
 }
