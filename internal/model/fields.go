@@ -16,3 +16,19 @@ var RoleFields = g.ArrayStr{
 	"created_at",
 	"updated_at",
 }
+
+var MenuFields = g.ArrayStr{
+	"id",
+	"created_at",
+	"updated_at",
+	"title",
+	"icon",
+	"keep_alive",
+	"default_menu",
+	"hidden",
+	"sort",
+	"parent_id",
+	"name",
+	"path",
+	"component",
+}

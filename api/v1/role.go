@@ -11,8 +11,8 @@ type RoleListReq struct {
 	PageReq
 }
 type RoleListRes struct {
-	Count int                `json:"count"`
-	Items []*serializer.Role `json:"items"`
+	Count int                `json:"count" dc:"记录总数"`
+	Items []*serializer.Role `json:"items" dc:"条目"`
 }
 
 type RoleDetailReq struct {
@@ -29,7 +29,7 @@ type RoleUpdateReq struct {
 	RoleAttrReq
 }
 type RoleUpdateRes struct {
-	Id string `json:"name"`
+	Id string `json:"id"`
 }
 
 type RoleDeleteReq struct {
@@ -50,7 +50,7 @@ type RoleCreateRes struct {
 }
 
 type RoleAttrReq struct {
-	Name   string `json:"name" dc:"name"`
-	Router string `json:"router" dc:"router"`
-	Pid    int    `json:"pid" dc:"pid"`
+	Name   string `json:"name" dc:"姓名"`
+	Router string `json:"router" dc:"路由"`
+	Pid    int    `json:"pid" dc:"父ID"`
 }

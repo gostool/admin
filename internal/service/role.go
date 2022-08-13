@@ -15,7 +15,7 @@ import (
 
 type IRole interface {
 	Count(ctx context.Context) (data int, err error)
-	List(ctx context.Context, in model.RoleListInput) (roles []*serializer.Role, err error)
+	List(ctx context.Context, in model.RoleListInput) (items []*serializer.Role, err error)
 	InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error)
 	Create(ctx context.Context, in *model.RoleCreateInput) (id int64, err error)
 	Update(ctx context.Context, in model.RoleUpdateInput) (row int64, err error)
