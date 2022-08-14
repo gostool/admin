@@ -7,6 +7,7 @@ package logic
 import (
 	_ "admin/internal/logic/log"
 	_ "admin/internal/logic/menu"
+	_ "admin/internal/logic/pool"
 	_ "admin/internal/logic/role"
 	_ "admin/internal/logic/token"
 	_ "admin/internal/logic/tools"

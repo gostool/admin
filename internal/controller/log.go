@@ -22,7 +22,7 @@ func (c *cLog) List(ctx context.Context, req *v1.LogListReq) (res *v1.LogListRes
 	if err != nil {
 		return res, err
 	}
-	cnt, err := service.Menu().Count(ctx)
+	cnt, err := service.Log().Count(ctx)
 	if err != nil {
 		return res, err
 	}
