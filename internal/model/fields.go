@@ -1,6 +1,8 @@
 package model
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"github.com/gogf/gf/v2/frame/g"
+)
 
 var UserFields = g.ArrayStr{
 	"id",
@@ -31,4 +33,24 @@ var MenuFields = g.ArrayStr{
 	"name",
 	"path",
 	"component",
+}
+
+var LogFields = g.ArrayStr{
+	"id",
+	"userId",
+	"createdAt",
+	"updatedAt",
+	"deletedAt",
+	"isDeleted",
+	"status",
+	"extra",
+	"ip",
+	"path",
+	"method",
+	"request",
+	"response",
+	"agent",
+	"latency",
+	"errMsg",
+	"userName",
 }

@@ -29,7 +29,7 @@ type MenuUpdateReq struct {
 	MenuAttrReq
 }
 type MenuUpdateRes struct {
-	Id string `json:"name"`
+	Id string `json:"id"`
 }
 
 type MenuDeleteReq struct {
