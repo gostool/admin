@@ -29,6 +29,7 @@ func TestLogicUserRegister(t *testing.T) {
 		Name:     "guest",
 		Password: "guest",
 		Nickname: "hanhan",
+		RoleId:   5,
 	}
 	uid, err := user.Register(ctx, in)
 	if err != nil {
