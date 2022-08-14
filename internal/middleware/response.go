@@ -7,6 +7,15 @@ import (
 	"net/http"
 )
 
+func JsonExit(r *ghttp.Request, code int, msg string, data interface{}) {
+	r.Response.WriteJson(ghttp.DefaultHandlerResponse{
+		Code:    code,
+		Message: msg,
+		Data:    data,
+	})
+	r.Exit()
+}
+
 func HandlerResponse(r *ghttp.Request) {
 	r.Middleware.Next()
 
@@ -39,9 +48,5 @@ func HandlerResponse(r *ghttp.Request) {
 	} else {
 		code = gcode.CodeOK
 	}
-	r.Response.WriteJson(ghttp.DefaultHandlerResponse{
-		Code:    code.Code(),
-		Message: msg,
-		Data:    res,
-	})
+	JsonExit(r, code.Code(), msg, res)
 }
