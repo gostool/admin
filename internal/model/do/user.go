@@ -20,4 +20,5 @@ type User struct {
 	Name      interface{} //
 	Password  interface{} //
 	Nickname  interface{} //
+	RoleId    interface{} //
 }

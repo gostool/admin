@@ -44,6 +44,7 @@ func TestLogicUserCreate(t *testing.T) {
 		Name:     "guest",
 		Password: "guest",
 		Nickname: "hanhan",
+		RoleId:   5,
 	}
 	uid, err := user.Create(ctx, in)
 	if err != nil {

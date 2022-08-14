@@ -11,6 +11,7 @@ type UserCreateInput struct {
 	Name     string // 账号
 	Password string // 密码(明文)
 	Nickname string // 昵称
+	RoleId   int
 }
 
 type UserDetailInput struct {

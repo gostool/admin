@@ -5,6 +5,7 @@ import (
 	"admin/internal/dao"
 	"admin/internal/model"
 	"admin/internal/model/entity"
+	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
 	"database/sql"
@@ -29,6 +30,27 @@ func init() {
 
 func New() *sUser {
 	return &sUser{}
+}
+
+func (s *sUser) FindOne(ctx context.Context, query *g.Map) (data *serializer.User, err error) {
+	data = (*serializer.User)(nil)
+	// 找不到数据时，不会初始化data
+	err = dao.User.Ctx(ctx).Fields(model.UserFields).Where(query).Scan(&data)
+	if err != nil {
+		return nil, err
+	}
+	if data == nil {
+		return data, errors.New("用户账号或密码错误")
+	}
+	return data, nil
+}
+
+func (s *sUser) Find(ctx context.Context, pk int64) (user *serializer.User, err error) {
+	query := g.Map{
+		"id":         pk,
+		"is_deleted": consts.CREATED,
+	}
+	return s.FindOne(ctx, &query)
 }
 
 // Login 执行登录
@@ -78,6 +100,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 		"name":       in.Name,
 		"password":   in.Password,
 		"nickname":   in.Nickname,
+		"roleId":     in.RoleId,
 		"is_deleted": consts.CREATED,
 	}
 	r, err := dao.User.Ctx(ctx).Data(data).Insert()
