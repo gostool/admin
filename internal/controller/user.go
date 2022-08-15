@@ -16,9 +16,11 @@ var (
 type cUser struct{}
 
 func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserWebRes, err error) {
-	user, err := service.User().LoginWeb(ctx, model.UserLoginInput{
-		Name:     req.Passport,
-		Password: req.Password,
+	user, err := service.User().LoginWeb(ctx, model.UserLoginWebInput{
+		Name:      req.Passport,
+		Password:  req.Password,
+		Captcha:   req.Captcha,
+		CaptchaId: req.CaptchaId,
 	})
 	if err != nil {
 		return res, err

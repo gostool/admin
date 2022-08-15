@@ -6,6 +6,13 @@ type UserLoginInput struct {
 	Password string // 密码(明文)
 }
 
+type UserLoginWebInput struct {
+	Name      string // 账号
+	Password  string // 密码(明文)
+	Captcha   string
+	CaptchaId string
+}
+
 // UserCreateInput UserRegisterInput 创建用户
 type UserCreateInput struct {
 	Name     string // 账号

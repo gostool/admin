@@ -53,7 +53,11 @@ func (s *sUser) Find(ctx context.Context, pk int64) (user *serializer.User, err 
 	return s.FindOne(ctx, &query)
 }
 
-func (s *sUser) LoginWeb(ctx context.Context, in model.UserLoginInput) (data *serializer.User, err error) {
+func (s *sUser) LoginWeb(ctx context.Context, in model.UserLoginWebInput) (data *serializer.User, err error) {
+	ok := service.Tools().Verify(ctx, in.CaptchaId, in.Captcha, true)
+	if !ok {
+		return nil, errors.New("验证码错误")
+	}
 	password, err := gmd5.EncryptString(in.Password)
 	if err != nil {
 		return nil, err
