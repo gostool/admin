@@ -13,7 +13,7 @@ var (
 type cStatus struct{}
 
 func (c *cStatus) List(ctx context.Context, req *v1.StatusReq) (res *v1.StatusRes, err error) {
-	data, err := service.Status().GetServerInfo()
+	data, err := service.Status().GetServerInfo(ctx)
 	if err != nil {
 		return res, err
 	}

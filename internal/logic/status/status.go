@@ -4,6 +4,7 @@ import (
 	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/service"
+	"context"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 	"github.com/pkg/errors"
@@ -38,15 +39,15 @@ const (
 
 // GetServerInfo 获取服务器信息
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *sStatus) GetServerInfo() (data *model.Server, err error) {
-	server := model.Server{Os: s.InitOs()}
-	if server.Cpu, err = s.InitCpu(); err != nil {
+func (s *sStatus) GetServerInfo(ctx context.Context) (data *model.Server, err error) {
+	server := model.Server{Os: s.InitOs(ctx)}
+	if server.Cpu, err = s.InitCpu(ctx); err != nil {
 		return nil, errors.Wrap(err, "获取CPU信息失败!")
 	}
-	if server.Rrm, err = s.InitRAM(); err != nil {
+	if server.Rrm, err = s.InitRAM(ctx); err != nil {
 		return nil, errors.Wrap(err, "获取ARM信息失败!")
 	}
-	if server.Disk, err = s.InitDisk(); err != nil {
+	if server.Disk, err = s.InitDisk(ctx); err != nil {
 		return nil, errors.Wrap(err, "获取硬盘信息失败!")
 	}
 
@@ -55,7 +56,7 @@ func (s *sStatus) GetServerInfo() (data *model.Server, err error) {
 
 // InitOs 获取系统信息 组装数据为 response.Os
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *sStatus) InitOs() model.Os {
+func (s *sStatus) InitOs(ctx context.Context) model.Os {
 	return model.Os{
 		GOOS:         runtime.GOOS,
 		NumCPU:       runtime.NumCPU(),
@@ -67,7 +68,7 @@ func (s *sStatus) InitOs() model.Os {
 
 // InitCpu 获取CPU信息 组装数据为 response.Cpu
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *sStatus) InitCpu() (model.Cpu, error) {
+func (s *sStatus) InitCpu(ctx context.Context) (model.Cpu, error) {
 	var _cpu model.Cpu
 	cores, err := cpu.Counts(false)
 	if err != nil {
@@ -83,7 +84,7 @@ func (s *sStatus) InitCpu() (model.Cpu, error) {
 
 // InitRAM 获取ARM信息 组装数据为 response.Rrm
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *sStatus) InitRAM() (model.Rrm, error) {
+func (s *sStatus) InitRAM(ctx context.Context) (model.Rrm, error) {
 	var arm model.Rrm
 	virtualMemoryStat, err := mem.VirtualMemory()
 	if err != nil {
@@ -97,7 +98,7 @@ func (s *sStatus) InitRAM() (model.Rrm, error) {
 
 // InitDisk 获取硬盘信息 组装数据为 response.Disk
 // Author [SliverHorn](https://github.com/SliverHorn)
-func (s *sStatus) InitDisk() (model.Disk, error) {
+func (s *sStatus) InitDisk(ctx context.Context) (model.Disk, error) {
 	var _disk model.Disk
 	usageStat, err := disk.Usage("/")
 	if err != nil {
