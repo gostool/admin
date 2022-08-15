@@ -10,6 +10,7 @@ import (
 	"database/sql"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sLog struct {
@@ -32,6 +33,40 @@ func (s *sLog) Count(ctx context.Context) (data int, err error) {
 		"is_deleted": consts.CREATED,
 	}
 	return dao.OperationLog.Ctx(ctx).Count(query)
+}
+
+func (s *sLog) Search(ctx context.Context, in model.LogSearchInput) (items []*serializer.Log, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	if in.Method != "" {
+		query["method"] = in.Method
+	}
+	if gconv.String(in.Path) != "" {
+		// 前缀查询
+		query["path"] = in.Path
+	}
+	if (in.Status > 0) && (in.Status < 600) {
+		query["status"] = in.Status
+	}
+	return s.search(ctx, in.Page, in.PageSize, in.OrmSortType.Type, query)
+}
+
+func (s *sLog) search(ctx context.Context, page, limit int, orderType int, query g.Map) (dataList []*serializer.Log, err error) {
+	path, ok := query["path"]
+	if ok {
+		// 针对path 字段，like 查询
+		delete(query, "path")
+	}
+	m := dao.OperationLog.Ctx(ctx).Fields(model.LogFields).Page(page, limit).Where(query)
+	if path != "" {
+		m = m.WhereLike("path", gconv.String(path)+"%")
+	}
+	err = m.Order(consts.OrderFiledByType(orderType)).Scan(&dataList)
+	if err != nil {
+		return dataList, err
+	}
+	return dataList, err
 }
 
 func (s *sLog) List(ctx context.Context, in model.LogListInput) (items []*serializer.Log, err error) {

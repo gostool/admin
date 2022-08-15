@@ -15,6 +15,7 @@ import (
 
 type ILog interface {
 	Count(ctx context.Context) (data int, err error)
+	Search(ctx context.Context, in model.LogSearchInput) (items []*serializer.Log, err error)
 	List(ctx context.Context, in model.LogListInput) (items []*serializer.Log, err error)
 	InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error)
 	Create(ctx context.Context, in *model.LogCreateInput) (id int64, err error)

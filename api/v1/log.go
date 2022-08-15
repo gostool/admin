@@ -7,9 +7,20 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
+type OpLogAttrReqSearch struct {
+	// 响应状态: 200/500/400
+	Status int `json:"status"`
+	// 请求方法: get/post
+	Method string `json:"method"`
+	// 请求路径
+	Path string `v:"length:0,20480#Path长度应当在:min到:max之间" json:"path"`
+}
+
 type LogListReq struct {
 	g.Meta `path:"/log/list" method:"get" tags:"LogService"`
 	PageReq
+	OpLogAttrReqSearch
+	OrmSortTypeReq
 }
 type LogListRes struct {
 	Count int               `json:"count" dc:"记录总数"`

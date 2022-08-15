@@ -42,7 +42,7 @@ func newOpLogByRequest(r *ghttp.Request) (record *model.LogCreateInput) {
 	record.Path = r.Request.URL.Path
 	record.Agent = r.Request.UserAgent()
 	record.UserId = uid
-	record.UserName = gconv.String(r.GetParam("passport"))
+	record.UserName = gconv.String(r.GetParam("name"))
 	var body []byte
 	var err error
 	switch record.Method {

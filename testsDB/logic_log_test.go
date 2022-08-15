@@ -32,6 +32,28 @@ func TestLogicLogList(t *testing.T) {
 	g.Dump(data)
 }
 
+func TestLogicLogSearch(t *testing.T) {
+	ctx := gctx.New()
+	r := log.New()
+	in := model.LogSearchInput{
+		Page:     1,
+		PageSize: 10,
+	}
+	in.OpLogAttrSearch = model.OpLogAttrSearch{
+		Status: 200,
+		Method: "post",
+		Path:   "/api",
+	}
+	in.OrmSortType = model.OrmSortType{
+		Type: 0,
+	}
+	items, err := r.Search(ctx, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(items)
+}
+
 func TestLogicLogCreate(t *testing.T) {
 	ctx := gctx.New()
 	r := log.New()

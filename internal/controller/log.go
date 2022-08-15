@@ -15,10 +15,21 @@ type cLog struct{}
 
 func (c *cLog) List(ctx context.Context, req *v1.LogListReq) (res *v1.LogListRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
-	items, err := service.Log().List(ctx, model.LogListInput{
+	attrReqSearch := model.OpLogAttrSearch{
+		Status: req.Status,
+		Method: req.Method,
+		Path:   req.Path,
+	}
+	ormSortType := model.OrmSortType{
+		Type: req.Type,
+	}
+	in := model.LogSearchInput{
 		Page:     req.PageReq.Page,
 		PageSize: req.PageReq.PageSize,
-	})
+	}
+	in.OpLogAttrSearch = attrReqSearch
+	in.OrmSortType = ormSortType
+	items, err := service.Log().Search(ctx, in)
 	if err != nil {
 		return res, err
 	}

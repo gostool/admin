@@ -5,9 +5,31 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
+type OpLogAttrSearch struct {
+	// 响应状态: 200/500/400
+	Status int `json:"status"`
+	// 请求方法: get/post
+	Method string `json:"method"`
+	// 请求路径
+	Path string `json:"path"`
+}
+
+type OrmSortType struct {
+	// 排序字段: "create_at/update_at desc"
+	//Filed string `json:"filed"`
+	Type int `json:"type"`
+}
+
 type LogListInput struct {
 	Page     int
 	PageSize int
+}
+
+type LogSearchInput struct {
+	Page     int
+	PageSize int
+	OpLogAttrSearch
+	OrmSortType
 }
 
 type LogCreateInput struct {
