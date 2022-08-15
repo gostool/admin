@@ -22,6 +22,20 @@ func TestLogicUserLogin(t *testing.T) {
 	g.Dump(uid)
 }
 
+func TestLogicUserLoginWeb(t *testing.T) {
+	ctx := gctx.New()
+	user := user.New()
+	in := model.UserLoginInput{
+		Name:     "guest",
+		Password: "guest",
+	}
+	uid, err := user.LoginWeb(ctx, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(uid)
+}
+
 func TestLogicUserRegister(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()

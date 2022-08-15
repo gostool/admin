@@ -17,6 +17,7 @@ import (
 type IUser interface {
 	FindOne(ctx context.Context, query *g.Map) (data *serializer.User, err error)
 	Find(ctx context.Context, pk int64) (user *serializer.User, err error)
+	LoginWeb(ctx context.Context, in model.UserLoginInput) (data *serializer.User, err error)
 	Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error)
 	Register(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
 	Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error)

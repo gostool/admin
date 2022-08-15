@@ -53,6 +53,26 @@ func (s *sUser) Find(ctx context.Context, pk int64) (user *serializer.User, err 
 	return s.FindOne(ctx, &query)
 }
 
+func (s *sUser) LoginWeb(ctx context.Context, in model.UserLoginInput) (data *serializer.User, err error) {
+	password, err := gmd5.EncryptString(in.Password)
+	if err != nil {
+		return nil, err
+	}
+	query := g.Map{
+		"name":       in.Name,
+		"password":   password,
+		"is_deleted": consts.CREATED,
+	}
+	err = dao.User.Ctx(ctx).Unscoped().Fields(model.UserFields).Where(query).Scan(&data)
+	if err != nil {
+		return nil, err
+	}
+	if data == nil {
+		return nil, errors.New("账号或密码错误，请重试")
+	}
+	return data, nil
+}
+
 // Login 执行登录
 func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error) {
 	password, err := gmd5.EncryptString(in.Password)

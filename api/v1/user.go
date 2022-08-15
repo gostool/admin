@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"admin/internal/model/serializer"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -17,10 +18,23 @@ type UserRegisterReq struct {
 	Nickname string `v:"required|length:5,16#请输入昵称|昵称长度应当在:5到:16之间" dc:"Your nickanme" json:"nickname"`
 }
 
+type UserWebReq struct {
+	g.Meta   `path:"/user/webLogin" method:"post" tags:"UserService" summary:"login an account"`
+	Passport string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"passport"`
+	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
+}
+
+type UserWebRes struct {
+	Id      int              `json:"id"`
+	RoleId  int              `json:"roleId"`
+	RoleMap *serializer.Role `json:"roleDetail"`
+	Token   string           `json:"token"`
+}
+
 //--------------------------------------------------------------------------------------
 
 type UserRes struct {
-	Id    int64  `json:"id""`
-	Role  int64  `json:"role"`
+	Id    int    `json:"id"`
+	Role  int    `json:"role"`
 	Token string `json:"token"`
 }

@@ -8,6 +8,7 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
+	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 )
@@ -87,6 +88,9 @@ func (s *sRole) Detail(ctx context.Context, in model.RoleDetailInput) (data *ser
 	err = dao.Role.Ctx(ctx).Unscoped().Fields(model.RoleFields).Where(query).Scan(&data)
 	if err != nil {
 		return data, err
+	}
+	if data == nil {
+		return data, errors.New("no found data")
 	}
 	return data, nil
 }

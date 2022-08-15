@@ -54,7 +54,7 @@ func TestLogicRoleDetail(t *testing.T) {
 	ctx := gctx.New()
 	r := role.New()
 	in := model.RoleDetailInput{
-		Id: 3,
+		Id: 5,
 	}
 	data, err := r.Detail(ctx, in)
 	if err != nil {

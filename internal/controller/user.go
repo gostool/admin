@@ -14,6 +14,33 @@ var (
 
 type cUser struct{}
 
+func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserWebRes, err error) {
+	udata, err := service.User().LoginWeb(ctx, model.UserLoginInput{
+		Name:     req.Passport,
+		Password: req.Password,
+	})
+	if err != nil {
+		return res, err
+	}
+	token, err := service.Token().GenToken(ctx, gconv.String(udata.Id), 0)
+	if err != nil {
+		return res, err
+	}
+	rdata, err := service.Role().Detail(ctx, model.RoleDetailInput{
+		Id: udata.RoleId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	res = &v1.UserWebRes{
+		Id:      udata.Id,
+		RoleId:  udata.RoleId,
+		RoleMap: rdata,
+		Token:   token,
+	}
+	return res, err
+}
+
 func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, err error) {
 	uid, err := service.User().Login(ctx, model.UserLoginInput{
 		Name:     req.Passport,
@@ -27,7 +54,7 @@ func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, er
 		return res, err
 	}
 	res = &v1.UserRes{
-		Id:    uid,
+		Id:    int(uid),
 		Role:  1,
 		Token: token,
 	}
@@ -44,7 +71,7 @@ func (c *cUser) Register(ctx context.Context, req *v1.UserRegisterReq) (res *v1.
 		return res, err
 	}
 	res = &v1.UserRes{
-		Id:    uid,
+		Id:    int(uid),
 		Role:  1,
 		Token: "faf",
 	}

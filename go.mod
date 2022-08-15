@@ -3,15 +3,16 @@ module admin
 go 1.18
 
 require (
+	github.com/casbin/casbin/v2 v2.51.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.2
 	github.com/gogf/gf/v2 v2.1.2
-	github.com/gostool/jsonconv v0.0.1
 	github.com/mojocn/base64Captcha v1.3.5
 )
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/clbanning/mxj/v2 v2.5.5 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
