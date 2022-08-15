@@ -79,9 +79,10 @@ var (
 						middleware.Record,
 					)
 					apiGroup.ALLMap(g.Map{
-						"/role/": controller.Role, // role
-						"/menu/": controller.Menu, // menu
-						"/log/":  controller.Log,  //log
+						"/role/":  controller.Role,   // role
+						"/menu/":  controller.Menu,   // menu
+						"/log/":   controller.Log,    //log
+						"/status": controller.Status, //status
 					})
 				})
 			})
