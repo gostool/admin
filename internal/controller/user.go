@@ -3,6 +3,7 @@ package controller
 import (
 	v1 "admin/api/v1"
 	"admin/internal/model"
+	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -15,28 +16,30 @@ var (
 type cUser struct{}
 
 func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserWebRes, err error) {
-	udata, err := service.User().LoginWeb(ctx, model.UserLoginInput{
+	user, err := service.User().LoginWeb(ctx, model.UserLoginInput{
 		Name:     req.Passport,
 		Password: req.Password,
 	})
 	if err != nil {
 		return res, err
 	}
-	token, err := service.Token().GenToken(ctx, gconv.String(udata.Id), 0)
+	token, err := service.Token().GenToken(ctx, gconv.String(user.Id), 0)
 	if err != nil {
 		return res, err
 	}
-	rdata, err := service.Role().Detail(ctx, model.RoleDetailInput{
-		Id: udata.RoleId,
+	role, err := service.Role().Detail(ctx, model.RoleDetailInput{
+		Id: user.RoleId,
 	})
 	if err != nil {
 		return nil, err
 	}
 	res = &v1.UserWebRes{
-		Id:      udata.Id,
-		RoleId:  udata.RoleId,
-		RoleMap: rdata,
-		Token:   token,
+		Id:     user.Id,
+		RoleId: user.RoleId,
+		RoleMap: map[int]*serializer.Role{
+			user.RoleId: role,
+		},
+		Token: token,
 	}
 	return res, err
 }
