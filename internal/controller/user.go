@@ -36,8 +36,9 @@ func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserW
 		return nil, err
 	}
 	res = &v1.UserWebRes{
-		Id:     user.Id,
-		RoleId: user.RoleId,
+		Id:       user.Id,
+		Passport: user.Name,
+		RoleId:   user.RoleId,
 		RoleMap: map[int]*serializer.Role{
 			user.RoleId: role,
 		},

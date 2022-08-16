@@ -27,10 +27,11 @@ type UserWebReq struct {
 }
 
 type UserWebRes struct {
-	Id      int                      `json:"id"`
-	RoleId  int                      `json:"roleId"`
-	RoleMap map[int]*serializer.Role `json:"roleMap"`
-	Token   string                   `json:"token"`
+	Id       int                      `json:"id"`
+	Passport string                   `json:"passport"`
+	RoleId   int                      `json:"roleId"`
+	RoleMap  map[int]*serializer.Role `json:"roleMap"`
+	Token    string                   `json:"token"`
 }
 
 //--------------------------------------------------------------------------------------
