@@ -74,15 +74,16 @@ var (
 				})
 				// auth
 				group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
-					apiGroup.Middleware(
-						middleware.JwtAuth,
-						middleware.Record,
-					)
+					//apiGroup.Middleware(
+					//	middleware.JwtAuth,
+					//	middleware.Record,
+					//)
 					apiGroup.ALLMap(g.Map{
-						"/role/":  controller.Role,   // role
-						"/menu/":  controller.Menu,   // menu
-						"/log/":   controller.Log,    //log
-						"/status": controller.Status, //status
+						"/role/":      controller.Role,     // role
+						"/menu/":      controller.Menu,     // menu
+						"/log/":       controller.Log,      //log
+						"/status":     controller.Status,   //status
+						"/role_menu/": controller.RoleMenu, // role_menu
 					})
 				})
 			})

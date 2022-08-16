@@ -38,6 +38,15 @@ var MenuFields = g.ArrayStr{
 	"component",
 }
 
+var RoleMenuFields = g.ArrayStr{
+	"id",
+	"created_at",
+	"updated_at",
+	"role_id",
+	"menu_id",
+	"is_deleted",
+}
+
 var LogFields = g.ArrayStr{
 	"id",
 	"userId",
