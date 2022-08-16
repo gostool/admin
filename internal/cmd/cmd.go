@@ -17,6 +17,7 @@ type cMainHttpInput struct {
 
 type cMainMenuInput struct {
 	g.Meta `name:"menu" brief:"init menu data"`
+	Act    string `v:"required" name:"action" short:"act" brief:"action"`
 }
 
 func (c *CMain) Http(ctx context.Context, in cMainHttpInput) (out *cMainOutput, err error) {
@@ -24,9 +25,17 @@ func (c *CMain) Http(ctx context.Context, in cMainHttpInput) (out *cMainOutput, 
 	s = RegisterRouter(s, ctx, in)
 	s.SetOpenApiPath("/api.json")
 	s.Run()
-	return
+	out = &cMainOutput{}
+	return out, nil
 }
 
 func (c *CMain) MenuInit(ctx context.Context, in cMainMenuInput) (out *cMainOutput, err error) {
-	return
+	switch in.Act {
+	case "init":
+		menuInit(ctx)
+	case "roleMenuInit":
+		menuRoleInit(ctx)
+	}
+	out = &cMainOutput{}
+	return out, nil
 }

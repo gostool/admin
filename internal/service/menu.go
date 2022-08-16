@@ -18,6 +18,7 @@ type IMenu interface {
 	List(ctx context.Context, in model.MenuListInput) (items []*serializer.Menu, err error)
 	InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error)
 	Create(ctx context.Context, in *model.MenuCreateInput) (id int64, err error)
+	Save(ctx context.Context, in *serializer.Menu) (result sql.Result, err error)
 	Update(ctx context.Context, in model.MenuUpdateInput) (row int64, err error)
 	Detail(ctx context.Context, in model.MenuDetailInput) (data *serializer.Menu, err error)
 	Delete(ctx context.Context, in model.MenuDeleteInput) (result sql.Result, err error)

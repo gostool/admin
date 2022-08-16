@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"admin/internal/model/serializer"
+	"admin/internal/service"
+	"context"
 )
 
 var menuList = []*serializer.Menu{
@@ -292,78 +294,44 @@ var menuList = []*serializer.Menu{
 	},
 }
 
-//func cmdMenu(ctx context.Context) {
-//	parser, err := gcmd.Parse(g.MapStrBool{
-//		"act,action": true,
-//		"h,help":     true,
-//	})
-//	if err != nil {
-//		logger.Fatal(ctx, err)
-//	}
-//	if gcmd.ContainsOpt("h") {
-//		menuHelp()
-//		return
-//	}
-//	act := parser.GetOpt("act")
-//	switch act {
-//	case "init":
-//		menuInit()
-//	case "roleMenuInit":
-//		menuRoleInit()
-//	}
-//	return
-//}
-//
-//func menuHelp() {
-//	g.Log().Print(gstr.Trim(`
-//USAGE
-//   cmd menu 		Menu manager
-//ARGUMENT
-//   -act   "Menu act: [init, roleMenuInit, clean, reset] ?"
-//EXAMPLES
-//   ./cmd menu -act=init
-//DESCRIPTION
-//   The "menu" command builds the mapkit project to crate a menu
-//`))
-//}
-//func menuRoleInit() error {
-//	roleId := 3
-//	role, err := service.Role.Find(roleId)
-//	if err != nil {
-//		return err
-//	}
-//	g.Dump(role)
-//	menuIdList := GetMenuIdList()
-//	for _, menuId := range menuIdList {
-//		roleMenu := &model.RoleMenu{
-//			Id:     menuId,
-//			RoleId: roleId,
-//			MenuId: menuId,
-//		}
-//		r, err := service.RoleMenu.Save(roleMenu)
-//		if err != nil {
-//			logger.Fatal(err)
-//		}
-//		logger.Debugf("r:%v", r)
-//	}
-//	return nil
-//}
-//
-//func GetMenuIdList() []int {
-//	menuIdList := make([]int, 0, len(menuList))
-//	for _, menu := range menuList {
-//		menuIdList = append(menuIdList, menu.Id)
-//	}
-//	return menuIdList
-//}
-//
-//func menuInit() {
-//	for _, menu := range menuList {
-//		result, err := service.Menu.Save(menu)
-//		if err != nil {
-//			logger.Fatal(err)
-//		}
-//		logger.Debugf("result:%v", result)
-//	}
-//	logger.Debugf("Menu init")
-//}
+func menuRoleInit(ctx context.Context) error {
+	//roleId := 3
+	//role, err := service.Role().Find(roleId)
+	//if err != nil {
+	//	return err
+	//}
+	//g.Dump(role)
+	//menuIdList := GetMenuIdList()
+	//for _, menuId := range menuIdList {
+	//	roleMenu := &model.RoleMenu{
+	//		Id:     menuId,
+	//		RoleId: roleId,
+	//		MenuId: menuId,
+	//	}
+	//	r, err := service.RoleMenu.Save(roleMenu)
+	//	if err != nil {
+	//		logger.Fatal(err)
+	//	}
+	//	logger.Debugf(ctx, "r:%v", r)
+	//}
+	return nil
+}
+
+func GetMenuIdList() []int {
+	menuIdList := make([]int, 0, len(menuList))
+	for _, menu := range menuList {
+		menuIdList = append(menuIdList, menu.Id)
+	}
+	return menuIdList
+}
+
+func menuInit(ctx context.Context) {
+	for _, menu := range menuList {
+		result, err := service.Menu().Save(ctx, menu)
+		if err != nil {
+			logger.Fatal(ctx, err)
+		}
+		logger.Debugf(ctx, "result:%v", result)
+	}
+	logger.Debugf(ctx, "Menu init")
+}

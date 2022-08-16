@@ -57,6 +57,10 @@ func (s *sMenu) Create(ctx context.Context, in *model.MenuCreateInput) (id int64
 	return s.InsertAndGetId(ctx, in.ToMap())
 }
 
+func (s *sMenu) Save(ctx context.Context, in *serializer.Menu) (result sql.Result, err error) {
+	return dao.Menu.Ctx(ctx).Save(in)
+}
+
 func (s *sMenu) update(ctx context.Context, query, data g.Map) (row int64, err error) {
 	logger.Debugf(ctx, "data:%v\n", data)
 	result, err := dao.Menu.Ctx(ctx).Where(query).Update(data)
