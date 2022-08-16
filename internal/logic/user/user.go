@@ -138,6 +138,17 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 	return uid, nil
 }
 
+func (s *sUser) Save(ctx context.Context, passport, password, nickname string, roleId int) (result sql.Result, err error) {
+	data := &g.Map{
+		"name":       passport,
+		"password":   password,
+		"nickname":   nickname,
+		"role_id":    roleId,
+		"is_deleted": 0,
+	}
+	return dao.User.Ctx(ctx).Save(data)
+}
+
 // Update 执行更新
 func (s *sUser) Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error) {
 	return

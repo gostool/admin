@@ -34,6 +34,9 @@ const (
 
 var logger *glog.Logger
 
+const guestRoleId = 2
+const adminRoleId = 1
+
 func init() {
 	logger = g.Log()
 }
