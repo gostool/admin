@@ -2,15 +2,7 @@ package cmd
 
 import (
 	"admin/internal/model/serializer"
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/os/glog"
 )
-
-var logger *glog.Logger
-
-func init() {
-	logger = g.Log()
-}
 
 var menuList = []*serializer.Menu{
 	{
@@ -325,13 +317,13 @@ var menuList = []*serializer.Menu{
 //func menuHelp() {
 //	g.Log().Print(gstr.Trim(`
 //USAGE
-//    cmd menu 		Menu manager
+//   cmd menu 		Menu manager
 //ARGUMENT
-//    -act   "Menu act: [init, roleMenuInit, clean, reset] ?"
+//   -act   "Menu act: [init, roleMenuInit, clean, reset] ?"
 //EXAMPLES
-//    ./cmd menu -act=init
+//   ./cmd menu -act=init
 //DESCRIPTION
-//    The "menu" command builds the mapkit project to crate a menu
+//   The "menu" command builds the mapkit project to crate a menu
 //`))
 //}
 //func menuRoleInit() error {
