@@ -18,12 +18,16 @@ type cMainHttpInput struct {
 
 type cMainMenuInput struct {
 	g.Meta `name:"menu" brief:"init menu data"`
-	Act    string `v:"required" name:"action" short:"act" brief:"action"`
+	Act    string `v:"required" name:"action" short:"act" brief:"action:[init, create]"`
 }
 
 type cMainUserInput struct {
 	g.Meta `name:"user" brief:"init user data"`
 	Act    string `v:"required" name:"action" short:"act" brief:"action"`
+}
+
+type cMainRoleInput struct {
+	g.Meta `name:"role" brief:"init role data"`
 }
 
 func (c *CMain) Http(ctx context.Context, in cMainHttpInput) (out *cMainOutput, err error) {
@@ -56,6 +60,12 @@ func (c *CMain) UserInit(ctx context.Context, in cMainUserInput) (out *cMainOutp
 		nickname := gcmd.Scan("> What's your super user nickname?\n")
 		userCreateAdmin(ctx, name, password, nickname)
 	}
+	out = &cMainOutput{}
+	return out, nil
+}
+
+func (c *CMain) RoleInit(ctx context.Context, in cMainRoleInput) (out *cMainOutput, err error) {
+	RoleInit(ctx)
 	out = &cMainOutput{}
 	return out, nil
 }

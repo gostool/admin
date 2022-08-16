@@ -22,6 +22,7 @@ type IRole interface {
 	Detail(ctx context.Context, in model.RoleDetailInput) (data *serializer.Role, err error)
 	Delete(ctx context.Context, in model.RoleDeleteInput) (result sql.Result, err error)
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
+	Save(ctx context.Context, in *serializer.Role) (result sql.Result, err error)
 }
 
 var localRole IRole

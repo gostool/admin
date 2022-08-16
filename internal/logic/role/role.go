@@ -116,3 +116,7 @@ func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row in
 	}
 	return row, nil
 }
+
+func (s *sRole) Save(ctx context.Context, in *serializer.Role) (result sql.Result, err error) {
+	return dao.Role.Ctx(ctx).Save(in)
+}
