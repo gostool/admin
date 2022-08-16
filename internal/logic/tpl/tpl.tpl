@@ -79,14 +79,17 @@ func (s *sRole) Update(ctx context.Context, in model.RoleUpdateInput) (row int64
 }
 
 // Detail 执行详情
-func (s *sRole) Detail(ctx context.Context, in model.RoleDetailInput) (data *serializer.Role, err error) {
+func (s *sRoleMenu) Detail(ctx context.Context, in model.RoleMenuDetailInput) (data *serializer.RoleMenu, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.Role.Ctx(ctx).Unscoped().Fields(model.RoleFields).Where(query).Scan(&data)
+	err = dao.RoleMenu.Ctx(ctx).Unscoped().Fields(model.RoleMenuFields).Where(query).Scan(&data)
 	if err != nil {
 		return data, err
+	}
+	if data == nil {
+		return data, consts.ErrNotExit
 	}
 	return data, nil
 }

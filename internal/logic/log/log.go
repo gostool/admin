@@ -123,6 +123,9 @@ func (s *sLog) Detail(ctx context.Context, in model.LogDetailInput) (data *seria
 	if err != nil {
 		return data, err
 	}
+	if data == nil {
+		return data, consts.ErrNotExit
+	}
 	return data, nil
 }
 

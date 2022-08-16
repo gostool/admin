@@ -8,7 +8,6 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
-	"errors"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 )
@@ -90,7 +89,7 @@ func (s *sRole) Detail(ctx context.Context, in model.RoleDetailInput) (data *ser
 		return data, err
 	}
 	if data == nil {
-		return data, errors.New("no found data")
+		return data, consts.ErrNotExit
 	}
 	return data, nil
 }

@@ -164,6 +164,9 @@ func (s *sUser) Detail(ctx context.Context, in model.UserDetailInput) (data *ent
 	if err != nil {
 		return data, err
 	}
+	if data == nil {
+		return data, consts.ErrNotExit
+	}
 	return data, nil
 }
 

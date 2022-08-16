@@ -14,7 +14,6 @@ type cMainHttpInput struct {
 
 type cMainMenuInput struct {
 	g.Meta `name:"menu" brief:"init menu data"`
-	Act    string `v:"required" name:"action" short:"act" brief:"action:[init, create]"`
 }
 
 type cMainUserInput struct {
@@ -24,4 +23,8 @@ type cMainUserInput struct {
 
 type cMainRoleInput struct {
 	g.Meta `name:"role" brief:"init role data"`
+}
+
+type cMainRoleMenuInput struct {
+	g.Meta `name:"role-menu" brief:"init role-menu data"`
 }

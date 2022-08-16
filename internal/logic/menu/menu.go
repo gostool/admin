@@ -92,6 +92,9 @@ func (s *sMenu) Detail(ctx context.Context, in model.MenuDetailInput) (data *ser
 	if err != nil {
 		return data, err
 	}
+	if data == nil {
+		return data, consts.ErrNotExit
+	}
 	return data, nil
 }
 

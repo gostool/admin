@@ -88,6 +88,9 @@ func (s *sRoleMenu) Detail(ctx context.Context, in model.RoleMenuDetailInput) (d
 	if err != nil {
 		return data, err
 	}
+	if data == nil {
+		return data, consts.ErrNotExit
+	}
 	return data, nil
 }
 
@@ -111,4 +114,8 @@ func (s *sRoleMenu) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (ro
 		return 0, consts.ErrDel
 	}
 	return row, nil
+}
+
+func (s *sRoleMenu) Save(ctx context.Context, in *serializer.RoleMenu) (result sql.Result, err error) {
+	return dao.RoleMenu.Ctx(ctx).Save(in)
 }

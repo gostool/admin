@@ -294,37 +294,6 @@ var menuList = []*serializer.Menu{
 	},
 }
 
-func menuRoleInit(ctx context.Context) error {
-	//roleId := 3
-	//role, err := service.Role().Find(roleId)
-	//if err != nil {
-	//	return err
-	//}
-	//g.Dump(role)
-	//menuIdList := GetMenuIdList()
-	//for _, menuId := range menuIdList {
-	//	roleMenu := &model.RoleMenu{
-	//		Id:     menuId,
-	//		RoleId: roleId,
-	//		MenuId: menuId,
-	//	}
-	//	r, err := service.RoleMenu.Save(roleMenu)
-	//	if err != nil {
-	//		logger.Fatal(err)
-	//	}
-	//	logger.Debugf(ctx, "r:%v", r)
-	//}
-	return nil
-}
-
-func GetMenuIdList() []int {
-	menuIdList := make([]int, 0, len(menuList))
-	for _, menu := range menuList {
-		menuIdList = append(menuIdList, menu.Id)
-	}
-	return menuIdList
-}
-
 func menuInit(ctx context.Context) {
 	for _, menu := range menuList {
 		result, err := service.Menu().Save(ctx, menu)

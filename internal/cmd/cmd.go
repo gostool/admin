@@ -16,12 +16,7 @@ func (c *CMain) Http(ctx context.Context, in cMainHttpInput) (out *cMainOutput, 
 }
 
 func (c *CMain) MenuInit(ctx context.Context, in cMainMenuInput) (out *cMainOutput, err error) {
-	switch in.Act {
-	case "init":
-		menuInit(ctx)
-	case "roleMenuInit":
-		menuRoleInit(ctx)
-	}
+	menuInit(ctx)
 	out = &cMainOutput{}
 	return out, nil
 }
@@ -42,6 +37,12 @@ func (c *CMain) UserInit(ctx context.Context, in cMainUserInput) (out *cMainOutp
 
 func (c *CMain) RoleInit(ctx context.Context, in cMainRoleInput) (out *cMainOutput, err error) {
 	RoleInit(ctx)
+	out = &cMainOutput{}
+	return out, nil
+}
+
+func (c *CMain) RoleMenuInit(ctx context.Context, in cMainRoleMenuInput) (out *cMainOutput, err error) {
+	menuRoleInit(ctx)
 	out = &cMainOutput{}
 	return out, nil
 }
