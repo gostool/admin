@@ -2,6 +2,8 @@ package controller
 
 import (
 	v1 "admin/api/v1"
+	"admin/internal/common"
+	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/service"
 	"context"
@@ -28,6 +30,20 @@ func (c *cRoleMenu) List(ctx context.Context, req *v1.RoleMenuListReq) (res *v1.
 	}
 	res = &v1.RoleMenuListRes{
 		Count: cnt,
+		Items: items,
+	}
+	return res, nil
+}
+
+func (c *cRoleMenu) Tree(ctx context.Context, req *v1.RoleMenuTreeReq) (res *v1.RoleMenuTreeRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
+	items, err := service.RoleMenu().GetTreeByRoleId(ctx, roleId)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.RoleMenuTreeRes{
+		Count: -1,
 		Items: items,
 	}
 	return res, nil

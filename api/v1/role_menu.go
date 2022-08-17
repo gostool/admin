@@ -10,6 +10,16 @@ type RoleMenuListReq struct {
 	g.Meta `path:"/role_menu/list" method:"get" tags:"RoleMenuService"`
 	PageReq
 }
+
+type RoleMenuTreeReq struct {
+	g.Meta `path:"/role_menu/tree" method:"get" tags:"RoleMenuService"`
+}
+
+type RoleMenuTreeRes struct {
+	Count int                      `json:"count" dc:"记录总数"`
+	Items []*serializer.MenuDetail `json:"items" dc:"条目"`
+}
+
 type RoleMenuListRes struct {
 	Count int                    `json:"count" dc:"记录总数"`
 	Items []*serializer.RoleMenu `json:"items" dc:"条目"`
