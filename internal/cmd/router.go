@@ -45,11 +45,12 @@ func RegisterRouter(s *ghttp.Server, ctx context.Context, in cMainHttpInput) *gh
 				middleware.Record,
 			)
 			apiGroup.ALLMap(g.Map{
-				"/role/":      controller.Role,     // role
-				"/menu/":      controller.Menu,     // menu
-				"/log/":       controller.Log,      //log
-				"/status":     controller.Status,   //status
-				"/role_menu/": controller.RoleMenu, // role_menu
+				"/role/":       controller.Role,      // role
+				"/menu/":       controller.Menu,      // menu
+				"/log/":        controller.Log,       // log
+				"/status":      controller.Status,    // status
+				"/role_menu/":  controller.RoleMenu,  // role_menu
+				"/admin_user/": controller.AdminUser, // admin user
 			})
 		})
 	})
