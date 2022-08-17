@@ -25,6 +25,6 @@ func New() *sTpl {
 
 // Logout 注销
 func (s *sTpl) Logout(ctx context.Context) error {
-	//return service.Session().RemoveUser(ctx)
+	//return service.Session().RemoveUser(common)
 	return nil
 }

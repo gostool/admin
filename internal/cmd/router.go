@@ -33,7 +33,7 @@ func RegisterRouter(s *ghttp.Server, ctx context.Context, in cMainHttpInput) *gh
 		// api
 		group.Group("/api", func(apiGroup *ghttp.RouterGroup) {
 			apiGroup.ALLMap(g.Map{
-				"/hello/": controller.Hello, // user
+				//"/hello/": controller.Hello, // user
 				"/user/":  controller.User,  // user
 				"/tools/": controller.Tools, // tools
 			})

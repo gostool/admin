@@ -67,6 +67,6 @@ func saveOpLog(r *ghttp.Request, record *model.LogCreateInput) {
 	}
 	record.Status = r.Response.Status
 	ctx := r.GetCtx()
-	//service.Log().Create(ctx, record)
+	//service.Log().Create(common, record)
 	service.Pool().Invoke(ctx, record)
 }

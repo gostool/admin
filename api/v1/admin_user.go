@@ -6,7 +6,7 @@ import (
 )
 
 type AdminUserWebReq struct {
-	g.Meta `path:"/admin_user/profile" method:"get" tags:"AdminUserService" summary:"get auth user profile"`
+	g.Meta `path:"/admin_user/profile" method:"get" tags:"AdminUserService"`
 }
 
 type AdminUserWebRes struct {

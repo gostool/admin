@@ -2,11 +2,12 @@ package controller
 
 import (
 	v1 "admin/api/v1"
+	"admin/internal/common"
 	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
-	"github.com/gogf/gf/v2/net/ghttp"
+	"context"
 )
 
 var (
@@ -15,20 +16,18 @@ var (
 
 type cAdminUser struct{}
 
-func (c *cAdminUser) Profile(r *ghttp.Request) {
-	ctx := r.GetCtx()
-	userId := r.GetCtxVar(consts.CtxUserId).Int()
-	userName := r.GetCtxVar(consts.CtxUserName).String()
-	roleId := r.GetCtxVar(consts.CtxUserRoleId).Int()
+func (c *cAdminUser) Profile(ctx context.Context, req *v1.AdminUserWebReq) (res *v1.AdminUserWebRes, err error) {
+	userId := common.GetVarFromCtx(ctx, consts.CtxUserId).Int()
+	userName := common.GetVarFromCtx(ctx, consts.CtxUserName).String()
+	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
 	role, err := service.Role().Detail(ctx, model.RoleDetailInput{
 		Id: roleId,
 	})
 	if err != nil {
 		logger.Fatal(ctx, err)
-		r.SetError(err)
-		return
+		return res, err
 	}
-	res := &v1.AdminUserWebRes{
+	res = &v1.AdminUserWebRes{
 		Id:       userId,
 		Passport: userName,
 		RoleId:   roleId,
@@ -36,7 +35,5 @@ func (c *cAdminUser) Profile(r *ghttp.Request) {
 			roleId: role,
 		},
 	}
-	logger.Debugf(ctx, "role:%v\n", res)
-	r.SetCtxVar(consts.CtxResponseData, res)
-	return
+	return res, nil
 }

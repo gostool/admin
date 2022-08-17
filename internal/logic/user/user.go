@@ -185,6 +185,6 @@ func (s *sUser) Delete(ctx context.Context, in model.UserDeleteInput) (result sq
 
 // Logout 注销
 func (s *sUser) Logout(ctx context.Context) error {
-	//return service.Session().RemoveUser(ctx)
+	//return service.Session().RemoveUser(common)
 	return nil
 }
