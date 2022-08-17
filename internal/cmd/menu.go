@@ -18,7 +18,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "仪表盘",
-		Icon:        "setting",
+		Icon:        "PieChart",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -31,7 +31,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "关于我们",
-		Icon:        "info",
+		Icon:        "InfoFilled",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -44,7 +44,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "超级管理员",
-		Icon:        "user-solid",
+		Icon:        "User",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -58,7 +58,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "角色管理",
-		Icon:        "s-custom",
+		Icon:        "Avatar",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -72,7 +72,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "菜单管理",
-		Icon:        "s-order",
+		Icon:        "Menu",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -86,7 +86,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "api管理",
-		Icon:        "s-platform",
+		Icon:        "Monitor",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -100,7 +100,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "用户管理",
-		Icon:        "coordinate",
+		Icon:        "User",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -114,7 +114,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "个人信息",
-		Icon:        "message-solid",
+		Icon:        "User",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -128,7 +128,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "示例文件",
-		Icon:        "s-management",
+		Icon:        "Management",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -142,7 +142,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "excel导入导出",
-		Icon:        "s-marketing",
+		Icon:        "Files",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -156,7 +156,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "媒体库（上传下载）",
-		Icon:        "upload",
+		Icon:        "UploadFilled",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -170,7 +170,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "断点续传",
-		Icon:        "upload",
+		Icon:        "UploadFilled",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -184,7 +184,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "客户列表（资源示例）",
-		Icon:        "s-custom",
+		Icon:        "User",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -198,7 +198,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "系统工具",
-		Icon:        "s-cooperation",
+		Icon:        "Setting",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -212,7 +212,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "代码生成器",
-		Icon:        "cpu",
+		Icon:        "Cpu",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -226,7 +226,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "表单生成器",
-		Icon:        "magic-stick",
+		Icon:        "MagicStick",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -240,7 +240,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "系统配置",
-		Icon:        "s-operation",
+		Icon:        "Setting",
 		IsDeleted:   consts.CREATED,
 	},
 
@@ -255,7 +255,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "字典管理",
-		Icon:        "notebook-2",
+		Icon:        "Notebook",
 		IsDeleted:   consts.CREATED,
 	},
 
@@ -270,7 +270,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "字典详情",
-		Icon:        "s-order",
+		Icon:        "ShoppingBag",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -284,7 +284,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "操作历史",
-		Icon:        "time",
+		Icon:        "Timer",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -298,7 +298,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   1,
 		DefaultMenu: 0,
 		Title:       "断点续传（插件版）",
-		Icon:        "upload",
+		Icon:        "UploadFilled",
 		IsDeleted:   consts.CREATED,
 	},
 	{
@@ -312,7 +312,7 @@ var menuList = []*serializer.Menu{
 		KeepAlive:   0,
 		DefaultMenu: 0,
 		Title:       "服务器状态",
-		Icon:        "cloudy",
+		Icon:        "Cloudy",
 		IsDeleted:   consts.CREATED,
 	},
 }
