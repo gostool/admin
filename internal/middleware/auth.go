@@ -4,7 +4,6 @@ import (
 	"admin/internal/consts"
 	jwt "admin/internal/logic/token"
 	"admin/internal/logic/user"
-	"admin/library/response"
 	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -16,16 +15,16 @@ func JwtAuth(r *ghttp.Request) {
 	token := r.GetHeader("token")
 	data := gmap.Map{}
 	if token == "" {
-		JsonExit(r, response.ERR_CODE_TOKEN, "token 不能为空", data)
+		JsonExit(r, consts.ErrCodeToken, "token 不能为空", data)
 	}
 	uid, err := jwt.New().CheckToken(ctx, token)
 	if err != nil {
-		JsonExit(r, response.ERR_CODE_TOKEN, "token验证失败", data)
+		JsonExit(r, consts.ErrCodeToken, "token验证失败", data)
 	}
 	// 必须在数据库验证存在用户
 	user, err := user.New().Find(ctx, gconv.Int64(uid))
 	if err != nil {
-		JsonExit(r, response.ERR_CODE_TOKEN, "用户不存在", data)
+		JsonExit(r, consts.ErrCodeToken, "用户不存在", data)
 	} else {
 		//认证成功后，配置参数
 		r.SetCtxVar(consts.CtxUserId, user.Id)

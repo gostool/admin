@@ -3,9 +3,17 @@ package consts
 import "errors"
 
 const (
-	DELETED     = 1
-	CREATED     = 0
+	DELETED      = 1
+	CREATED      = 0
+	ErrCodeOk    = 200
+	ErrCodeBad   = 400
+	ErrCodeToken = 403
+	ErrCodeErr   = 500
+)
+
+const (
 	LoggerDebug = "debug"
+	ErrMsgErr   = "服务器出错"
 )
 
 var (
@@ -18,8 +26,6 @@ var (
 	CtxUserName   = "ctx_user_name"
 	CtxUserData   = "ctx_user_data"
 	CtxUserToken  = "ctx_user_token"
-	// CtxResponseData 兼容请求handler是r *ghttp.Request 无法返回res
-	CtxResponseData = "ctx_response_data"
 )
 
 func OrderFiledByType(c int) string {
