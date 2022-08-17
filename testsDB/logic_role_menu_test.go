@@ -91,3 +91,13 @@ func TestLogicRoleMenuUpdate(t *testing.T) {
 	}
 	g.Dump(id)
 }
+
+func TestLogicRoleMenuGetTree(t *testing.T) {
+	ctx := gctx.New()
+	r := role_menu.New()
+	items, err := r.GetTreeByRoleId(ctx, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(items)
+}

@@ -17,3 +17,8 @@ type Menu struct {
 	Path        string      `json:"path"      dc:"路径"   `     //
 	Component   string      `json:"component"   dc:"组件路径" `   //
 }
+
+type MenuDetail struct {
+	Menu
+	Children []*MenuDetail `json:"children"`
+}

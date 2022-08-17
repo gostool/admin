@@ -16,6 +16,11 @@ import (
 type IRoleMenu interface {
 	Count(ctx context.Context) (data int, err error)
 	List(ctx context.Context, in model.RoleMenuListInput) (items []*serializer.RoleMenu, err error)
+	SortField() string
+	RoleMenuIdList(ctx context.Context, roleId int) (idList []int, err error)
+	GetRoleMenuList(ctx context.Context, roleId int) (objList []*serializer.MenuDetail, err error)
+	GetTreeMap(ctx context.Context, roleId int) (treeMap map[int][]*serializer.MenuDetail, err error)
+	GetTreeByRoleId(ctx context.Context, roleId int) (items []*serializer.MenuDetail, err error)
 	InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error)
 	Create(ctx context.Context, in *model.RoleMenuCreateInput) (id int64, err error)
 	Update(ctx context.Context, in model.RoleMenuUpdateInput) (row int64, err error)

@@ -45,6 +45,88 @@ func (s *sRoleMenu) List(ctx context.Context, in model.RoleMenuListInput) (items
 	return items, nil
 }
 
+func (s *sRoleMenu) SortField() string {
+	return "sort asc"
+}
+
+func (s *sRoleMenu) RoleMenuIdList(ctx context.Context, roleId int) (idList []int, err error) {
+	query := g.Map{
+		"role_id":    roleId,
+		"is_deleted": consts.CREATED,
+	}
+	objList := ([]serializer.RoleMenu)(nil)
+	err = dao.RoleMenu.Ctx(ctx).Fields(model.RoleMenuFields).Where(query).Scan(&objList)
+	if err != nil {
+		return idList, err
+	}
+	idList = make([]int, 0, len(objList))
+	for _, obj := range objList {
+		idList = append(idList, obj.MenuId)
+	}
+	return idList, nil
+}
+
+func (s *sRoleMenu) GetRoleMenuList(ctx context.Context, roleId int) (objList []*serializer.MenuDetail, err error) {
+	// 1.获取当前角色的菜单列表
+	menuIdList, err := s.RoleMenuIdList(ctx, roleId)
+	if err != nil {
+		return objList, err
+	}
+	// 2.获取所有菜单
+	query := g.Map{
+		"id":         menuIdList,
+		"is_deleted": consts.CREATED,
+	}
+	objList = ([]*serializer.MenuDetail)(nil)
+	err = dao.Menu.Ctx(ctx).Fields(model.MenuFields).Order(s.SortField()).Where(query).Scan(&objList)
+	if err != nil {
+		return objList, err
+	}
+	return objList, nil
+}
+
+// GetTreeMap
+// 菜单树
+// 根据父节点聚合
+func (s *sRoleMenu) GetTreeMap(ctx context.Context, roleId int) (treeMap map[int][]*serializer.MenuDetail, err error) {
+	objList, err := s.GetRoleMenuList(ctx, roleId)
+	if err != nil {
+		return nil, err
+	}
+	// 1.父节点聚合
+	treeMap = make(map[int][]*serializer.MenuDetail)
+	for _, v := range objList {
+		treeMap[v.ParentId] = append(treeMap[v.ParentId], v)
+	}
+	return treeMap, err
+}
+
+func (s *sRoleMenu) GetTreeByRoleId(ctx context.Context, roleId int) (items []*serializer.MenuDetail, err error) {
+	menuTree, err := s.GetTreeMap(ctx, roleId)
+	root := menuTree[0]
+	// 遍历一级菜单
+	items = root
+	for i := 0; i < len(root); i++ {
+		menu := items[i]
+		if menu == nil {
+			continue
+		}
+
+		childList, ok := menuTree[menu.Id]
+		if !ok {
+			// 当前的一级菜单没有child
+			continue
+		}
+		if menu.Children == nil {
+			n := len(childList)
+			menu.Children = make([]*serializer.MenuDetail, n, n)
+		}
+		copy(menu.Children, childList)
+		logger.Debugf(ctx, "menu:%v Children:%v\n", menu.Title, len(menu.Children))
+	}
+	return items, err
+}
+
 func (s *sRoleMenu) InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error) {
 	id, err = dao.RoleMenu.Ctx(ctx).InsertAndGetId(data)
 	if err != nil {
