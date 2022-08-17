@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
@@ -24,7 +25,7 @@ func menuRoleInit(ctx context.Context) error {
 			Id:        menuId,
 			RoleId:    role.Id,
 			MenuId:    menuId,
-			IsDeleted: 0,
+			IsDeleted: consts.CREATED,
 		}
 		r, err := service.RoleMenu().Save(ctx, roleMenu)
 		if err != nil {

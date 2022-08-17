@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"admin/internal/consts"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
@@ -11,13 +12,13 @@ var RoleList = []*serializer.Role{
 		Id:        1,
 		Name:      "admin",
 		Router:    "dashboard",
-		IsDeleted: 0,
+		IsDeleted: consts.CREATED,
 	},
 	&serializer.Role{
 		Id:        2,
 		Name:      "guest",
 		Router:    "dashboard",
-		IsDeleted: 0,
+		IsDeleted: consts.CREATED,
 	},
 }
 

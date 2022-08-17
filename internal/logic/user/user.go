@@ -144,7 +144,7 @@ func (s *sUser) Save(ctx context.Context, passport, password, nickname string, r
 		"password":   password,
 		"nickname":   nickname,
 		"role_id":    roleId,
-		"is_deleted": 0,
+		"is_deleted": consts.CREATED,
 	}
 	return dao.User.Ctx(ctx).Save(data)
 }

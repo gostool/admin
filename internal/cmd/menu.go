@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"admin/internal/consts"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
@@ -18,6 +19,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "仪表盘",
 		Icon:        "setting",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          2,
@@ -30,6 +32,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "关于我们",
 		Icon:        "info",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          3,
@@ -42,6 +45,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "超级管理员",
 		Icon:        "user-solid",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          4,
@@ -55,6 +59,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "角色管理",
 		Icon:        "s-custom",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          5,
@@ -68,6 +73,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "菜单管理",
 		Icon:        "s-order",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          6,
@@ -81,6 +87,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "api管理",
 		Icon:        "s-platform",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          7,
@@ -94,6 +101,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "用户管理",
 		Icon:        "coordinate",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          8,
@@ -107,6 +115,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "个人信息",
 		Icon:        "message-solid",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          9,
@@ -120,6 +129,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "示例文件",
 		Icon:        "s-management",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          10,
@@ -133,6 +143,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "excel导入导出",
 		Icon:        "s-marketing",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          11,
@@ -146,6 +157,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "媒体库（上传下载）",
 		Icon:        "upload",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          12,
@@ -159,6 +171,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "断点续传",
 		Icon:        "upload",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          13,
@@ -172,6 +185,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "客户列表（资源示例）",
 		Icon:        "s-custom",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          14,
@@ -185,6 +199,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "系统工具",
 		Icon:        "s-cooperation",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          15,
@@ -198,6 +213,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "代码生成器",
 		Icon:        "cpu",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          16,
@@ -211,6 +227,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "表单生成器",
 		Icon:        "magic-stick",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          17,
@@ -224,6 +241,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "系统配置",
 		Icon:        "s-operation",
+		IsDeleted:   consts.CREATED,
 	},
 
 	{
@@ -238,6 +256,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "字典管理",
 		Icon:        "notebook-2",
+		IsDeleted:   consts.CREATED,
 	},
 
 	{
@@ -252,6 +271,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "字典详情",
 		Icon:        "s-order",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          20,
@@ -265,6 +285,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "操作历史",
 		Icon:        "time",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          21,
@@ -278,6 +299,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "断点续传（插件版）",
 		Icon:        "upload",
+		IsDeleted:   consts.CREATED,
 	},
 	{
 		Id:          22,
@@ -291,6 +313,7 @@ var menuList = []*serializer.Menu{
 		DefaultMenu: 0,
 		Title:       "服务器状态",
 		Icon:        "cloudy",
+		IsDeleted:   consts.CREATED,
 	},
 }
 
