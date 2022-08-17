@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"admin/internal/consts"
 	jwt "admin/internal/logic/token"
 	"admin/internal/logic/user"
 	"admin/library/response"
@@ -27,11 +28,11 @@ func JwtAuth(r *ghttp.Request) {
 		JsonExit(r, response.ERR_CODE_TOKEN, "用户不存在", data)
 	} else {
 		//认证成功后，配置参数
-		r.SetParam("uid", user.Id)
-		r.SetParam("roleId", user.RoleId)
-		r.SetParam("name", user.Name)
-		r.SetParam("data", user.ToData())
-		r.SetParam("token", token)
+		r.SetCtxVar(consts.CtxUserId, user.Id)
+		r.SetCtxVar(consts.CtxUserRoleId, user.RoleId)
+		r.SetCtxVar(consts.CtxUserName, user.Name)
+		r.SetCtxVar(consts.CtxUserData, user.ToData())
+		r.SetCtxVar(consts.CtxUserToken, token)
 		r.Middleware.Next()
 	}
 }

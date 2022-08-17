@@ -12,6 +12,14 @@ var (
 	ErrDel     = errors.New("删除失败")
 	ErrUpdate  = errors.New("更新失败")
 	ErrNotExit = errors.New("不存在")
+	//CtxUserId ctx user info
+	CtxUserId     = "ctx_user_id"
+	CtxUserRoleId = "ctx_user_role_id"
+	CtxUserName   = "ctx_user_name"
+	CtxUserData   = "ctx_user_data"
+	CtxUserToken  = "ctx_user_token"
+	// CtxResponseData 兼容请求handler是r *ghttp.Request 无法返回res
+	CtxResponseData = "ctx_response_data"
 )
 
 func OrderFiledByType(c int) string {

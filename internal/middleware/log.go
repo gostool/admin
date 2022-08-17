@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/service"
 	"bytes"
@@ -35,14 +36,14 @@ func Record(r *ghttp.Request) {
 }
 
 func newOpLogByRequest(r *ghttp.Request) (record *model.LogCreateInput) {
-	uid := gconv.Int(r.GetParam("uid"))
+	uid := r.GetCtxVar(consts.CtxUserId).Int()
 	record = &model.LogCreateInput{}
 	record.Ip = r.GetClientIp()
 	record.Method = r.Request.Method
 	record.Path = r.Request.URL.Path
 	record.Agent = r.Request.UserAgent()
 	record.UserId = uid
-	record.UserName = gconv.String(r.GetParam("name"))
+	record.UserName = r.GetCtxVar(consts.CtxUserName).String()
 	var body []byte
 	var err error
 	switch record.Method {
