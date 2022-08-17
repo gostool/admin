@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"github.com/gogf/gf/v2/crypto/gmd5"
+	"github.com/gogf/gf/v2/os/gcmd"
 )
 
 const (
@@ -28,7 +29,7 @@ func userSave(ctx context.Context, name, password, nickname string) {
 	logger.Debugf(ctx, "user init ok:%v ", data)
 }
 
-func userInit(ctx context.Context) {
+func userGuestInit(ctx context.Context) {
 	type User struct {
 		Passport string
 		Password string
@@ -64,4 +65,11 @@ func userCreateAdmin(ctx context.Context, passport, password, nickname string) {
 		logger.Fatal(ctx, err)
 	}
 	logger.Debugf(ctx, "user create ok:%v", id)
+}
+
+func createAdmin(ctx context.Context) {
+	name := gcmd.Scan("> What's your super user name?\n")
+	password := gcmd.Scan("> What's your super user password?\n")
+	nickname := gcmd.Scan("> What's your super user nickname?\n")
+	userCreateAdmin(ctx, name, password, nickname)
 }

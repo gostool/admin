@@ -28,3 +28,7 @@ type cMainRoleInput struct {
 type cMainRoleMenuInput struct {
 	g.Meta `name:"role-menu" brief:"init role-menu data"`
 }
+
+type cMainInitInput struct {
+	g.Meta `name:"init" brief:"init role->menu->user->role-menu data"`
+}

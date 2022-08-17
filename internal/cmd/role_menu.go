@@ -11,7 +11,7 @@ import (
 
 func menuRoleInit(ctx context.Context) error {
 	in := model.RoleDetailInput{
-		Id: 1,
+		Id: 1, // 1 is role admin
 	}
 	role, err := service.Role().Detail(ctx, in)
 	if err != nil {
@@ -19,6 +19,9 @@ func menuRoleInit(ctx context.Context) error {
 		panic("please do this first: ./main role")
 	}
 	g.Dump(role)
+	if role.Name != "admin" {
+		panic("role.id=1 must be admin")
+	}
 	menuIdList := GetMenuIdList()
 	for _, menuId := range menuIdList {
 		roleMenu := &serializer.RoleMenu{
