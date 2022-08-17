@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"admin/internal/consts"
 	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -47,6 +48,9 @@ func HandlerResponse(r *ghttp.Request) {
 		}
 	} else {
 		code = gcode.CodeOK
+	}
+	if res == nil {
+		res = r.GetCtxVar(consts.CtxResponseData).Map()
 	}
 	JsonExit(r, code.Code(), msg, res)
 }
