@@ -69,9 +69,11 @@ func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, er
 
 func (c *cUser) Register(ctx context.Context, req *v1.UserRegisterReq) (res *v1.UserRes, err error) {
 	uid, err := service.User().Register(ctx, model.UserCreateInput{
-		Name:     req.Name,
-		Password: req.Password,
-		Nickname: req.Nickname,
+		UserAttr: model.UserAttr{
+			Name:     req.Name,
+			Password: req.Password,
+			Nickname: req.Nickname,
+		},
 	})
 	if err != nil {
 		return res, err

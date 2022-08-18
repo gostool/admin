@@ -16,7 +16,8 @@ var (
 
 type cAdminUser struct{}
 
-func (c *cAdminUser) Profile(ctx context.Context, req *v1.AdminUserWebReq) (res *v1.AdminUserWebRes, err error) {
+// Detail 获取用户详情
+func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (res *v1.AdminUserDetailRes, err error) {
 	userId := common.GetVarFromCtx(ctx, consts.CtxUserId).Int()
 	userName := common.GetVarFromCtx(ctx, consts.CtxUserName).String()
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
@@ -27,7 +28,7 @@ func (c *cAdminUser) Profile(ctx context.Context, req *v1.AdminUserWebReq) (res 
 		logger.Fatal(ctx, err)
 		return res, err
 	}
-	res = &v1.AdminUserWebRes{
+	res = &v1.AdminUserDetailRes{
 		Id:       userId,
 		Passport: userName,
 		RoleId:   roleId,
@@ -35,5 +36,86 @@ func (c *cAdminUser) Profile(ctx context.Context, req *v1.AdminUserWebReq) (res 
 			roleId: role,
 		},
 	}
+	return res, nil
+}
+
+func (c *cAdminUser) List(ctx context.Context, req *v1.AdminUserListReq) (res []*v1.AdminUserListRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	in := model.UserListInput{
+		Page:     req.Page,
+		PageSize: req.PageSize,
+	}
+	items, err := service.User().List(ctx, in)
+	if err != nil {
+		return res, err
+	}
+	for i := 0; i < len(items); i++ {
+		roleId := items[i].RoleId
+		role, err := service.Role().Detail(ctx, model.RoleDetailInput{
+			Id: roleId,
+		})
+		if err != nil {
+			logger.Fatal(ctx, err)
+			return res, err
+		}
+		res = append(res, &v1.AdminUserListRes{
+			Id:       items[i].Id,
+			Passport: items[i].Password,
+			RoleId:   items[i].RoleId,
+			RoleMap: map[int]*serializer.Role{
+				roleId: role,
+			},
+		})
+	}
+	return res, nil
+}
+
+func (c *cAdminUser) Update(ctx context.Context, req *v1.AdminUserUpdateReq) (res *v1.OrmUpdateRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	in := model.UserUpdateInput{
+		Id: req.Id,
+		UserAttr: model.UserAttr{
+			Name:     req.Name,
+			Password: req.Password,
+			RoleId:   req.RoleId,
+			Nickname: req.Nickname,
+		},
+	}
+	_, err = service.User().Update(ctx, in)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.OrmUpdateRes{}
+	return res, nil
+}
+
+func (c *cAdminUser) Delete(ctx context.Context, req *v1.AdminUserDeleteReq) (res *v1.OrmDeleteRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	_, err = service.User().SafeDelete(ctx, &model.OrmDeleteInput{
+		Id: req.Id,
+	})
+	if err != nil {
+		return res, err
+	}
+	res = &v1.OrmDeleteRes{}
+	return res, nil
+}
+
+func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserCreateReq) (res *v1.AdminUserCreateRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	in := model.UserCreateInput{
+		UserAttr: model.UserAttr{
+			Name:     req.Name,
+			Password: req.Password,
+			RoleId:   req.RoleId,
+			Nickname: req.Nickname,
+		},
+	}
+	id, err := service.User().Create(ctx, in)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.AdminUserCreateRes{}
+	res.Id = int(id)
 	return res, nil
 }

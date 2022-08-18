@@ -8,6 +8,7 @@ var UserFields = g.ArrayStr{
 	"id",
 	"name",
 	"created_at",
+	"updated_at",
 	"password",
 	"nickname",
 	"roleId",

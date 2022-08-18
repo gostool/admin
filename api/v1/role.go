@@ -28,9 +28,6 @@ type RoleUpdateReq struct {
 	OrmIdReq
 	RoleAttrReq
 }
-type RoleUpdateRes struct {
-	Id string `json:"id"`
-}
 
 type RoleDeleteReq struct {
 	g.Meta `path:"/role/delete" method:"post" tags:"RoleService"`
@@ -46,7 +43,7 @@ type RoleCreateReq struct {
 }
 
 type RoleCreateRes struct {
-	OrmIdReq
+	Id int `json:"id"`
 }
 
 type RoleAttrReq struct {

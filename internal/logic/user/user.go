@@ -149,9 +149,36 @@ func (s *sUser) Save(ctx context.Context, passport, password, nickname string, r
 	return dao.User.Ctx(ctx).Save(data)
 }
 
+func (s *sUser) update(ctx context.Context, query, data g.Map) (row int64, err error) {
+	logger.Debugf(ctx, "data:%v\n", data)
+	result, err := dao.User.Ctx(ctx).Where(query).Update(data)
+	if err != nil {
+		return 0, err
+	}
+	row, err = result.RowsAffected()
+	if err != nil {
+		return row, err
+	}
+	if row == 0 {
+		return 0, consts.ErrUpdate
+	}
+	return row, err
+}
+
 // Update 执行更新
 func (s *sUser) Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error) {
-	return
+	return s.update(ctx, in.ToWhereMap(), in.ToMap())
+}
+
+func (s *sUser) List(ctx context.Context, in model.UserListInput) (items []*serializer.User, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	err = dao.User.Ctx(ctx).Fields(model.UserFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
 }
 
 // Detail 执行详情
@@ -181,6 +208,15 @@ func (s *sUser) Delete(ctx context.Context, in model.UserDeleteInput) (result sq
 		return result, err
 	}
 	return result, nil
+}
+
+func (s *sUser) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error) {
+	row, err = s.update(ctx, r.ToWhereMap(), r.ToMap())
+	if err != nil {
+		logger.Error(ctx, err)
+		return 0, consts.ErrDel
+	}
+	return row, nil
 }
 
 // Logout 注销
