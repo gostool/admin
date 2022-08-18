@@ -1,4 +1,4 @@
-package role
+package tpl
 
 import (
 	"admin/internal/consts"
@@ -12,7 +12,7 @@ import (
 	"github.com/gogf/gf/v2/os/glog"
 )
 
-type sRole struct {
+type sTpl struct {
 }
 
 var logger *glog.Logger
@@ -20,46 +20,46 @@ var logger *glog.Logger
 func init() {
 	instance := New()
 	logger = g.Log(consts.LoggerDebug)
-	service.RegisterRole(instance)
+	service.RegisterTpl(instance)
 }
 
-func New() *sRole {
-	return &sRole{}
+func New() *sTpl {
+	return &sTpl{}
 }
 
-func (s *sRole) Count(ctx context.Context) (data int, err error) {
+func (s *sTpl) Count(ctx context.Context) (data int, err error) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	return dao.Role.Ctx(ctx).Count(query)
+	return dao.Tpl.Ctx(ctx).Count(query)
 }
 
-func (s *sRole) List(ctx context.Context, in model.RoleListInput) (items []*serializer.Role, err error) {
+func (s *sTpl) List(ctx context.Context, in model.TplListInput) (items []*serializer.Tpl, err error) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	err = dao.Tpl.Ctx(ctx).Fields(model.TplFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
 	if err != nil {
 		return nil, err
 	}
 	return items, nil
 }
 
-func (s *sRole) InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error) {
-	id, err = dao.Role.Ctx(ctx).InsertAndGetId(data)
+func (s *sTpl) InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error) {
+	id, err = dao.Tpl.Ctx(ctx).InsertAndGetId(data)
 	if err != nil {
 		return id, err
 	}
 	return id, nil
 }
 
-func (s *sRole) Create(ctx context.Context, in *model.RoleCreateInput) (id int64, err error) {
+func (s *sTpl) Create(ctx context.Context, in *model.TplCreateInput) (id int64, err error) {
 	return s.InsertAndGetId(ctx, in.ToMap())
 }
 
-func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err error) {
+func (s *sTpl) update(ctx context.Context, query, data g.Map) (row int64, err error) {
 	logger.Debugf(ctx, "data:%v\n", data)
-	result, err := dao.Role.Ctx(ctx).Where(query).Update(data)
+	result, err := dao.Tpl.Ctx(ctx).Where(query).Update(data)
 	if err != nil {
 		return 0, err
 	}
@@ -74,17 +74,17 @@ func (s *sRole) update(ctx context.Context, query, data g.Map) (row int64, err e
 }
 
 // Update 执行更新
-func (s *sRole) Update(ctx context.Context, in model.RoleUpdateInput) (row int64, err error) {
+func (s *sTpl) Update(ctx context.Context, in model.TplUpdateInput) (row int64, err error) {
 	return s.update(ctx, in.ToWhereMap(), in.ToMap())
 }
 
 // Detail 执行详情
-func (s *sRoleMenu) Detail(ctx context.Context, in model.RoleMenuDetailInput) (data *serializer.RoleMenu, err error) {
+func (s *sTpl) Detail(ctx context.Context, in model.TplDetailInput) (data *serializer.Tpl, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.RoleMenu.Ctx(ctx).Unscoped().Fields(model.RoleMenuFields).Where(query).Scan(&data)
+	err = dao.Tpl.Ctx(ctx).Unscoped().Fields(model.TplFields).Where(query).Scan(&data)
 	if err != nil {
 		return data, err
 	}
@@ -95,19 +95,19 @@ func (s *sRoleMenu) Detail(ctx context.Context, in model.RoleMenuDetailInput) (d
 }
 
 // Delete 执行删除
-func (s *sRole) Delete(ctx context.Context, in model.RoleDeleteInput) (result sql.Result, err error) {
+func (s *sTpl) Delete(ctx context.Context, in model.TplDeleteInput) (result sql.Result, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
 	}
-	result, err = dao.Role.Ctx(ctx).Unscoped().Where(query).Delete()
+	result, err = dao.Tpl.Ctx(ctx).Unscoped().Where(query).Delete()
 	if err != nil {
 		return result, err
 	}
 	return result, nil
 }
 
-func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error) {
+func (s *sTpl) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error) {
 	row, err = s.update(ctx, r.ToWhereMap(), r.ToMap())
 	if err != nil {
 		logger.Error(ctx, err)
@@ -116,10 +116,10 @@ func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row in
 	return row, nil
 }
 
-func (s *sMenu) Save(ctx context.Context, in *entity.Menu) (result sql.Result, err error) {
-	return dao.Menu.Ctx(ctx).Save(in)
+func (s *sTpl) Save(ctx context.Context, in *entity.Tpl) (result sql.Result, err error) {
+	return dao.Tpl.Ctx(ctx).Save(in)
 }
 
-func (s *sRoleMenu) SortField() string {
+func (s *sTpl) SortField() string {
 	return "sort asc"
 }
