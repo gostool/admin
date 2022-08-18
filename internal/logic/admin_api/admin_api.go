@@ -20,6 +20,7 @@ var logger *glog.Logger
 
 func init() {
 	instance := New()
+	logger = g.Log(consts.LoggerDebug)
 	service.RegisterAdminApi(instance)
 }
 
