@@ -6,7 +6,7 @@ import (
 
 var UserFields = g.ArrayStr{
 	"id",
-	"name",
+	"passport",
 	"created_at",
 	"updated_at",
 	"password",

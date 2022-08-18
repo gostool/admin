@@ -15,7 +15,7 @@ type User struct {
 	UpdatedAt *gtime.Time `json:"updatedAt" ` // 修改时间
 	DeletedAt *gtime.Time `json:"deletedAt" ` // 删除时间
 	IsDeleted int         `json:"isDeleted" ` // 数据的逻辑删除
-	Name      string      `json:"name"      ` //
+	Passport  string      `json:"passport"  ` //
 	Password  string      `json:"password"  ` //
 	Nickname  string      `json:"nickname"  ` //
 	RoleId    int         `json:"roleId"    ` //

@@ -17,7 +17,7 @@ type cUser struct{}
 
 func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserWebRes, err error) {
 	user, err := service.User().LoginWeb(ctx, model.UserLoginWebInput{
-		Name:      req.Passport,
+		Passport:  req.Passport,
 		Password:  req.Password,
 		Captcha:   req.Captcha,
 		CaptchaId: req.CaptchaId,
@@ -37,7 +37,7 @@ func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserW
 	}
 	res = &v1.UserWebRes{
 		Id:       user.Id,
-		Passport: user.Name,
+		Passport: user.Passport,
 		RoleId:   user.RoleId,
 		RoleMap: map[int]*serializer.Role{
 			user.RoleId: role,
@@ -49,7 +49,7 @@ func (c *cUser) LoginWeb(ctx context.Context, req *v1.UserWebReq) (res *v1.UserW
 
 func (c *cUser) Login(ctx context.Context, req *v1.UserReq) (res *v1.UserRes, err error) {
 	uid, err := service.User().Login(ctx, model.UserLoginInput{
-		Name:     req.Passport,
+		Passport: req.Passport,
 		Password: req.Password,
 	})
 	if err != nil {

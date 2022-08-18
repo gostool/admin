@@ -6,7 +6,6 @@ package service
 
 import (
 	"admin/internal/model"
-	"admin/internal/model/entity"
 	"admin/internal/model/serializer"
 	"context"
 	"database/sql"
@@ -25,7 +24,7 @@ type IUser interface {
 	Save(ctx context.Context, passport, password, nickname string, roleId int) (result sql.Result, err error)
 	Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error)
 	List(ctx context.Context, in model.UserListInput) (items []*serializer.UserInfo, err error)
-	Detail(ctx context.Context, in model.UserDetailInput) (data *entity.User, err error)
+	Detail(ctx context.Context, in model.UserDetailInput) (data *serializer.User, err error)
 	Delete(ctx context.Context, in model.UserDeleteInput) (result sql.Result, err error)
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
 	Logout(ctx context.Context) error

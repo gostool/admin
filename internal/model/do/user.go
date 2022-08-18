@@ -17,7 +17,7 @@ type User struct {
 	UpdatedAt *gtime.Time // 修改时间
 	DeletedAt *gtime.Time // 删除时间
 	IsDeleted interface{} // 数据的逻辑删除
-	Name      interface{} //
+	Passport  interface{} //
 	Password  interface{} //
 	Nickname  interface{} //
 	RoleId    interface{} //

@@ -7,12 +7,12 @@ import (
 
 // UserLoginInput 用户登录
 type UserLoginInput struct {
-	Name     string // 账号
+	Passport string // 账号
 	Password string // 密码(明文)
 }
 
 type UserLoginWebInput struct {
-	Name      string // 账号
+	Passport  string // 账号
 	Password  string // 密码(明文)
 	Captcha   string
 	CaptchaId string
@@ -42,7 +42,7 @@ type UserUpdateInput struct {
 }
 
 type UserAttr struct {
-	Name     string // 账号
+	Passport string // 账号
 	Password string // 密码(明文)
 	Nickname string // 昵称
 	RoleId   int
@@ -58,7 +58,7 @@ func (r *UserUpdateInput) ToWhereMap() (data g.Map) {
 
 func (r *UserUpdateInput) ToMap() (data g.Map) {
 	data = g.Map{}
-	data["name"] = r.Name
+	data["passport"] = r.Passport
 	data["password"] = r.Password
 	data["nickname"] = r.Nickname
 	data["role_id"] = r.RoleId

@@ -23,7 +23,7 @@ var (
 	//CtxUserId common user info
 	CtxUserId       = "ctx_user_id"
 	CtxUserRoleId   = "ctx_user_role_id"
-	CtxUserName     = "ctx_user_name"
+	CtxUserPassport = "ctx_user_passport"
 	CtxUserNickName = "ctx_user_nickname"
 	CtxUserData     = "ctx_user_data"
 	CtxUserToken    = "ctx_user_token"

@@ -12,7 +12,7 @@ func TestLogicUserLogin(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserLoginInput{
-		Name:     "john",
+		Passport: "john",
 		Password: "123",
 	}
 	uid, err := user.Login(ctx, in)
@@ -26,7 +26,7 @@ func TestLogicUserLoginWeb(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserLoginWebInput{
-		Name:     "guest",
+		Passport: "guest",
 		Password: "guest",
 	}
 	uid, err := user.LoginWeb(ctx, in)
@@ -41,7 +41,7 @@ func TestLogicUserRegister(t *testing.T) {
 	user := user.New()
 	in := model.UserCreateInput{
 		UserAttr: model.UserAttr{
-			Name:     "alice",
+			Passport: "alice",
 			Password: "alice",
 			Nickname: "shasha",
 			RoleId:   1,
@@ -59,7 +59,7 @@ func TestLogicUserCreate(t *testing.T) {
 	user := user.New()
 	in := model.UserCreateInput{
 		UserAttr: model.UserAttr{
-			Name:     "guest",
+			Passport: "guest",
 			Password: "guest",
 			Nickname: "hanhan",
 			RoleId:   5,

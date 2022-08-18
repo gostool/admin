@@ -19,7 +19,7 @@ type cAdminUser struct{}
 // Detail 获取用户详情
 func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (res *v1.AdminUserDetailRes, err error) {
 	userId := common.GetVarFromCtx(ctx, consts.CtxUserId).Int()
-	userName := common.GetVarFromCtx(ctx, consts.CtxUserName).String()
+	passport := common.GetVarFromCtx(ctx, consts.CtxUserPassport).String()
 	userNickname := common.GetVarFromCtx(ctx, consts.CtxUserNickName).String()
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
 	role, err := service.Role().Detail(ctx, model.RoleDetailInput{
@@ -32,7 +32,7 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 	res = &v1.AdminUserDetailRes{
 		UserDetail: &serializer.UserDetail{
 			Id:       userId,
-			Name:     userName,
+			Passport: passport,
 			Nickname: userNickname,
 			RoleId:   roleId,
 			RoleMap: map[int]*serializer.Role{
@@ -69,7 +69,7 @@ func (c *cAdminUser) Update(ctx context.Context, req *v1.AdminUserUpdateReq) (re
 	in := model.UserUpdateInput{
 		Id: req.Id,
 		UserAttr: model.UserAttr{
-			Name:     req.Name,
+			Passport: req.Passport,
 			Password: req.Password,
 			RoleId:   req.RoleId,
 			Nickname: req.Nickname,
@@ -99,7 +99,7 @@ func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserRegisterReq) (
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	in := model.UserCreateInput{
 		UserAttr: model.UserAttr{
-			Name:     req.Name,
+			Passport: req.Passport,
 			Password: req.Password,
 			RoleId:   req.RoleId,
 			Nickname: req.Nickname,

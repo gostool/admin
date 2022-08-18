@@ -12,7 +12,7 @@ type User struct {
 	UpdatedAt *gtime.Time `json:"-" dc:"修改时间" `         // 修改时间
 	DeletedAt *gtime.Time `json:"-" dc:"删除时间"`          // 删除时间
 	IsDeleted int         `json:"-" `                   // 数据的逻辑删除
-	Name      string      `json:"name"      `           //
+	Passport  string      `json:"passport"      `       //
 	Password  string      `json:"password"  `           //
 	Nickname  string      `json:"nickname"  `           //
 	RoleId    int         `json:"roleId"    `           //
@@ -21,15 +21,15 @@ type User struct {
 func (u *User) ToData() (data *g.Map) {
 	data = &g.Map{
 		"id":       u.Id,
-		"name":     u.Name,
-		"nickname": u.Name,
+		"passport": u.Passport,
+		"nickname": u.Nickname,
 	}
 	return data
 }
 
 type UserDetail struct {
 	Id       int           `json:"id"`
-	Name     string        `json:"name"`
+	Passport string        `json:"passport"`
 	Nickname string        `json:"nickname"`
 	RoleId   int           `json:"roleId"`
 	RoleMap  map[int]*Role `json:"roleMap"`
@@ -38,7 +38,7 @@ type UserDetail struct {
 type UserInfo struct {
 	gmeta.Meta `orm:"table:user"`
 	Id         int       `json:"id"`
-	Name       string    `json:"name"`
+	Passport   string    `json:"passport"`
 	Nickname   string    `json:"nickname"`
 	RoleId     int       `json:"roleId"`
 	RoleMap    *RoleWith `orm:"with:id=roleId"`

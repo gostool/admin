@@ -25,7 +25,7 @@ type UserColumns struct {
 	UpdatedAt string // 修改时间
 	DeletedAt string // 删除时间
 	IsDeleted string // 数据的逻辑删除
-	Name      string //
+	Passport  string //
 	Password  string //
 	Nickname  string //
 	RoleId    string //
@@ -38,7 +38,7 @@ var userColumns = UserColumns{
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
 	IsDeleted: "is_deleted",
-	Name:      "name",
+	Passport:  "passport",
 	Password:  "password",
 	Nickname:  "nickname",
 	RoleId:    "role_id",

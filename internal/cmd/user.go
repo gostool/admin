@@ -51,7 +51,7 @@ func userCreateAdmin(ctx context.Context, passport, password, nickname string) {
 		logger.Fatal(ctx, err)
 	}
 	in := model.UserCreateInput{}
-	in.Name = passport
+	in.Passport = passport
 	in.Password = password
 	in.Nickname = nickname
 	in.RoleId = adminRoleId

@@ -63,7 +63,7 @@ func (s *sUser) LoginWeb(ctx context.Context, in model.UserLoginWebInput) (data 
 		return nil, err
 	}
 	query := g.Map{
-		"name":       in.Name,
+		"passport":   in.Passport,
 		"password":   password,
 		"is_deleted": consts.CREATED,
 	}
@@ -84,7 +84,7 @@ func (s *sUser) Login(ctx context.Context, in model.UserLoginInput) (uid int64, 
 		return uid, err
 	}
 	query := g.Map{
-		"name":       in.Name,
+		"passport":   in.Passport,
 		"password":   password,
 		"is_deleted": consts.CREATED,
 	}
@@ -128,7 +128,7 @@ func (s *sUser) Count(ctx context.Context) (data int, err error) {
 
 func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error) {
 	data := g.Map{
-		"name":       in.Name,
+		"passport":   in.Passport,
 		"password":   in.Password,
 		"nickname":   in.Nickname,
 		"roleId":     in.RoleId,
@@ -147,7 +147,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 
 func (s *sUser) Save(ctx context.Context, passport, password, nickname string, roleId int) (result sql.Result, err error) {
 	data := &g.Map{
-		"name":       passport,
+		"passport":   passport,
 		"password":   password,
 		"nickname":   nickname,
 		"role_id":    roleId,
@@ -189,7 +189,7 @@ func (s *sUser) List(ctx context.Context, in model.UserListInput) (items []*seri
 }
 
 // Detail 执行详情
-func (s *sUser) Detail(ctx context.Context, in model.UserDetailInput) (data *entity.User, err error) {
+func (s *sUser) Detail(ctx context.Context, in model.UserDetailInput) (data *serializer.User, err error) {
 	query := g.Map{
 		"id":         in.Id,
 		"is_deleted": consts.CREATED,
