@@ -137,7 +137,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 	}
 	r, err := dao.User.Ctx(ctx).Data(data).Insert()
 	if err != nil {
-		return uid, nil
+		return uid, err
 	}
 	uid, err = r.LastInsertId()
 	if err != nil {

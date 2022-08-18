@@ -40,9 +40,10 @@ func TestLogicUserRegister(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserCreateInput{
+		RoleIds: "[1,2]",
 		UserAttr: model.UserAttr{
-			Passport: "alice",
-			Password: "alice",
+			Passport: "admin03",
+			Password: "admin03",
 			Nickname: "shasha",
 			RoleId:   1,
 		},

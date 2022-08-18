@@ -59,7 +59,7 @@ type AdminUserAttr struct {
 	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
 	Nickname string `v:"required|length:5,16#请输入昵称|昵称长度应当在:5到:16之间" dc:"Your nickname" json:"nickname"`
 	RoleId   int    `v:"required|min:1#(roleId)角色Id不能为空|角色Id应当>=1" dc:"Your roleId" json:"roleId"`
-	RoleIds  []int  `v:"required dc:"Your roleIds" json:"roleIds"`
+	RoleIds  []int  `v:"required" dc:"Your roleIds" json:"roleIds"`
 }
 
 func (r *AdminUserAttr) ToRoleIds() string {
