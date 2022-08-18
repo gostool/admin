@@ -40,10 +40,12 @@ func TestLogicUserRegister(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserCreateInput{
-		Name:     "alice",
-		Password: "alice",
-		Nickname: "shasha",
-		RoleId:   1,
+		UserAttr: model.UserAttr{
+			Name:     "alice",
+			Password: "alice",
+			Nickname: "shasha",
+			RoleId:   1,
+		},
 	}
 	uid, err := user.Register(ctx, in)
 	if err != nil {
@@ -56,10 +58,12 @@ func TestLogicUserCreate(t *testing.T) {
 	ctx := gctx.New()
 	user := user.New()
 	in := model.UserCreateInput{
-		Name:     "guest",
-		Password: "guest",
-		Nickname: "hanhan",
-		RoleId:   5,
+		UserAttr: model.UserAttr{
+			Name:     "guest",
+			Password: "guest",
+			Nickname: "hanhan",
+			RoleId:   5,
+		},
 	}
 	uid, err := user.Create(ctx, in)
 	if err != nil {
