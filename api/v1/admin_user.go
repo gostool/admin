@@ -28,8 +28,8 @@ type AdminUserUpdateReq struct {
 	AdminUserAttr
 }
 
-type AdminUserCreateReq struct {
-	g.Meta `path:"/admin_user/create" method:"post" tags:"AdminUserService"`
+type AdminUserRegisterReq struct {
+	g.Meta `path:"/admin_user/register" method:"post" tags:"AdminUserService"`
 	AdminUserAttr
 }
 
@@ -43,8 +43,8 @@ type AdminUserDeleteReq struct {
 }
 
 type AdminUserAttr struct {
-	Name     string `json:"name"`
-	Password string `json:"password"`
-	RoleId   int    `json:"roleId"`
-	Nickname string `json:"nickname"`
+	Name     string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"name"`
+	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
+	Nickname string `v:"required|length:5,16#请输入昵称|昵称长度应当在:5到:16之间" dc:"Your nickname" json:"nickname"`
+	RoleId   int    `v:"required|min:1#(roleId)角色Id不能为空|角色Id应当>=1" dc:"Your roleId" json:"roleId"`
 }

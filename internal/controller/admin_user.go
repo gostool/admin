@@ -95,7 +95,7 @@ func (c *cAdminUser) Delete(ctx context.Context, req *v1.AdminUserDeleteReq) (re
 	return res, nil
 }
 
-func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserCreateReq) (res *v1.AdminUserCreateRes, err error) {
+func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserRegisterReq) (res *v1.AdminUserCreateRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	in := model.UserCreateInput{
 		UserAttr: model.UserAttr{

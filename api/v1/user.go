@@ -11,13 +11,6 @@ type UserReq struct {
 	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
 }
 
-type UserRegisterReq struct {
-	g.Meta   `path:"/user/register" method:"post" tags:"UserService" summary:"register an account"`
-	Name     string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"name"`
-	Password string `v:"required|length:5,16#请输入确认密码|密码长度应当在:5到:16之间" dc:"Your password" json:"password"`
-	Nickname string `v:"required|length:5,16#请输入昵称|昵称长度应当在:5到:16之间" dc:"Your nickanme" json:"nickname"`
-}
-
 type UserWebReq struct {
 	g.Meta    `path:"/user/webLogin" method:"post" tags:"UserService" summary:"login an account"`
 	Passport  string `v:"required|length:5,16#请输入用户名|用户名称长度应当在:5到:16之间" dc:"Your name" json:"passport"`
