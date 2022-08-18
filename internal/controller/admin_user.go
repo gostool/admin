@@ -98,6 +98,7 @@ func (c *cAdminUser) Delete(ctx context.Context, req *v1.AdminUserDeleteReq) (re
 func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserRegisterReq) (res *v1.AdminUserCreateRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	in := model.UserCreateInput{
+		RoleIds: req.ToRoleIds(),
 		UserAttr: model.UserAttr{
 			Passport: req.Passport,
 			Password: req.Password,
@@ -111,5 +112,24 @@ func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserRegisterReq) (
 	}
 	res = &v1.AdminUserCreateRes{}
 	res.Id = int(id)
+	return res, nil
+}
+
+func (c *cAdminUser) Patch(ctx context.Context, req *v1.AdminUserPatchReq) (res *v1.OrmUpdateRes, err error) {
+	in := model.UserPatchInput{
+		Id:      req.Id,
+		RoleIds: req.ToRoleIds(),
+		UserAttr: model.UserAttr{
+			Passport: req.Passport,
+			Password: req.Password,
+			RoleId:   req.RoleId,
+			Nickname: req.Nickname,
+		},
+	}
+	_, err = service.User().Patch(ctx, in)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.OrmUpdateRes{}
 	return res, nil
 }

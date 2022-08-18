@@ -16,6 +16,7 @@ type User struct {
 	Password  string      `json:"password"  `           //
 	Nickname  string      `json:"nickname"  `           //
 	RoleId    int         `json:"roleId"    `           //
+	RoleIds   string      `json:"roleIds"   `           // eg:[1, 2] 角色数组
 }
 
 func (u *User) ToData() (data *g.Map) {
@@ -31,6 +32,7 @@ type UserDetail struct {
 	Id       int           `json:"id"`
 	Passport string        `json:"passport"`
 	Nickname string        `json:"nickname"`
+	RoleIds  string        `json:"roleIds"`
 	RoleId   int           `json:"roleId"`
 	RoleMap  map[int]*Role `json:"roleMap"`
 }
@@ -40,6 +42,7 @@ type UserInfo struct {
 	Id         int       `json:"id"`
 	Passport   string    `json:"passport"`
 	Nickname   string    `json:"nickname"`
+	RoleIds    string    `json:"roleIds"`
 	RoleId     int       `json:"roleId"`
 	RoleMap    *RoleWith `orm:"with:id=roleId"`
 }

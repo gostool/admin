@@ -13,14 +13,15 @@ const (
 	DefaultUserGuest     = "guest"
 	DefaultGuestPassword = "guest"
 	DefaultGuestNickname = "guest"
+	DefaultGuestRoleIds  = "2"
 )
 
-func userSave(ctx context.Context, name, password, nickname string) {
+func userSave(ctx context.Context, name, password, nickname, roleIds string) {
 	password, err := gmd5.EncryptString(password)
 	if err != nil {
 		logger.Fatal(ctx, err)
 	}
-	data, err := service.User().Save(ctx, name, password, nickname, guestRoleId)
+	data, err := service.User().Save(ctx, name, password, nickname, guestRoleId, roleIds)
 	if err != nil {
 		logger.Fatal(ctx, err)
 	}
@@ -34,13 +35,14 @@ func userGuestInit(ctx context.Context) {
 		Passport string
 		Password string
 		Nickname string
+		RoleIds  string
 	}
 
 	userList := []User{
-		{DefaultUserGuest, DefaultGuestPassword, DefaultGuestNickname},
+		{DefaultUserGuest, DefaultGuestPassword, DefaultGuestNickname, DefaultGuestRoleIds},
 	}
 	for _, user := range userList {
-		userSave(ctx, user.Passport, user.Password, user.Nickname)
+		userSave(ctx, user.Passport, user.Password, user.Nickname, user.RoleIds)
 	}
 }
 

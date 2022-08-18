@@ -19,4 +19,5 @@ type User struct {
 	Password  string      `json:"password"  ` //
 	Nickname  string      `json:"nickname"  ` //
 	RoleId    int         `json:"roleId"    ` //
+	RoleIds   string      `json:"roleIds"   ` // eg:[1, 2] 角色数组
 }

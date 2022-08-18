@@ -132,6 +132,7 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 		"password":   in.Password,
 		"nickname":   in.Nickname,
 		"roleId":     in.RoleId,
+		"RoleIds":    in.RoleIds,
 		"is_deleted": consts.CREATED,
 	}
 	r, err := dao.User.Ctx(ctx).Data(data).Insert()
@@ -145,12 +146,13 @@ func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64
 	return uid, nil
 }
 
-func (s *sUser) Save(ctx context.Context, passport, password, nickname string, roleId int) (result sql.Result, err error) {
+func (s *sUser) Save(ctx context.Context, passport, password, nickname string, roleId int, roleIds string) (result sql.Result, err error) {
 	data := &g.Map{
 		"passport":   passport,
 		"password":   password,
 		"nickname":   nickname,
 		"role_id":    roleId,
+		"RoleIds":    roleIds,
 		"is_deleted": consts.CREATED,
 	}
 	return dao.User.Ctx(ctx).Save(data)
@@ -170,6 +172,11 @@ func (s *sUser) update(ctx context.Context, query, data g.Map) (row int64, err e
 		return 0, consts.ErrUpdate
 	}
 	return row, err
+}
+
+// Patch partial update
+func (s *sUser) Patch(ctx context.Context, in model.UserPatchInput) (uid int64, err error) {
+	return s.update(ctx, in.ToWhereMap(), in.ToMap())
 }
 
 // Update 执行更新

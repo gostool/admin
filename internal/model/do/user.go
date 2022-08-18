@@ -21,4 +21,5 @@ type User struct {
 	Password  interface{} //
 	Nickname  interface{} //
 	RoleId    interface{} //
+	RoleIds   interface{} // eg:[1, 2] 角色数组
 }
