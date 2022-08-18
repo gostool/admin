@@ -51,6 +51,7 @@ func RegisterRouter(s *ghttp.Server, ctx context.Context, in cMainHttpInput) *gh
 				"/status":      controller.Status,    // status
 				"/role_menu/":  controller.RoleMenu,  // role_menu
 				"/admin_user/": controller.AdminUser, // admin user
+				"/admin_api/":  controller.AdminApi,  //admin api
 			})
 		})
 	})
