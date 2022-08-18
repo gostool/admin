@@ -67,3 +67,15 @@ var LogFields = g.ArrayStr{
 	"errMsg",
 	"userName",
 }
+
+var ApiFields = g.ArrayStr{
+	"id",
+	"created_at",
+	"updated_at",
+	"deleted_at",
+	"is_deleted",
+	"group",
+	"path",
+	"detail",
+	"method",
+}
