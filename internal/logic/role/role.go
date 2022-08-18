@@ -4,6 +4,7 @@ import (
 	"admin/internal/consts"
 	"admin/internal/dao"
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
@@ -116,6 +117,6 @@ func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row in
 	return row, nil
 }
 
-func (s *sRole) Save(ctx context.Context, in *serializer.Role) (result sql.Result, err error) {
+func (s *sRole) Save(ctx context.Context, in *entity.Role) (result sql.Result, err error) {
 	return dao.Role.Ctx(ctx).Save(in)
 }

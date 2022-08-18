@@ -6,6 +6,7 @@ package service
 
 import (
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"admin/internal/model/serializer"
 	"context"
 	"database/sql"
@@ -27,7 +28,7 @@ type IRoleMenu interface {
 	Detail(ctx context.Context, in model.RoleMenuDetailInput) (data *serializer.RoleMenu, err error)
 	Delete(ctx context.Context, in model.RoleMenuDeleteInput) (result sql.Result, err error)
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
-	Save(ctx context.Context, in *serializer.RoleMenu) (result sql.Result, err error)
+	Save(ctx context.Context, in *entity.RoleMenu) (result sql.Result, err error)
 }
 
 var localRoleMenu IRoleMenu

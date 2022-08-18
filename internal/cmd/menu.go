@@ -2,12 +2,12 @@ package cmd
 
 import (
 	"admin/internal/consts"
-	"admin/internal/model/serializer"
+	"admin/internal/model/entity"
 	"admin/internal/service"
 	"context"
 )
 
-var menuList = []*serializer.Menu{
+var menuList = []*entity.Menu{
 	{
 		Id:          1,
 		Path:        "dashboard",

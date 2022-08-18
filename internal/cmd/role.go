@@ -2,19 +2,19 @@ package cmd
 
 import (
 	"admin/internal/consts"
-	"admin/internal/model/serializer"
+	"admin/internal/model/entity"
 	"admin/internal/service"
 	"context"
 )
 
-var RoleList = []*serializer.Role{
-	&serializer.Role{
+var RoleList = []*entity.Role{
+	{
 		Id:        1,
 		Name:      "admin",
 		Router:    "dashboard",
 		IsDeleted: consts.CREATED,
 	},
-	&serializer.Role{
+	{
 		Id:        2,
 		Name:      "guest",
 		Router:    "dashboard",

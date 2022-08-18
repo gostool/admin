@@ -2,7 +2,6 @@ package v1
 
 import (
 	"admin/internal/model/serializer"
-	"database/sql"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -10,6 +9,7 @@ type MenuListReq struct {
 	g.Meta `path:"/menu/list" method:"get" tags:"MenuService"`
 	PageReq
 }
+
 type MenuListRes struct {
 	Count int                `json:"count" dc:"记录总数"`
 	Items []*serializer.Menu `json:"items" dc:"条目"`
@@ -35,9 +35,6 @@ type MenuUpdateRes struct {
 type MenuDeleteReq struct {
 	g.Meta `path:"/menu/delete" method:"post" tags:"MenuService"`
 	OrmIdReq
-}
-type MenuDeleteRes struct {
-	Data sql.Result
 }
 
 type MenuCreateReq struct {

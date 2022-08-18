@@ -4,6 +4,7 @@ import (
 	"admin/internal/consts"
 	"admin/internal/dao"
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
@@ -198,6 +199,6 @@ func (s *sRoleMenu) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (ro
 	return row, nil
 }
 
-func (s *sRoleMenu) Save(ctx context.Context, in *serializer.RoleMenu) (result sql.Result, err error) {
+func (s *sRoleMenu) Save(ctx context.Context, in *entity.RoleMenu) (result sql.Result, err error) {
 	return dao.RoleMenu.Ctx(ctx).Save(in)
 }

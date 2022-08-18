@@ -3,7 +3,7 @@ package cmd
 import (
 	"admin/internal/consts"
 	"admin/internal/model"
-	"admin/internal/model/serializer"
+	"admin/internal/model/entity"
 	"admin/internal/service"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
@@ -24,7 +24,7 @@ func menuRoleInit(ctx context.Context) error {
 	}
 	menuIdList := GetMenuIdList()
 	for _, menuId := range menuIdList {
-		roleMenu := &serializer.RoleMenu{
+		roleMenu := &entity.RoleMenu{
 			Id:        menuId,
 			RoleId:    role.Id,
 			MenuId:    menuId,

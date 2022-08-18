@@ -4,6 +4,7 @@ import (
 	"admin/internal/consts"
 	"admin/internal/dao"
 	"admin/internal/model"
+	"admin/internal/model/entity"
 	"admin/internal/model/serializer"
 	"admin/internal/service"
 	"context"
@@ -57,7 +58,7 @@ func (s *sMenu) Create(ctx context.Context, in *model.MenuCreateInput) (id int64
 	return s.InsertAndGetId(ctx, in.ToMap())
 }
 
-func (s *sMenu) Save(ctx context.Context, in *serializer.Menu) (result sql.Result, err error) {
+func (s *sMenu) Save(ctx context.Context, in *entity.Menu) (result sql.Result, err error) {
 	return dao.Menu.Ctx(ctx).Save(in)
 }
 
