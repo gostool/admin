@@ -30,7 +30,7 @@ func (u *User) ToData() (data *g.Map) {
 type UserDetail struct {
 	Id       int           `json:"id"`
 	Name     string        `json:"name"`
-	Nickname string        `json:"nickname"  `
+	Nickname string        `json:"nickname"`
 	RoleId   int           `json:"roleId"`
 	RoleMap  map[int]*Role `json:"roleMap"`
 }
@@ -39,6 +39,7 @@ type UserInfo struct {
 	gmeta.Meta `orm:"table:user"`
 	Id         int       `json:"id"`
 	Name       string    `json:"name"`
+	Nickname   string    `json:"nickname"`
 	RoleId     int       `json:"roleId"`
 	RoleMap    *RoleWith `orm:"with:id=roleId"`
 }
