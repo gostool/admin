@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 18/08/2022 18:03:03
+ Date: 18/08/2022 18:45:06
 */
 
 SET NAMES utf8mb4;
@@ -82,7 +82,7 @@ CREATE TABLE `operation_log` (
   `user_name` varchar(255) DEFAULT NULL COMMENT '用户名',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for role
@@ -142,12 +142,12 @@ CREATE TABLE `user` (
   `updated_at` datetime DEFAULT NULL COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
   `is_deleted` int NOT NULL DEFAULT '0' COMMENT ' 数据的逻辑删除',
-  `name` varchar(255) NOT NULL,
+  `passport` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) NOT NULL,
   `nickname` varchar(255) DEFAULT NULL,
   `role_id` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`) USING BTREE,
+  UNIQUE KEY `name` (`passport`) USING BTREE,
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
