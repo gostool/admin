@@ -119,6 +119,13 @@ func (s *sUser) Register(ctx context.Context, in model.UserCreateInput) (uid int
 	return
 }
 
+func (s *sUser) Count(ctx context.Context) (data int, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	return dao.User.Ctx(ctx).Count(query)
+}
+
 func (s *sUser) Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error) {
 	data := g.Map{
 		"name":       in.Name,

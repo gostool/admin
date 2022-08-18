@@ -29,17 +29,19 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 		return res, err
 	}
 	res = &v1.AdminUserDetailRes{
-		Id:       userId,
-		Passport: userName,
-		RoleId:   roleId,
-		RoleMap: map[int]*serializer.Role{
-			roleId: role,
+		UserDetail: &serializer.UserDetail{
+			Id:       userId,
+			Passport: userName,
+			RoleId:   roleId,
+			RoleMap: map[int]*serializer.Role{
+				roleId: role,
+			},
 		},
 	}
 	return res, nil
 }
 
-func (c *cAdminUser) List(ctx context.Context, req *v1.AdminUserListReq) (res []*v1.AdminUserListRes, err error) {
+func (c *cAdminUser) List(ctx context.Context, req *v1.AdminUserListReq) (res *v1.AdminUserListRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	in := model.UserListInput{
 		Page:     req.Page,
@@ -49,23 +51,13 @@ func (c *cAdminUser) List(ctx context.Context, req *v1.AdminUserListReq) (res []
 	if err != nil {
 		return res, err
 	}
-	for i := 0; i < len(items); i++ {
-		roleId := items[i].RoleId
-		role, err := service.Role().Detail(ctx, model.RoleDetailInput{
-			Id: roleId,
-		})
-		if err != nil {
-			logger.Fatal(ctx, err)
-			return res, err
-		}
-		res = append(res, &v1.AdminUserListRes{
-			Id:       items[i].Id,
-			Passport: items[i].Password,
-			RoleId:   items[i].RoleId,
-			RoleMap: map[int]*serializer.Role{
-				roleId: role,
-			},
-		})
+	cnt, err := service.User().Count(ctx)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.AdminUserListRes{
+		Count: cnt,
+		Items: items,
 	}
 	return res, nil
 }

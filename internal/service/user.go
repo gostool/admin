@@ -20,6 +20,7 @@ type IUser interface {
 	LoginWeb(ctx context.Context, in model.UserLoginWebInput) (data *serializer.User, err error)
 	Login(ctx context.Context, in model.UserLoginInput) (uid int64, err error)
 	Register(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
+	Count(ctx context.Context) (data int, err error)
 	Create(ctx context.Context, in model.UserCreateInput) (uid int64, err error)
 	Save(ctx context.Context, passport, password, nickname string, roleId int) (result sql.Result, err error)
 	Update(ctx context.Context, in model.UserUpdateInput) (uid int64, err error)

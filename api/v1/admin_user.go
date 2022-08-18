@@ -10,22 +10,16 @@ type AdminUserDetailReq struct {
 }
 
 type AdminUserDetailRes struct {
-	Id       int                      `json:"id"`
-	Passport string                   `json:"passport"`
-	RoleId   int                      `json:"roleId"`
-	RoleMap  map[int]*serializer.Role `json:"roleMap"`
+	*serializer.UserDetail
 }
 
 type AdminUserListReq struct {
 	g.Meta `path:"/admin_user/list" method:"get" tags:"AdminUserService"`
 	PageReq
 }
-
 type AdminUserListRes struct {
-	Id       int                      `json:"id"`
-	Passport string                   `json:"passport"`
-	RoleId   int                      `json:"roleId"`
-	RoleMap  map[int]*serializer.Role `json:"roleMap"`
+	Count int                `json:"count" dc:"记录总数"`
+	Items []*serializer.User `json:"items" dc:"条目"`
 }
 
 type AdminUserUpdateReq struct {
