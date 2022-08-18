@@ -105,7 +105,7 @@ func (c *cAdminUser) Create(ctx context.Context, req *v1.AdminUserCreateReq) (re
 			Nickname: req.Nickname,
 		},
 	}
-	id, err := service.User().Create(ctx, in)
+	id, err := service.User().Register(ctx, in)
 	if err != nil {
 		return res, err
 	}
