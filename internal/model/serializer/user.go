@@ -29,7 +29,8 @@ func (u *User) ToData() (data *g.Map) {
 
 type UserDetail struct {
 	Id       int           `json:"id"`
-	Passport string        `json:"passport"`
+	Name     string        `json:"name"`
+	Nickname string        `json:"nickname"  `
 	RoleId   int           `json:"roleId"`
 	RoleMap  map[int]*Role `json:"roleMap"`
 }

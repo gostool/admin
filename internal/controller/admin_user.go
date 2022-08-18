@@ -20,6 +20,7 @@ type cAdminUser struct{}
 func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (res *v1.AdminUserDetailRes, err error) {
 	userId := common.GetVarFromCtx(ctx, consts.CtxUserId).Int()
 	userName := common.GetVarFromCtx(ctx, consts.CtxUserName).String()
+	userNickname := common.GetVarFromCtx(ctx, consts.CtxUserNickName).String()
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
 	role, err := service.Role().Detail(ctx, model.RoleDetailInput{
 		Id: roleId,
@@ -31,7 +32,8 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 	res = &v1.AdminUserDetailRes{
 		UserDetail: &serializer.UserDetail{
 			Id:       userId,
-			Passport: userName,
+			Name:     userName,
+			Nickname: userNickname,
 			RoleId:   roleId,
 			RoleMap: map[int]*serializer.Role{
 				roleId: role,

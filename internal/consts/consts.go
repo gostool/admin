@@ -21,11 +21,12 @@ var (
 	ErrUpdate  = errors.New("更新失败")
 	ErrNotExit = errors.New("不存在")
 	//CtxUserId common user info
-	CtxUserId     = "ctx_user_id"
-	CtxUserRoleId = "ctx_user_role_id"
-	CtxUserName   = "ctx_user_name"
-	CtxUserData   = "ctx_user_data"
-	CtxUserToken  = "ctx_user_token"
+	CtxUserId       = "ctx_user_id"
+	CtxUserRoleId   = "ctx_user_role_id"
+	CtxUserName     = "ctx_user_name"
+	CtxUserNickName = "ctx_user_nickname"
+	CtxUserData     = "ctx_user_data"
+	CtxUserToken    = "ctx_user_token"
 )
 
 func OrderFiledByType(c int) string {
