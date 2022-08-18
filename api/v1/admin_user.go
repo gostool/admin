@@ -18,8 +18,8 @@ type AdminUserListReq struct {
 	PageReq
 }
 type AdminUserListRes struct {
-	Count int                `json:"count" dc:"记录总数"`
-	Items []*serializer.User `json:"items" dc:"条目"`
+	Count int                    `json:"count" dc:"记录总数"`
+	Items []*serializer.UserInfo `json:"items" dc:"条目"`
 }
 
 type AdminUserUpdateReq struct {

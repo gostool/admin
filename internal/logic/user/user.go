@@ -177,11 +177,11 @@ func (s *sUser) Update(ctx context.Context, in model.UserUpdateInput) (uid int64
 	return s.update(ctx, in.ToWhereMap(), in.ToMap())
 }
 
-func (s *sUser) List(ctx context.Context, in model.UserListInput) (items []*serializer.User, err error) {
+func (s *sUser) List(ctx context.Context, in model.UserListInput) (items []*serializer.UserInfo, err error) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.User.Ctx(ctx).Fields(model.UserFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	err = dao.User.Ctx(ctx).WithAll().Where(query).Scan(&items)
 	if err != nil {
 		return nil, err
 	}

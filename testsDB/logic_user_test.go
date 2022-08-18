@@ -97,3 +97,17 @@ func TestLogicUserDelete(t *testing.T) {
 	}
 	g.Dump(data)
 }
+
+func TestLogicUserList(t *testing.T) {
+	ctx := gctx.New()
+	instance := user.New()
+	in := model.UserListInput{
+		Page:     1,
+		PageSize: 10,
+	}
+	items, err := instance.List(ctx, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(items)
+}
