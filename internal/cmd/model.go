@@ -18,7 +18,7 @@ type cMainMenuInput struct {
 
 type cMainUserInput struct {
 	g.Meta `name:"user" brief:"init user data"`
-	Act    string `v:"required" name:"action" short:"act" brief:"action"`
+	Act    string `v:"required" name:"action" short:"act" brief:"action:[init,create],init是初始化guest，create是创建超级管理员"`
 }
 
 type cMainRoleInput struct {
