@@ -3,6 +3,7 @@ package testsDB
 import (
 	"admin/internal/logic/role"
 	"admin/internal/model"
+	"admin/internal/model/serializer"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"testing"
@@ -90,4 +91,24 @@ func TestLogicRoleUpdate(t *testing.T) {
 		t.Fatal(err)
 	}
 	g.Dump(id)
+}
+
+func TestLogicRoleTree(t *testing.T) {
+	ctx := gctx.New()
+	r := role.New()
+	in := model.RoleListInput{
+		Page:     1,
+		PageSize: 1000,
+	}
+	objList, err := r.GetTree(ctx, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	treeMap := make(map[int][]*serializer.RoleDetail)
+	for _, v := range objList {
+		treeMap[v.Pid] = append(treeMap[v.Pid], v)
+	}
+
+	// bfs map => tree
+	g.Dump(treeMap)
 }
