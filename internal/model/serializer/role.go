@@ -33,3 +33,7 @@ type RoleDetail struct {
 	Role
 	Children []*RoleDetail `json:"children"`
 }
+
+func (r *RoleDetail) Toinpu() {
+
+}
