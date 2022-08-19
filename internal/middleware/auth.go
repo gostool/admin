@@ -31,6 +31,7 @@ func JwtAuth(r *ghttp.Request) {
 		r.SetCtxVar(consts.CtxUserRoleId, user.RoleId)
 		r.SetCtxVar(consts.CtxUserPassport, user.Passport)
 		r.SetCtxVar(consts.CtxUserNickName, user.Nickname)
+		r.SetCtxVar(consts.CtxUserRoleIds, user.RoleIds)
 		r.SetCtxVar(consts.CtxUserData, user.ToData())
 		r.SetCtxVar(consts.CtxUserToken, token)
 		r.Middleware.Next()

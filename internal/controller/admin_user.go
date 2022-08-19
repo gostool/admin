@@ -22,6 +22,7 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 	passport := common.GetVarFromCtx(ctx, consts.CtxUserPassport).String()
 	userNickname := common.GetVarFromCtx(ctx, consts.CtxUserNickName).String()
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
+	roleIds := common.GetVarFromCtx(ctx, consts.CtxUserRoleIds).String()
 	role, err := service.Role().Detail(ctx, model.RoleDetailInput{
 		Id: roleId,
 	})
@@ -35,6 +36,7 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 			Passport: passport,
 			Nickname: userNickname,
 			RoleId:   roleId,
+			RoleIds:  roleIds,
 			RoleMap: map[int]*serializer.Role{
 				roleId: role,
 			},

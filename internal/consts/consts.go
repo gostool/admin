@@ -25,6 +25,7 @@ var (
 	CtxUserRoleId   = "ctx_user_role_id"
 	CtxUserPassport = "ctx_user_passport"
 	CtxUserNickName = "ctx_user_nickname"
+	CtxUserRoleIds  = "ctx_user_roleIds"
 	CtxUserData     = "ctx_user_data"
 	CtxUserToken    = "ctx_user_token"
 )
