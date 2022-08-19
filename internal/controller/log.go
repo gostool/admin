@@ -98,7 +98,7 @@ func (c *cLog) Delete(ctx context.Context, req *v1.LogDeleteReq) (res *v1.OrmDel
 	return res, nil
 }
 
-func (c *cLog) Create(ctx context.Context, req *v1.LogCreateReq) (res *v1.LogCreateRes, err error) {
+func (c *cLog) Create(ctx context.Context, req *v1.LogCreateReq) (res *v1.OrmIdRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	in := model.LogCreateInput{
 		LogAttr: model.LogAttr{
@@ -120,7 +120,7 @@ func (c *cLog) Create(ctx context.Context, req *v1.LogCreateReq) (res *v1.LogCre
 	if err != nil {
 		return res, err
 	}
-	res = &v1.LogCreateRes{}
+	res = &v1.OrmIdRes{}
 	res.Id = int(id)
 	return res, nil
 }

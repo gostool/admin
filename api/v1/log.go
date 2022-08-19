@@ -57,10 +57,6 @@ type LogCreateReq struct {
 	LogAttrReq
 }
 
-type LogCreateRes struct {
-	OrmIdReq
-}
-
 type LogAttrReq struct {
 	UserId    int         `json:"userId"  dc:"用户id"  `    //
 	CreatedAt *gtime.Time `json:"createdAt" dc:"创建时间"`    // 创建时间
