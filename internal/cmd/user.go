@@ -7,14 +7,19 @@ import (
 	"errors"
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/os/gcmd"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 const (
 	DefaultUserGuest     = "guest"
 	DefaultGuestPassword = "guest"
 	DefaultGuestNickname = "guest"
-	DefaultGuestRoleIds  = "2"
 )
+
+func ToRoleIds(roleId int) string {
+	roleIds := []int{roleId}
+	return gconv.String(roleIds)
+}
 
 func userSave(ctx context.Context, name, password, nickname, roleIds string) {
 	password, err := gmd5.EncryptString(password)
@@ -39,7 +44,7 @@ func userGuestInit(ctx context.Context) {
 	}
 
 	userList := []User{
-		{DefaultUserGuest, DefaultGuestPassword, DefaultGuestNickname, DefaultGuestRoleIds},
+		{DefaultUserGuest, DefaultGuestPassword, DefaultGuestNickname, ToRoleIds(guestRoleId)},
 	}
 	for _, user := range userList {
 		userSave(ctx, user.Passport, user.Password, user.Nickname, user.RoleIds)
@@ -57,6 +62,7 @@ func userCreateAdmin(ctx context.Context, passport, password, nickname string) {
 	in.Password = password
 	in.Nickname = nickname
 	in.RoleId = adminRoleId
+	in.RoleIds = ToRoleIds(in.RoleId)
 	password, err = gmd5.EncryptString(in.Password)
 	if err != nil {
 		logger.Fatal(ctx, err)
