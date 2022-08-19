@@ -36,7 +36,7 @@ func (c *cAdminUser) Detail(ctx context.Context, req *v1.AdminUserDetailReq) (re
 			Passport: passport,
 			Nickname: userNickname,
 			RoleId:   roleId,
-			RoleIds:  roleIds,
+			RoleIds:  ToRoleIdsNums(roleIds),
 			RoleMap: map[int]*serializer.Role{
 				roleId: role,
 			},

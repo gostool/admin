@@ -32,7 +32,7 @@ type UserDetail struct {
 	Id       int           `json:"id"`
 	Passport string        `json:"passport"`
 	Nickname string        `json:"nickname"`
-	RoleIds  string        `json:"roleIds"`
+	RoleIds  []int         `json:"roleIds"`
 	RoleId   int           `json:"roleId"`
 	RoleMap  map[int]*Role `json:"roleMap"`
 }
@@ -42,7 +42,7 @@ type UserInfo struct {
 	Id         int       `json:"id"`
 	Passport   string    `json:"passport"`
 	Nickname   string    `json:"nickname"`
-	RoleIds    string    `json:"roleIds"`
+	RoleIds    []int     `json:"roleIds"`
 	RoleId     int       `json:"roleId"`
-	RoleMap    *RoleWith `orm:"with:id=roleId"`
+	RoleInfo   *RoleWith `orm:"with:id=roleId" json:"roleInfo"`
 }
