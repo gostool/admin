@@ -15,6 +15,16 @@ type RoleListRes struct {
 	Items []*serializer.Role `json:"items" dc:"条目"`
 }
 
+type RoleTreeReq struct {
+	g.Meta `path:"/role/tree" method:"get" tags:"RoleService"`
+	PageReq
+}
+
+type RoleTreeRes struct {
+	Count int                      `json:"count" dc:"记录总数"`
+	Items []*serializer.RoleDetail `json:"items" dc:"条目"`
+}
+
 type RoleDetailReq struct {
 	g.Meta `path:"/role/detail" method:"post" tags:"RoleService"`
 	OrmIdReq

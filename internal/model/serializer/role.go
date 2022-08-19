@@ -28,3 +28,8 @@ type RoleWith struct {
 	Pid       int         `json:"pid"      dc:"父角色id" ` // 父角色id
 	Router    string      `json:"router"   dc:"默认路由" `  // 默认路由
 }
+
+type RoleDetail struct {
+	Role
+	Children []*RoleDetail `json:"children"`
+}

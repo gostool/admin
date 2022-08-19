@@ -95,3 +95,19 @@ func (c *cRole) Create(ctx context.Context, req *v1.RoleCreateReq) (res *v1.Role
 	res.Id = int(id)
 	return res, nil
 }
+
+func (c *cRole) Tree(ctx context.Context, req *v1.RoleTreeReq) (res *v1.RoleTreeRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	items, err := service.Role().GetTree(ctx, model.RoleListInput{
+		Page:     req.PageReq.Page,
+		PageSize: req.PageReq.PageSize,
+	})
+	if err != nil {
+		return res, err
+	}
+	res = &v1.RoleTreeRes{
+		Count: -1,
+		Items: items,
+	}
+	return res, nil
+}

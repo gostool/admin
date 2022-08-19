@@ -120,3 +120,14 @@ func (s *sRole) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row in
 func (s *sRole) Save(ctx context.Context, in *entity.Role) (result sql.Result, err error) {
 	return dao.Role.Ctx(ctx).Save(in)
 }
+
+func (s *sRole) GetTree(ctx context.Context, in model.RoleListInput) (items []*serializer.RoleDetail, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	err = dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	if err != nil {
+		return nil, err
+	}
+	return items, nil
+}
