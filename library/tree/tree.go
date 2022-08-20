@@ -1,13 +1,11 @@
 package tree
 
-type Node struct {
+type Node[K any] struct {
 	Id       int
-	Pid      int
-	Children []*Node
+	Children []*Node[K]
 }
 
-//
-func bfs(treeMap map[int][]*Node) (items []*Node) {
+func Bfs[K any](treeMap map[int][]*Node[K]) (items []*Node[K]) {
 	q := treeMap[0]
 	items = q
 	for len(q) > 0 {
@@ -24,12 +22,23 @@ func bfs(treeMap map[int][]*Node) (items []*Node) {
 			}
 			if node.Children == nil {
 				n := len(childList)
-				node.Children = make([]*Node, n, n)
+				node.Children = make([]*Node[K], n, n)
 			}
 			copy(node.Children, childList)
 			q = append(q, node.Children...)
 		}
 		q = q[size:]
 	}
-	return
+	return items
 }
+
+//func (n *Node[K]) GetId() int {
+//	return n.Id
+//}
+
+//func (n *Node[K]) NewChild(l int) {
+//	n.Children = make([]*Node[K], l, l)
+//	return
+//}
+
+// New returns an empty B-tree.
