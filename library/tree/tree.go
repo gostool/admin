@@ -1,14 +1,13 @@
 package tree
 
-type INode interface {
-	GetId() int
-	ChildIsNil() bool
-	NewChild(n int)
-	SetChild(childList []INode)
-	GetChildList() []INode
+type Node struct {
+	Id       int
+	Pid      int
+	Children []*Node
 }
 
-func Bfs(treeMap map[int][]INode) (items []INode) {
+//
+func bfs(treeMap map[int][]*Node) (items []*Node) {
 	q := treeMap[0]
 	items = q
 	for len(q) > 0 {
@@ -18,46 +17,19 @@ func Bfs(treeMap map[int][]INode) (items []INode) {
 			if node == nil {
 				continue
 			}
-			childList, ok := treeMap[node.GetId()]
+			childList, ok := treeMap[node.Id]
 			if !ok {
 				// 当前菜单没有child
 				continue
 			}
-			if node.ChildIsNil() {
+			if node.Children == nil {
 				n := len(childList)
-				node.NewChild(n)
+				node.Children = make([]*Node, n, n)
 			}
-			node.SetChild(childList)
-			q = append(q, node.GetChildList()...)
+			copy(node.Children, childList)
+			q = append(q, node.Children...)
 		}
 		q = q[size:]
 	}
-	return items
-}
-
-// Convenience types for common cases
-type Node struct {
-	Id    int
-	Child []*Node
-}
-
-func (x *Node) GetId() int {
-	return x.Id
-}
-
-func (x *Node) ChildIsNil() bool {
-	return x.Child == nil
-}
-func (x *Node) NewChild(n int) {
-	x.Child = make([]*Node, n, n)
 	return
-}
-
-func (x *Node) SetChild(childList []*Node) {
-	copy(x.Child, childList)
-	return
-}
-
-func (x *Node) GetChildList() (childList []*Node) {
-	return x.Child
 }

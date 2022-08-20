@@ -7,6 +7,7 @@ import (
 
 func TestBfs(t *testing.T) {
 	type args struct {
+		root    Node
 		treeMap map[int][]Node
 	}
 	tests := []struct {
@@ -24,7 +25,7 @@ func TestBfs(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotItems := Bfs(tt.args.treeMap); !reflect.DeepEqual(gotItems, tt.wantItems) {
+			if gotItems := bfs(tt.args.root, tt.args.treeMap); !reflect.DeepEqual(gotItems, tt.wantItems) {
 				t.Errorf("Bfs() = %v, want %v", gotItems, tt.wantItems)
 			}
 		})
