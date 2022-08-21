@@ -22,6 +22,6 @@ type OrmIdRes struct {
 }
 
 type OrmOrderParamsReq struct {
-	OrderKey string `json:"orderKey" d:"id"`
+	OrderKey string `v:"required|length:2,10#请输入orderKey|orderKey长度应当在:2到:10之间" json:"orderKey" d:"id"`
 	Desc     int    `json:"desc" d:"0"`
 }
