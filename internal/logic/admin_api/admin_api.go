@@ -25,7 +25,7 @@ var column g.SliceStr
 
 func init() {
 	column = g.SliceStr{"id", "path", "method", "group"}
-	set.Add(column...)
+	set = gset.NewStrSetFrom(column)
 	instance := New()
 	logger = g.Log(consts.LoggerDebug)
 	service.RegisterAdminApi(instance)
@@ -66,7 +66,7 @@ func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string
 		delete(query, "path")
 	}
 	m := dao.Api.Ctx(ctx).Fields(model.ApiFields).Page(page, limit).Where(query)
-	if path != "" {
+	if path != nil {
 		m = m.WhereLike("path", gconv.String(path)+"%")
 	}
 	m, err = common.CheckOrderByKey(set, m, orderKey, desc)

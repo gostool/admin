@@ -13,9 +13,9 @@ func CheckOrderByKey(set *gset.StrSet, m *gdb.Model, orderKey string, desc bool)
 		return m, err
 	}
 	if desc {
-		m.OrderDesc(orderKey)
+		m = m.OrderDesc(orderKey)
 	} else {
-		m.OrderAsc(orderKey)
+		m = m.OrderAsc(orderKey)
 	}
 	return m, nil
 }

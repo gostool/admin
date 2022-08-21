@@ -59,7 +59,7 @@ func (s *sLog) search(ctx context.Context, page, limit int, orderType int, query
 		delete(query, "path")
 	}
 	m := dao.OperationLog.Ctx(ctx).Fields(model.LogFields).Page(page, limit).Where(query)
-	if path != "" {
+	if path != nil {
 		m = m.WhereLike("path", gconv.String(path)+"%")
 	}
 	err = m.Order(consts.OrderFiledByType(orderType)).Scan(&dataList)
