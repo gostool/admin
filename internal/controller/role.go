@@ -103,10 +103,14 @@ func (c *cRole) Tree(ctx context.Context, req *v1.RoleTreeReq) (res *v1.RoleTree
 		PageSize: req.PageReq.PageSize,
 	})
 	if err != nil {
-		return res, err
+		return nil, err
+	}
+	cnt, err := service.Role().Count(ctx)
+	if err != nil {
+		return nil, err
 	}
 	res = &v1.RoleTreeRes{
-		Count: -1,
+		Count: cnt,
 		Items: items,
 	}
 	return res, nil
