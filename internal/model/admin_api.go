@@ -5,6 +5,22 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
+type AdminApiSearchAttr struct {
+	Group string `json:"group"`
+	// 请求方法: get/post
+	Method string `json:"method"`
+	// 请求路径
+	Path string `json:"path"`
+}
+
+type AdminApiSearchInput struct {
+	Page     int
+	PageSize int
+	AdminApiSearchAttr
+	OrderKey string
+	Desc     bool
+}
+
 type AdminApiListInput struct {
 	Page     int
 	PageSize int

@@ -20,3 +20,8 @@ type OrmUpdateRes struct {
 type OrmIdRes struct {
 	Id int `json:"id" dc:"id"`
 }
+
+type OrmOrderParamsReq struct {
+	OrderKey string `json:"orderKey" d:"id"`
+	Desc     int    `json:"desc" d:"0"`
+}

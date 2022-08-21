@@ -11,6 +11,7 @@ import (
 	"database/sql"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sAdminApi struct {
@@ -33,6 +34,45 @@ func (s *sAdminApi) Count(ctx context.Context) (data int, err error) {
 		"is_deleted": consts.CREATED,
 	}
 	return dao.Api.Ctx(ctx).Count(query)
+}
+
+func (s *sAdminApi) Search(ctx context.Context, in model.AdminApiSearchInput) (items []*serializer.Api, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	if in.Method != "" {
+		query["method"] = in.Method
+	}
+	if gconv.String(in.Path) != "" {
+		// 前缀查询
+		query["path"] = in.Path
+	}
+	if in.Group != "" {
+		query["group"] = in.Group
+	}
+	return s.search(ctx, in.Page, in.PageSize, in.OrderKey, in.Desc, query)
+}
+
+func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string, desc bool, query g.Map) (dataList []*serializer.Api, err error) {
+	path, ok := query["path"]
+	if ok {
+		// 针对path 字段，like 查询
+		delete(query, "path")
+	}
+	m := dao.Api.Ctx(ctx).Fields(model.ApiFields).Page(page, limit).Where(query)
+	if path != "" {
+		m = m.WhereLike("path", gconv.String(path)+"%")
+	}
+	if desc {
+		m = m.OrderDesc(orderKey)
+	} else {
+		m = m.OrderAsc(orderKey)
+	}
+	err = m.Scan(&dataList)
+	if err != nil {
+		return dataList, err
+	}
+	return dataList, err
 }
 
 func (s *sAdminApi) List(ctx context.Context, in model.AdminApiListInput) (items []*serializer.Api, err error) {

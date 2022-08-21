@@ -9,6 +9,7 @@ const (
 	ErrCodeBad   = 400
 	ErrCodeToken = 403
 	ErrCodeErr   = 500
+	Desc         = 1
 )
 
 const (

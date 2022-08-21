@@ -16,6 +16,7 @@ import (
 
 type IAdminApi interface {
 	Count(ctx context.Context) (data int, err error)
+	Search(ctx context.Context, in model.AdminApiSearchInput) (items []*serializer.Api, err error)
 	List(ctx context.Context, in model.AdminApiListInput) (items []*serializer.Api, err error)
 	InsertAndGetId(ctx context.Context, data g.Map) (id int64, err error)
 	Create(ctx context.Context, in *model.AdminApiCreateInput) (id int64, err error)

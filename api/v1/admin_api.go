@@ -10,6 +10,22 @@ type AdminApiListReq struct {
 	PageReq
 }
 
+type AdminApiAttrSearchReq struct {
+	// 响应状态: 200/500/400
+	Group string `json:"group"`
+	// 请求方法: get/post
+	Method string `json:"method"`
+	// 请求路径
+	Path string `v:"length:0,2048#Path长度应当在:0到:2000之间" json:"path"`
+}
+
+type AdminApiSearchListReq struct {
+	g.Meta `path:"/admin_api/search" method:"get" tags:"AdminApiService"`
+	PageReq
+	OrmOrderParamsReq
+	AdminApiAttrSearchReq
+}
+
 type AdminApiListRes struct {
 	Count int               `json:"count" dc:"记录总数"`
 	Items []*serializer.Api `json:"items" dc:"条目"`

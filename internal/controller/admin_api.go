@@ -2,6 +2,7 @@ package controller
 
 import (
 	v1 "admin/api/v1"
+	"admin/internal/consts"
 	"admin/internal/model"
 	"admin/internal/service"
 	"context"
@@ -20,6 +21,35 @@ func (c *cAdminApi) List(ctx context.Context, req *v1.AdminApiListReq) (res *v1.
 		PageSize: req.PageReq.PageSize,
 	}
 	items, err := service.AdminApi().List(ctx, in)
+	if err != nil {
+		return res, err
+	}
+	cnt, err := service.AdminApi().Count(ctx)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.AdminApiListRes{
+		Count: cnt,
+		Items: items,
+	}
+	return res, nil
+}
+
+func (c *cAdminApi) Search(ctx context.Context, req *v1.AdminApiSearchListReq) (res *v1.AdminApiListRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	apiSearchAttr := model.AdminApiSearchAttr{
+		Path:   req.Path,
+		Group:  req.Group,
+		Method: req.Method,
+	}
+	in := model.AdminApiSearchInput{
+		Page:     req.PageReq.Page,
+		PageSize: req.PageReq.PageSize,
+		OrderKey: req.OrderKey,
+		Desc:     req.Desc == consts.Desc,
+	}
+	in.AdminApiSearchAttr = apiSearchAttr
+	items, err := service.AdminApi().Search(ctx, in)
 	if err != nil {
 		return res, err
 	}
