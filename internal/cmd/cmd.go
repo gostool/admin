@@ -32,7 +32,7 @@ func (c *CMain) UserInit(ctx context.Context, in cMainUserInput) (out *cMainOutp
 }
 
 func (c *CMain) RoleInit(ctx context.Context, in cMainRoleInput) (out *cMainOutput, err error) {
-	RoleInit(ctx)
+	roleInit(ctx)
 	out = &cMainOutput{}
 	return out, nil
 }
@@ -43,8 +43,15 @@ func (c *CMain) RoleMenuInit(ctx context.Context, in cMainRoleMenuInput) (out *c
 	return out, nil
 }
 
+func (c *CMain) ApiInit(ctx context.Context, in cMainApiInput) (out *cMainOutput, err error) {
+	apiInit(ctx)
+	out = &cMainOutput{}
+	return out, nil
+}
+
 func (c *CMain) Init(ctx context.Context, in cMainInitInput) (out *cMainOutput, err error) {
-	RoleInit(ctx)
+	apiInit(ctx)
+	roleInit(ctx)
 	menuInit(ctx)
 	userGuestInit(ctx)
 	createAdmin(ctx)

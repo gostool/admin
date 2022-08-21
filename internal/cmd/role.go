@@ -22,7 +22,7 @@ var RoleList = []*entity.Role{
 	},
 }
 
-func RoleInit(ctx context.Context) {
+func roleInit(ctx context.Context) {
 	for _, role := range RoleList {
 		result, err := service.Role().Save(ctx, role)
 		if err != nil {
