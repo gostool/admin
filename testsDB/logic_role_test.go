@@ -100,17 +100,10 @@ func TestLogicRoleTree(t *testing.T) {
 		Page:     1,
 		PageSize: 1000,
 	}
-	objList, err := r.GetTree(ctx, in)
+	items, err := r.GetTree(ctx, in)
 	if err != nil {
 		t.Fatal(err)
 	}
-	treeMap := make(map[int][]*serializer.RoleDetail)
-	for _, v := range objList {
-		treeMap[v.Pid] = append(treeMap[v.Pid], v)
-	}
-
-	// bfs map => tree
-	items := bfs(treeMap)
 	g.Dump(items)
 }
 

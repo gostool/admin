@@ -125,9 +125,42 @@ func (s *sRole) GetTree(ctx context.Context, in model.RoleListInput) (items []*s
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).Scan(&items)
+	var objList []*serializer.RoleDetail
+	err = dao.Role.Ctx(ctx).Fields(model.RoleFields).Page(in.Page, in.PageSize).Where(query).Scan(&objList)
 	if err != nil {
 		return nil, err
 	}
+	treeMap := make(map[int][]*serializer.RoleDetail)
+	for _, v := range objList {
+		treeMap[v.Pid] = append(treeMap[v.Pid], v)
+	}
+	items = s.Bfs(treeMap)
 	return items, nil
+}
+
+func (s *sRole) Bfs(treeMap map[int][]*serializer.RoleDetail) (items []*serializer.RoleDetail) {
+	q := treeMap[0]
+	items = q
+	for len(q) > 0 {
+		size := len(q)
+		for i := 0; i < size; i++ {
+			node := q[i]
+			if node == nil {
+				continue
+			}
+			childList, ok := treeMap[node.Id]
+			if !ok {
+				// 当前菜单没有child
+				continue
+			}
+			if node.Children == nil {
+				n := len(childList)
+				node.Children = make([]*serializer.RoleDetail, n, n)
+			}
+			copy(node.Children, childList)
+			q = append(q, node.Children...)
+		}
+		q = q[size:]
+	}
+	return
 }

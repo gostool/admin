@@ -25,6 +25,7 @@ type IRole interface {
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
 	Save(ctx context.Context, in *entity.Role) (result sql.Result, err error)
 	GetTree(ctx context.Context, in model.RoleListInput) (items []*serializer.RoleDetail, err error)
+	Bfs(treeMap map[int][]*serializer.RoleDetail) (items []*serializer.RoleDetail)
 }
 
 var localRole IRole
