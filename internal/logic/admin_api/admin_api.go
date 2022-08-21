@@ -1,6 +1,7 @@
 package admin_api
 
 import (
+	"admin/internal/common"
 	"admin/internal/consts"
 	"admin/internal/dao"
 	"admin/internal/model"
@@ -9,10 +10,7 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
-	"errors"
-	"fmt"
 	"github.com/gogf/gf/v2/container/gset"
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -22,7 +20,7 @@ type sAdminApi struct {
 }
 
 var logger *glog.Logger
-var set gset.StrSet
+var set *gset.StrSet
 var column g.SliceStr
 
 func init() {
@@ -31,19 +29,6 @@ func init() {
 	instance := New()
 	logger = g.Log(consts.LoggerDebug)
 	service.RegisterAdminApi(instance)
-}
-
-func CheckOrderByKey(m *gdb.Model, orderKey string, desc bool) (n *gdb.Model, err error) {
-	if !set.Contains(orderKey) {
-		err = errors.New(fmt.Sprintf("orderKey must in %v\n", column))
-		return m, err
-	}
-	if desc {
-		m.OrderDesc(orderKey)
-	} else {
-		m.OrderAsc(orderKey)
-	}
-	return m, nil
 }
 
 func New() *sAdminApi {
@@ -84,7 +69,7 @@ func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string
 	if path != "" {
 		m = m.WhereLike("path", gconv.String(path)+"%")
 	}
-	m, err = CheckOrderByKey(m, orderKey, desc)
+	m, err = common.CheckOrderByKey(set, m, orderKey, desc)
 	if err != nil {
 		return nil, err
 	}
