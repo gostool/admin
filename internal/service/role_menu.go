@@ -11,6 +11,7 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/gogf/gf/v2/container/gset"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -29,6 +30,9 @@ type IRoleMenu interface {
 	Delete(ctx context.Context, in model.RoleMenuDeleteInput) (result sql.Result, err error)
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
 	Save(ctx context.Context, in *entity.RoleMenu) (result sql.Result, err error)
+	TxBulkCreateRoleMenu(ctx context.Context, roleId int, deleteIdSet, insertIdSet *gset.IntSet) (err error)
+	GetMenuIdSet(ctx context.Context, roleId int) (idSet *gset.IntSet, err error)
+	BulkCreateRoleMenu(ctx context.Context, r *model.PermMenuReq) (err error)
 }
 
 var localRoleMenu IRoleMenu

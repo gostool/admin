@@ -55,3 +55,20 @@ type RoleMenuAttr struct {
 	RoleId int
 	MenuId int
 }
+
+type MenuIdListReq struct {
+	// 菜单id list
+	MenuIdList []int
+}
+
+type RoleIdReq struct {
+	// 角色id
+	RoleId int
+}
+
+// PermMenuReq
+// 管理员-对角色-菜单-授权
+type PermMenuReq struct {
+	MenuIdListReq
+	RoleIdReq
+}

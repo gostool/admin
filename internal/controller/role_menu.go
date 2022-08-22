@@ -109,17 +109,13 @@ func (c *cRoleMenu) Delete(ctx context.Context, req *v1.RoleMenuDeleteReq) (res 
 
 func (c *cRoleMenu) Create(ctx context.Context, req *v1.RoleMenuCreateReq) (res *v1.RoleMenuCreateRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
-	in := model.RoleMenuCreateInput{
-		RoleMenuAttr: model.RoleMenuAttr{
-			RoleId: req.RoleId,
-			MenuId: req.MenuId,
-		},
-	}
-	id, err := service.RoleMenu().Create(ctx, &in)
+	in := model.PermMenuReq{}
+	in.RoleId = req.RoleId
+	in.MenuIdList = req.MenuIdList
+	err = service.RoleMenu().BulkCreateRoleMenu(ctx, &in)
 	if err != nil {
 		return res, err
 	}
 	res = &v1.RoleMenuCreateRes{}
-	res.Id = int(id)
 	return res, nil
 }

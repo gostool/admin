@@ -58,12 +58,12 @@ type RoleMenuDeleteRes struct {
 }
 
 type RoleMenuCreateReq struct {
-	g.Meta `path:"/role_menu/create" method:"post" tags:"RoleMenuService"`
-	RoleMenuAttr
+	g.Meta     `path:"/role_menu/create" method:"post" tags:"RoleMenuService"`
+	MenuIdList []int `json:"menuIdList"`
+	RoleId     int   `v:"required|min:1#角色id不能为空|角色id最小值:min" json:"roleId"`
 }
 
 type RoleMenuCreateRes struct {
-	OrmIdReq
 }
 
 type RoleMenuAttr struct {

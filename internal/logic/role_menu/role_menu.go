@@ -9,6 +9,8 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
+	"github.com/gogf/gf/v2/container/gset"
+	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 )
@@ -201,4 +203,91 @@ func (s *sRoleMenu) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (ro
 
 func (s *sRoleMenu) Save(ctx context.Context, in *entity.RoleMenu) (result sql.Result, err error) {
 	return dao.RoleMenu.Ctx(ctx).Save(in)
+}
+
+func txBulkDelete(ctx context.Context, tx *gdb.TX, roleId int, idSet *gset.IntSet) (err error) {
+	if idSet == nil {
+		return nil
+	}
+	if idSet.Size() <= 0 {
+		return nil
+	}
+	query := g.Map{
+		"role_id": roleId,
+		"menu_id": idSet.Slice(),
+	}
+	_, err = dao.RoleMenu.Ctx(ctx).Unscoped().TX(tx).Where(query).Delete()
+	return err
+}
+
+func txBulkInsert(ctx context.Context, tx *gdb.TX, roleId int, idSet *gset.IntSet) (err error) {
+	if idSet == nil {
+		return nil
+	}
+	if idSet.Size() <= 0 {
+		return nil
+	}
+	data := make([]g.Map, 0, idSet.Size())
+	idSet.Iterator(func(v int) bool {
+		item := g.Map{}
+		item["menu_id"] = v
+		item["role_id"] = roleId
+		item["is_deleted"] = consts.CREATED
+		data = append(data, item)
+		return true
+	})
+	_, err = dao.RoleMenu.Ctx(ctx).TX(tx).Data(data).Insert()
+	return err
+}
+
+func (s *sRoleMenu) TxBulkCreateRoleMenu(ctx context.Context, roleId int, deleteIdSet, insertIdSet *gset.IntSet) (err error) {
+	tx, err := g.DB().Begin(ctx)
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+	err = txBulkDelete(ctx, tx, roleId, deleteIdSet)
+	if err != nil {
+		return err
+	}
+	err = txBulkInsert(ctx, tx, roleId, insertIdSet)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *sRoleMenu) GetMenuIdSet(ctx context.Context, roleId int) (idSet *gset.IntSet, err error) {
+	objIdList, err := s.RoleMenuIdList(ctx, roleId)
+	if err != nil {
+		return idSet, err
+	}
+	idSet = gset.NewIntSetFrom(objIdList)
+	return idSet, nil
+}
+
+func (s *sRoleMenu) BulkCreateRoleMenu(ctx context.Context, r *model.PermMenuReq) (err error) {
+	oldIdSet, err := s.GetMenuIdSet(ctx, r.RoleId)
+	if err != nil {
+		return err
+	}
+	newIdSet := gset.NewIntSet()
+	for _, v := range r.MenuIdList {
+		newIdSet.Add(v)
+	}
+	logger.Infof(ctx, "RoleId:%v\n", r.RoleId)
+	logger.Infof(ctx, "newIdSet:%v\n", newIdSet)
+	logger.Infof(ctx, "oldIdSet:%v\n", oldIdSet)
+	deleteIdSet := oldIdSet.Diff(newIdSet)
+	insertIdSet := newIdSet.Diff(oldIdSet)
+	logger.Infof(ctx, "deleteIdSet:%v\n", deleteIdSet)
+	logger.Infof(ctx, "insertIdSet:%v\n", insertIdSet)
+	if err != nil {
+		return err
+	}
+	return s.TxBulkCreateRoleMenu(ctx, r.RoleId, deleteIdSet, insertIdSet)
 }
