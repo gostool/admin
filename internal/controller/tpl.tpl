@@ -124,3 +124,23 @@ func (c *cTpl) Create(ctx context.Context, req *v1.TplCreateReq) (res *v1.TplCre
 	res.Id = int(id)
 	return res, nil
 }
+
+func (c *cTpl) Tree(ctx context.Context, req *v1.TplTreeReq) (res *v1.TplTreeRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	items, err := service.Tpl().GetTree(ctx, model.TplListInput{
+		Page:     req.PageReq.Page,
+		PageSize: req.PageReq.PageSize,
+	})
+	if err != nil {
+		return nil, err
+	}
+	cnt, err := service.Tpl().Count(ctx)
+	if err != nil {
+		return nil, err
+	}
+	res = &v1.TplTreeRes{
+		Count: cnt,
+		Items: items,
+	}
+	return res, nil
+}

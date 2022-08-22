@@ -123,3 +123,47 @@ func (s *sTpl) Save(ctx context.Context, in *entity.Tpl) (result sql.Result, err
 func (s *sTpl) SortField() string {
 	return "sort asc"
 }
+
+func (s *sTpl) GetTree(ctx context.Context, in model.TplListInput) (items []*serializer.TplDetail, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	var objList []*serializer.TplDetail
+	err = dao.Tpl.Ctx(ctx).Fields(model.TplFields).Page(in.Page, in.PageSize).Where(query).Scan(&objList)
+	if err != nil {
+		return nil, err
+	}
+	treeMap := make(map[int][]*serializer.TplDetail)
+	for _, v := range objList {
+		treeMap[v.ParentId] = append(treeMap[v.ParentId], v)
+	}
+	items = s.Bfs(treeMap)
+	return items, nil
+}
+
+func (s *sTpl) Bfs(treeMap map[int][]*serializer.TplDetail) (items []*serializer.TplDetail) {
+	q := treeMap[0]
+	items = q
+	for len(q) > 0 {
+		size := len(q)
+		for i := 0; i < size; i++ {
+			node := q[i]
+			if node == nil {
+				continue
+			}
+			childList, ok := treeMap[node.Id]
+			if !ok {
+				// 当前菜单没有child
+				continue
+			}
+			if node.Children == nil {
+				n := len(childList)
+				node.Children = make([]*serializer.TplDetail, n, n)
+			}
+			copy(node.Children, childList)
+			q = append(q, node.Children...)
+		}
+		q = q[size:]
+	}
+	return
+}

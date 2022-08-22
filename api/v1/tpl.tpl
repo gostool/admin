@@ -39,3 +39,13 @@ type TplCreateReq struct {
 type TplCreateRes struct {
 	OrmIdReq
 }
+
+type TplTreeReq struct {
+	g.Meta `path:"/tpl/tree" method:"get" tags:"TplService"`
+	PageReq
+}
+
+type TplTreeRes struct {
+	Count int                      `json:"count" dc:"记录总数"`
+	Items []*serializer.TplDetail `json:"items" dc:"条目"`
+}
