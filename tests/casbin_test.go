@@ -8,14 +8,28 @@ import (
 	"testing"
 )
 
-func TestCasbin(t *testing.T) {
-	e, err := casbin.NewEnforcer("./example.conf", "./example.csv")
+// sub, obj, act 表示经典三元组: 访问实体 (Subject)，访问资源 (Object) 和访问方法 (Action)
+
+func testGetRoles(t *testing.T, e *casbin.Enforcer, res []string, name string, domain ...string) {
+	t.Helper()
+	myRes, err := e.GetRolesForUser(name, domain...)
 	if err != nil {
-		t.Fatal(err)
+		t.Error("Roles for ", name, " could not be fetched: ", err.Error())
 	}
-	g.Dump(e)
-	ans := e.AddNamedMatchingFunc("g", "KeyMatch2", util.KeyMatch2)
-	g.Dump(ans)
+	t.Log("Roles for ", name, ": ", myRes)
+
+	if !util.SetEquals(res, myRes) {
+		t.Error("Roles for ", name, ": ", myRes, ", supposed to be ", res)
+	}
+}
+
+func TestCasbin(t *testing.T) {
+	e, _ := casbin.NewEnforcer("examples/rbac_model.conf", "examples/rbac_policy.csv")
+
+	testGetRoles(t, e, []string{"data2_admin"}, "alice")
+	testGetRoles(t, e, []string{}, "bob")
+	testGetRoles(t, e, []string{}, "data2_admin")
+	testGetRoles(t, e, []string{}, "non_exist")
 }
 
 func TestGfMap(t *testing.T) {
