@@ -49,6 +49,20 @@ func (c *cRoleMenu) Tree(ctx context.Context, req *v1.RoleMenuTreeReq) (res *v1.
 	return res, nil
 }
 
+func (c *cRoleMenu) TreeById(ctx context.Context, req *v1.RoleMenuTreeByIdReq) (res *v1.RoleMenuTreeRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	roleId := req.Id
+	items, err := service.RoleMenu().GetTreeByRoleId(ctx, roleId)
+	if err != nil {
+		return res, err
+	}
+	res = &v1.RoleMenuTreeRes{
+		Count: -1,
+		Items: items,
+	}
+	return res, nil
+}
+
 func (c *cRoleMenu) Detail(ctx context.Context, req *v1.RoleMenuDetailReq) (res *v1.RoleMenuDetailRes, err error) {
 	logger.Debugf(ctx, `receive say: %+v`, req)
 	data, err := service.RoleMenu().Detail(ctx, model.RoleMenuDetailInput{

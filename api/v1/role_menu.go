@@ -11,8 +11,15 @@ type RoleMenuListReq struct {
 	PageReq
 }
 
+// RoleMenuTreeReq get current login user role_menu tree
 type RoleMenuTreeReq struct {
 	g.Meta `path:"/role_menu/tree" method:"get" tags:"RoleMenuService"`
+}
+
+// RoleMenuTreeByIdReq get role_menu tree by one role_id
+type RoleMenuTreeByIdReq struct {
+	g.Meta `path:"/role_menu/tree" method:"post" tags:"RoleMenuService"`
+	OrmIdReq
 }
 
 type RoleMenuTreeRes struct {
