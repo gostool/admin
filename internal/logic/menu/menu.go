@@ -120,3 +120,47 @@ func (s *sMenu) SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row in
 	}
 	return row, nil
 }
+
+func (s *sMenu) GetTree(ctx context.Context, in model.MenuListInput) (items []*serializer.MenuDetail, err error) {
+	query := g.Map{
+		"is_deleted": consts.CREATED,
+	}
+	var objList []*serializer.MenuDetail
+	err = dao.Menu.Ctx(ctx).Fields(model.MenuFields).Page(in.Page, in.PageSize).Where(query).Scan(&objList)
+	if err != nil {
+		return nil, err
+	}
+	treeMap := make(map[int][]*serializer.MenuDetail)
+	for _, v := range objList {
+		treeMap[v.ParentId] = append(treeMap[v.ParentId], v)
+	}
+	items = s.Bfs(treeMap)
+	return items, nil
+}
+
+func (s *sMenu) Bfs(treeMap map[int][]*serializer.MenuDetail) (items []*serializer.MenuDetail) {
+	q := treeMap[0]
+	items = q
+	for len(q) > 0 {
+		size := len(q)
+		for i := 0; i < size; i++ {
+			node := q[i]
+			if node == nil {
+				continue
+			}
+			childList, ok := treeMap[node.Id]
+			if !ok {
+				// 当前菜单没有child
+				continue
+			}
+			if node.Children == nil {
+				n := len(childList)
+				node.Children = make([]*serializer.MenuDetail, n, n)
+			}
+			copy(node.Children, childList)
+			q = append(q, node.Children...)
+		}
+		q = q[size:]
+	}
+	return
+}

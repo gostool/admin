@@ -24,6 +24,8 @@ type IMenu interface {
 	Detail(ctx context.Context, in model.MenuDetailInput) (data *serializer.Menu, err error)
 	Delete(ctx context.Context, in model.MenuDeleteInput) (result sql.Result, err error)
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
+	GetTree(ctx context.Context, in model.MenuListInput) (items []*serializer.MenuDetail, err error)
+	Bfs(treeMap map[int][]*serializer.MenuDetail) (items []*serializer.MenuDetail)
 }
 
 var localMenu IMenu

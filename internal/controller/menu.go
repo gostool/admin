@@ -109,3 +109,23 @@ func (c *cMenu) Create(ctx context.Context, req *v1.MenuCreateReq) (res *v1.Menu
 	res.Id = int(id)
 	return res, nil
 }
+
+func (c *cMenu) Tree(ctx context.Context, req *v1.MenuTreeReq) (res *v1.MenuTreeRes, err error) {
+	logger.Debugf(ctx, `receive say: %+v`, req)
+	items, err := service.Menu().GetTree(ctx, model.MenuListInput{
+		Page:     req.PageReq.Page,
+		PageSize: req.PageReq.PageSize,
+	})
+	if err != nil {
+		return nil, err
+	}
+	cnt, err := service.Menu().Count(ctx)
+	if err != nil {
+		return nil, err
+	}
+	res = &v1.MenuTreeRes{
+		Count: cnt,
+		Items: items,
+	}
+	return res, nil
+}

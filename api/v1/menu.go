@@ -15,6 +15,16 @@ type MenuListRes struct {
 	Items []*serializer.Menu `json:"items" dc:"条目"`
 }
 
+type MenuTreeReq struct {
+	g.Meta `path:"/menu/tree" method:"get" tags:"MenuService"`
+	PageReq
+}
+
+type MenuTreeRes struct {
+	Count int                      `json:"count" dc:"记录总数"`
+	Items []*serializer.MenuDetail `json:"items" dc:"条目"`
+}
+
 type MenuDetailReq struct {
 	g.Meta `path:"/menu/detail" method:"post" tags:"MenuService"`
 	OrmIdReq
