@@ -31,6 +31,7 @@ type IRoleMenu interface {
 	SafeDelete(ctx context.Context, r *model.OrmDeleteInput) (row int64, err error)
 	Save(ctx context.Context, in *entity.RoleMenu) (result sql.Result, err error)
 	TxBulkCreateRoleMenu(ctx context.Context, roleId int, deleteIdSet, insertIdSet *gset.IntSet) (err error)
+	AsyncTxBulkCreateRoleMenu(ctx context.Context, roleId int, deleteIdSet, insertIdSet *gset.IntSet) (err error)
 	GetMenuIdSet(ctx context.Context, roleId int) (idSet *gset.IntSet, err error)
 	BulkCreateRoleMenu(ctx context.Context, r *model.PermMenuReq) (err error)
 }

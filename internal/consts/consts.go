@@ -10,6 +10,16 @@ const (
 	ErrCodeToken = 403
 	ErrCodeErr   = 500
 	Desc         = 1
+	// PoolWorkOk
+	// 池任务状态
+	PoolWorkOk  = 0
+	PoolWorkErr = 1
+)
+
+const (
+	JobTypeRole = iota
+	JobTypeMenu
+	JobTypeRoleMenu
 )
 
 const (

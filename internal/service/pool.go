@@ -12,6 +12,11 @@ import (
 type IPool interface {
 	Invoke(ctx context.Context, r *model.LogCreateInput)
 	Jobs() int
+	Cap() int
+	Size() int
+	Add(ctx context.Context, f func(ctx context.Context)) error
+	Idea() int
+	Show(ctx context.Context)
 }
 
 var localPool IPool

@@ -9,16 +9,21 @@ import (
 	"admin/internal/service"
 	"context"
 	"database/sql"
+	"errors"
 	"github.com/gogf/gf/v2/container/gset"
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/util/gconv"
+	"sync"
 )
 
 type sRoleMenu struct {
 }
 
 var logger *glog.Logger
+
+type txBulkFunc func(ctx context.Context, tx *gdb.TX, roleId int, idSet *gset.IntSet) (err error)
 
 func init() {
 	logger = g.Log(consts.LoggerDebug)
@@ -261,6 +266,71 @@ func (s *sRoleMenu) TxBulkCreateRoleMenu(ctx context.Context, roleId int, delete
 	return nil
 }
 
+// makeMenuRoleDBBulkResponse
+// 获取所有goroutine的结果.
+// 上传数据
+func makeMenuRoleDBBulkResponse(ch <-chan g.Map) (err error) {
+	for response := range ch {
+		if gconv.Int(response["code"]) != consts.PoolWorkOk {
+			msg := gconv.String(response["msg"])
+			return errors.New(msg)
+		}
+	}
+	return nil
+}
+
+func JobRoleMenuBulk(ctx context.Context, f txBulkFunc, tx *gdb.TX, roleId int, idSet *gset.IntSet, ch chan<- g.Map) {
+	data := g.Map{
+		"code": consts.PoolWorkOk,
+		"msg":  "",
+		"type": consts.JobTypeRoleMenu,
+		"data": nil,
+	}
+	defer func() {
+		ch <- data
+		if err := recover(); err != nil {
+			logger.Error(ctx, err)
+		}
+	}()
+	err := f(ctx, tx, roleId, idSet)
+	if err != nil {
+		data["code"] = consts.PoolWorkErr
+		data["msg"] = err.Error()
+	}
+}
+
+func (s *sRoleMenu) AsyncTxBulkCreateRoleMenu(ctx context.Context, roleId int, deleteIdSet, insertIdSet *gset.IntSet) (err error) {
+	tx, err := g.DB().Begin(ctx)
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+	ch := make(chan g.Map, 2)
+	service.Pool().Add(ctx, func(ctx context.Context) {
+		defer wg.Done()
+		JobRoleMenuBulk(ctx, txBulkDelete, tx, roleId, deleteIdSet, ch)
+	})
+	service.Pool().Add(ctx, func(ctx context.Context) {
+		defer wg.Done()
+		JobRoleMenuBulk(ctx, txBulkInsert, tx, roleId, insertIdSet, ch)
+	})
+	service.Pool().Show(ctx)
+	wg.Wait()
+	service.Pool().Show(ctx)
+	close(ch)
+	err = makeMenuRoleDBBulkResponse(ch)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s *sRoleMenu) GetMenuIdSet(ctx context.Context, roleId int) (idSet *gset.IntSet, err error) {
 	objIdList, err := s.RoleMenuIdList(ctx, roleId)
 	if err != nil {
@@ -289,5 +359,6 @@ func (s *sRoleMenu) BulkCreateRoleMenu(ctx context.Context, r *model.PermMenuReq
 	if err != nil {
 		return err
 	}
-	return s.TxBulkCreateRoleMenu(ctx, r.RoleId, deleteIdSet, insertIdSet)
+	//return s.TxBulkCreateRoleMenu(ctx, r.RoleId, deleteIdSet, insertIdSet)
+	return s.AsyncTxBulkCreateRoleMenu(ctx, r.RoleId, deleteIdSet, insertIdSet)
 }
