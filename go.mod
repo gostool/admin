@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/casbin/casbin/v2 v2.51.2
+	github.com/casbin/redis-adapter/v2 v2.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.2
 	github.com/gogf/gf/v2 v2.1.2
@@ -26,6 +27,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grokify/html-strip-tags-go v0.0.1 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
