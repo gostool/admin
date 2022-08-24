@@ -80,3 +80,14 @@ var ApiFields = g.ArrayStr{
 	"detail",
 	"method",
 }
+
+var CasbinRuleFields = g.ArrayStr{
+	"id",
+	"ptype",
+	"v0",
+	"v1",
+	"v2",
+	"v3",
+	"v4",
+	"v5",
+}
