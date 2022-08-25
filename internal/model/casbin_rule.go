@@ -27,7 +27,6 @@ type CasbinRuleDeleteInput struct {
 }
 
 type CasbinRuleAttr struct {
-	Id    uint64 `json:"id"    ` //
 	Ptype string `json:"ptype" ` //
 	V0    string `json:"v0"    ` //
 	V1    string `json:"v1"    ` //

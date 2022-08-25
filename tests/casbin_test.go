@@ -1,6 +1,8 @@
 package tests
 
 import (
+	_ "admin/internal/logic"
+	"admin/internal/service"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
 	"github.com/gogf/gf/v2/container/gmap"
@@ -30,6 +32,23 @@ func TestCasbin(t *testing.T) {
 	testGetRoles(t, e, []string{}, "bob")
 	testGetRoles(t, e, []string{}, "data2_admin")
 	testGetRoles(t, e, []string{}, "non_exist")
+}
+
+func TestCasbinAdapter(t *testing.T) {
+	a := service.Adapter()
+	e, err := casbin.NewEnforcer("examples/rbac_model.conf", a)
+	if err != nil {
+		t.Fatal(err)
+	}
+	e.LoadPolicy()
+
+	// Check the permission.
+	ans, err := e.Enforce("alice", "data1", "read")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(ans)
+
 }
 
 func TestGfMap(t *testing.T) {

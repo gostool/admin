@@ -23,6 +23,7 @@ type ICasbinRule interface {
 	Detail(ctx context.Context, in model.CasbinRuleDetailInput) (data *serializer.CasbinRule, err error)
 	Delete(ctx context.Context, in model.OrmDeleteInput) (result sql.Result, err error)
 	Save(ctx context.Context, in *entity.CasbinRule) (result sql.Result, err error)
+	DeleteByModel(ctx context.Context, r *entity.CasbinRule) (row int64, err error)
 }
 
 var localCasbinRule ICasbinRule
