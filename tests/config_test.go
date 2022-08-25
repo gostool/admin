@@ -35,7 +35,13 @@ func TestAppConf(t *testing.T) {
 	v := g.Cfg().MustGet(ctx, "app")
 	conf := v.MapStrVar()
 	t.Log(conf)
+	casbin := conf["casbin"].Map()
+	t.Log("casbin:", casbin)
+	model := casbin["model"]
+	policy := casbin["policy"]
 	gtest.C(t, func(t *gtest.T) {
+		t.AssertEQ(model, "./manifest/config/rbac_model.conf")
+		t.AssertEQ(policy, "./manifest/config/rbac_policy.csv")
 		//t.AssertEQ(conf["shareLink"].String(), "http://192.168.0.100:9000/preview/#/index")
 		//t.AssertEQ(conf["machineId"].Uint16(), uint16(1))
 		//// tpl

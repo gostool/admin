@@ -37,7 +37,7 @@ func TestCasbin(t *testing.T) {
 
 func TestCasbinAdapter(t *testing.T) {
 	a := service.Adapter()
-	e, err := casbin.NewEnforcer("examples/rbac_model.conf", a)
+	e, err := casbin.NewEnforcer("tests/examples/rbac_model.conf", a)
 	if err != nil {
 		t.Fatal(err)
 	}

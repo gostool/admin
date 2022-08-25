@@ -22,4 +22,7 @@ database:
     Level: all
     Stdout: true
 
-
+app:
+  casbin:
+    model: ./manifest/config/rbac_model.conf
+    policy: ./manifest/config/rbac_policy.cs
