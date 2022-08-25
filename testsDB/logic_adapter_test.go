@@ -8,6 +8,7 @@ import (
 	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gctx"
 	"testing"
 )
 
@@ -36,8 +37,13 @@ func TestCasbin(t *testing.T) {
 }
 
 func TestCasbinAdapter(t *testing.T) {
+	ctx := gctx.New()
+	v := g.Cfg().MustGet(ctx, "app")
+	conf := v.MapStrVar()
+	casbinConf := conf["casbin"].Map()
+	model := casbinConf["model"]
 	a := service.Adapter()
-	e, err := casbin.NewEnforcer("tests/examples/rbac_model.conf", a)
+	e, err := casbin.NewEnforcer(model, a)
 	if err != nil {
 		t.Fatal(err)
 	}
