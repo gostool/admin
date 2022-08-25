@@ -1,4 +1,4 @@
-package tests
+package testsDB
 
 import (
 	_ "admin/internal/logic"
