@@ -5,17 +5,15 @@
 package service
 
 import (
-	"context"
-
 	"github.com/casbin/casbin/v2/model"
 )
 
 type IAdapter interface {
-	LoadPolicy(ctx context.Context, model model.Model) error
-	SavePolicy(ctx context.Context, model model.Model) (err error)
-	AddPolicy(ctx context.Context, sec string, ptype string, rule []string) (err error)
-	RemovePolicy(ctx context.Context, sec string, ptype string, line []string) error
-	RemoveFilteredPolicy(ctx context.Context, sec string, ptype string, fieldIndex int, fieldValues ...string) error
+	LoadPolicy(model model.Model) error
+	SavePolicy(model model.Model) (err error)
+	AddPolicy(sec string, ptype string, rule []string) (err error)
+	RemovePolicy(sec string, ptype string, line []string) error
+	RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error
 }
 
 var localAdapter IAdapter

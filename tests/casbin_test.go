@@ -5,6 +5,7 @@ import (
 	"admin/internal/service"
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
+	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/frame/g"
 	"testing"

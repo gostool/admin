@@ -52,8 +52,9 @@ func loadPolicyLine(line *entity.CasbinRule, model model.Model) {
 }
 
 // LoadPolicy loads policy from database.
-func (a *sAdapter) LoadPolicy(ctx context.Context, model model.Model) error {
+func (a *sAdapter) LoadPolicy(model model.Model) error {
 	var lines []*entity.CasbinRule
+	ctx := context.TODO()
 	if err := dao.CasbinRule.Ctx(ctx).Scan(&lines); err != nil {
 		return err
 	}
@@ -63,15 +64,15 @@ func (a *sAdapter) LoadPolicy(ctx context.Context, model model.Model) error {
 	return nil
 }
 
-func (a *sAdapter) dropTable(ctx context.Context) (err error) {
+func (a *sAdapter) dropTable() (err error) {
 	return
 }
 
-func (a *sAdapter) createTable(ctx context.Context) (err error) {
+func (a *sAdapter) createTable() (err error) {
 	return
 }
 
-func (a *sAdapter) savePolicyLine(ctx context.Context, ptype string, line []string) (err error) {
+func (a *sAdapter) savePolicyLine(ptype string, line []string) (err error) {
 	rule := convLineToRule(ptype, line)
 	var casbinRuleCreateInput *dbModel.CasbinRuleCreateInput
 	casbinRuleCreateInput.Ptype = rule.Ptype
@@ -81,10 +82,11 @@ func (a *sAdapter) savePolicyLine(ctx context.Context, ptype string, line []stri
 	casbinRuleCreateInput.V3 = rule.V3
 	casbinRuleCreateInput.V4 = rule.V4
 	casbinRuleCreateInput.V5 = rule.V5
-	return a.savePolicyRule(ctx, casbinRuleCreateInput)
+	return a.savePolicyRule(casbinRuleCreateInput)
 }
 
-func (a *sAdapter) savePolicyRule(ctx context.Context, rule *dbModel.CasbinRuleCreateInput) (err error) {
+func (a *sAdapter) savePolicyRule(rule *dbModel.CasbinRuleCreateInput) (err error) {
+	ctx := context.TODO()
 	_, err = service.CasbinRule().Create(ctx, rule)
 	if err != nil {
 		return err
@@ -116,24 +118,25 @@ func convLineToRule(ptype string, rule []string) (line *entity.CasbinRule) {
 	return line
 }
 
-func (a *sAdapter) delPolicyRule(ctx context.Context, rule *entity.CasbinRule) (err error) {
+func (a *sAdapter) delPolicyRule(rule *entity.CasbinRule) (err error) {
+	ctx := context.TODO()
 	_, err = service.CasbinRule().DeleteByModel(ctx, rule)
 	return err
 }
 
 // SavePolicy saves policy to database.
-func (a *sAdapter) SavePolicy(ctx context.Context, model model.Model) (err error) {
-	err = a.dropTable(ctx)
+func (a *sAdapter) SavePolicy(model model.Model) (err error) {
+	err = a.dropTable()
 	if err != nil {
 		return
 	}
-	err = a.createTable(ctx)
+	err = a.createTable()
 	if err != nil {
 		return
 	}
 	for ptype, ast := range model["p"] {
 		for _, rule := range ast.Policy {
-			err = a.savePolicyLine(ctx, ptype, rule)
+			err = a.savePolicyLine(ptype, rule)
 			if err != nil {
 				return err
 			}
@@ -142,7 +145,7 @@ func (a *sAdapter) SavePolicy(ctx context.Context, model model.Model) (err error
 
 	for ptype, ast := range model["g"] {
 		for _, rule := range ast.Policy {
-			err = a.savePolicyLine(ctx, ptype, rule)
+			err = a.savePolicyLine(ptype, rule)
 			if err != nil {
 				return err
 			}
@@ -152,23 +155,23 @@ func (a *sAdapter) SavePolicy(ctx context.Context, model model.Model) (err error
 }
 
 // AddPolicy adds a policy rule to the storage.
-func (a *sAdapter) AddPolicy(ctx context.Context, sec string, ptype string, rule []string) (err error) {
-	err = a.savePolicyLine(ctx, ptype, rule)
+func (a *sAdapter) AddPolicy(sec string, ptype string, rule []string) (err error) {
+	err = a.savePolicyLine(ptype, rule)
 	return err
 }
 
-func (a *sAdapter) delPolicyLine(ctx context.Context, ptype string, line []string) (err error) {
+func (a *sAdapter) delPolicyLine(ptype string, line []string) (err error) {
 	rule := convLineToRule(ptype, line)
-	return a.delPolicyRule(ctx, rule)
+	return a.delPolicyRule(rule)
 }
 
 // RemovePolicy removes a policy rule from the storage.
-func (a *sAdapter) RemovePolicy(ctx context.Context, sec string, ptype string, line []string) error {
-	return a.delPolicyLine(ctx, ptype, line)
+func (a *sAdapter) RemovePolicy(sec string, ptype string, line []string) error {
+	return a.delPolicyLine(ptype, line)
 }
 
 // RemoveFilteredPolicy removes policy rules that match the filter from the storage.
-func (a *sAdapter) RemoveFilteredPolicy(ctx context.Context, sec string, ptype string, fieldIndex int, fieldValues ...string) error {
+func (a *sAdapter) RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error {
 	rule := &entity.CasbinRule{}
 	rule.Ptype = ptype
 	if fieldIndex <= 0 && 0 < fieldIndex+len(fieldValues) {
@@ -189,6 +192,6 @@ func (a *sAdapter) RemoveFilteredPolicy(ctx context.Context, sec string, ptype s
 	if fieldIndex <= 5 && 5 < fieldIndex+len(fieldValues) {
 		rule.V5 = fieldValues[5-fieldIndex]
 	}
-	err := a.delPolicyRule(ctx, rule)
+	err := a.delPolicyRule(rule)
 	return err
 }
