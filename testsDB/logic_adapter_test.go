@@ -40,8 +40,8 @@ func TestCasbinAdapter(t *testing.T) {
 	ctx := gctx.New()
 	v := g.Cfg().MustGet(ctx, "app")
 	conf := v.MapStrVar()
-	casbinConf := conf["casbin"].Map()
-	model := casbinConf["model"]
+	casbinConf := conf["casbin"].MapStrVar()
+	model := casbinConf["model"].String()
 	a := service.Adapter()
 	e, err := casbin.NewEnforcer(model, a)
 	if err != nil {
