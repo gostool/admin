@@ -2,23 +2,25 @@ package jwt
 
 import (
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 	"strings"
 	"time"
 )
 
 type Claims struct {
 	Uid string `json:"uid"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
 /*
 new secret by uid. it is unique for everyone
 */
+
 func SecSecret(uid, salt string) string {
 	return ToMd5(fmt.Sprintf("%v:+-*/:%v", salt, uid))
 }
@@ -35,15 +37,17 @@ before CreateToken:
 then:
 	CreateToken(uid, secret, expireToken)
 */
-func CreateToken(uid, secret string, expireToken int64) (string, error) {
-	if expireToken <= 0 {
-		expireToken = time.Now().Add(time.Hour * 1).Unix()
+
+func CreateToken(uid, secret string, expireToken time.Time) (string, error) {
+	now := time.Now()
+	if expireToken.Before(now) {
+		expireToken = now.Add(time.Hour * 1)
 	}
 	// 1. Create payload
 	claims := Claims{
 		uid,
-		jwt.StandardClaims{
-			ExpiresAt: expireToken,
+		jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expireToken),
 			Issuer:    uid,
 		},
 	}
@@ -66,6 +70,7 @@ before AuthToken:
 	secret = SecSecret(uid, secret)
 then AuthToken(signedToken, secret)
 */
+
 func AuthToken(signedToken string, secret interface{}) (string, error) {
 	// 1.tpl decode by tokens & secret
 	token, err := jwt.ParseWithClaims(signedToken, &Claims{}, func(token *jwt.Token) (interface{}, error) {
@@ -95,7 +100,7 @@ func GetHeaderAndClaims(token string) (header string, ob Claims, err error) {
 	}
 
 	payload := parts[1]
-	data, err := jwt.DecodeSegment(payload)
+	data, err := DecodeSegment(payload)
 	if err != nil {
 		return "", ob, err
 	}
@@ -107,12 +112,24 @@ func GetHeaderAndClaims(token string) (header string, ob Claims, err error) {
 	return parts[0], ob, nil
 }
 
+func DecodeSegment(seg string) ([]byte, error) {
+	if jwt.DecodePaddingAllowed {
+		if l := len(seg) % 4; l > 0 {
+			seg += strings.Repeat("=", 4-l)
+		}
+		return base64.URLEncoding.DecodeString(seg)
+	}
+
+	return base64.RawURLEncoding.DecodeString(seg)
+}
+
 /*
 tpl:
 header: part[0]
 payload: part[1]
 sign: part[2]
 */
+
 func GetHeaderAndUid(signedToken string) (header string, uid string, err error) {
 	header, ob, err := GetHeaderAndClaims(signedToken)
 	if err != nil {

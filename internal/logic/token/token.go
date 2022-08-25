@@ -42,13 +42,18 @@ func (t *sToken) GenAccessToken(ctx context.Context, r *model.TokenServiceGenTok
 }
 
 // exp: 小于0时，使用配置中的默认时间
+
 func (t *sToken) GenToken(ctx context.Context, uid string, exp int64) (token string, err error) {
+	var expTime time.Time
 	if exp <= 0 {
-		exp = time.Now().Add(time.Duration(jwtExp) * time.Second).Unix()
+		expTime = time.Now().Add(time.Duration(jwtExp) * time.Second)
+	} else {
+		// timeStamp to time.Time
+		expTime = time.Unix(exp, 0)
 	}
 	return t.GenAccessToken(ctx, &model.TokenServiceGenTokenReq{
 		Uid: uid,
-		Exp: exp,
+		Exp: expTime,
 	})
 }
 
