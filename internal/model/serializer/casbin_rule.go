@@ -12,7 +12,6 @@ type CasbinRule struct {
 }
 
 type CasbinApi struct {
-	Id     int    `json:"id"        ` //
 	Path   string `json:"path"      ` // 请求路径
 	Method string `json:"method"    ` // 请求方式
 }
