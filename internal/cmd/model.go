@@ -33,6 +33,10 @@ type cMainApiInput struct {
 	g.Meta `name:"api" brief:"init api data"`
 }
 
+type cMainPermInput struct {
+	g.Meta `name:"perm" brief:"init perm data"`
+}
+
 type cMainInitInput struct {
 	g.Meta `name:"init" brief:"init role->menu->user->role-menu data"`
 }

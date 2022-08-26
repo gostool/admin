@@ -49,6 +49,12 @@ func (c *CMain) ApiInit(ctx context.Context, in cMainApiInput) (out *cMainOutput
 	return out, nil
 }
 
+func (c *CMain) PermInit(ctx context.Context, in cMainPermInput) (out *cMainOutput, err error) {
+	permInit(ctx)
+	out = &cMainOutput{}
+	return out, nil
+}
+
 func (c *CMain) Init(ctx context.Context, in cMainInitInput) (out *cMainOutput, err error) {
 	apiInit(ctx)
 	roleInit(ctx)
@@ -56,6 +62,7 @@ func (c *CMain) Init(ctx context.Context, in cMainInitInput) (out *cMainOutput, 
 	userGuestInit(ctx)
 	createAdmin(ctx)
 	menuRoleInit(ctx)
+	permInit(ctx)
 	out = &cMainOutput{}
 	return out, nil
 }
