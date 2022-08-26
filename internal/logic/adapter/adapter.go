@@ -74,20 +74,20 @@ func (a *sAdapter) createTable() (err error) {
 
 func (a *sAdapter) savePolicyLine(ptype string, line []string) (err error) {
 	rule := convLineToRule(ptype, line)
-	var casbinRuleCreateInput *dbModel.CasbinRuleCreateInput
-	casbinRuleCreateInput.Ptype = rule.Ptype
-	casbinRuleCreateInput.V0 = rule.V0
-	casbinRuleCreateInput.V1 = rule.V1
-	casbinRuleCreateInput.V2 = rule.V2
-	casbinRuleCreateInput.V3 = rule.V3
-	casbinRuleCreateInput.V4 = rule.V4
-	casbinRuleCreateInput.V5 = rule.V5
-	return a.savePolicyRule(casbinRuleCreateInput)
+	in := dbModel.CasbinRuleCreateInput{}
+	in.Ptype = rule.Ptype
+	in.V0 = rule.V0
+	in.V1 = rule.V1
+	in.V2 = rule.V2
+	in.V3 = rule.V3
+	in.V4 = rule.V4
+	in.V5 = rule.V5
+	return a.savePolicyRule(&in)
 }
 
-func (a *sAdapter) savePolicyRule(rule *dbModel.CasbinRuleCreateInput) (err error) {
+func (a *sAdapter) savePolicyRule(in *dbModel.CasbinRuleCreateInput) (err error) {
 	ctx := context.TODO()
-	_, err = service.CasbinRule().Create(ctx, rule)
+	_, err = service.CasbinRule().Create(ctx, in)
 	if err != nil {
 		return err
 	}
@@ -160,6 +160,16 @@ func (a *sAdapter) AddPolicy(sec string, ptype string, rule []string) (err error
 	return err
 }
 
+func (a *sAdapter) AddPolicies(sec string, ptype string, rules [][]string) (err error) {
+	for _, rule := range rules {
+		err = a.AddPolicy(sec, ptype, rule)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func (a *sAdapter) delPolicyLine(ptype string, line []string) (err error) {
 	rule := convLineToRule(ptype, line)
 	return a.delPolicyRule(rule)
@@ -168,6 +178,16 @@ func (a *sAdapter) delPolicyLine(ptype string, line []string) (err error) {
 // RemovePolicy removes a policy rule from the storage.
 func (a *sAdapter) RemovePolicy(sec string, ptype string, line []string) error {
 	return a.delPolicyLine(ptype, line)
+}
+
+func (a *sAdapter) RemovePolicies(sec string, ptype string, lines [][]string) error {
+	for _, v := range lines {
+		err := a.delPolicyLine(ptype, v)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // RemoveFilteredPolicy removes policy rules that match the filter from the storage.

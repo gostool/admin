@@ -18,10 +18,14 @@ func TestStruct(t *testing.T) {
 			},
 		},
 	}
+	in := model.EnforcerUpdateInput{
+		RoleId: req.RoleId,
+	}
 	infoList := make([]model.AdminCasbinAttr, len(req.ApiInfoList))
 	err := gconv.Struct(req.ApiInfoList, &infoList)
 	if err != nil {
 		t.Fatal(err)
 	}
-	g.Dump(infoList)
+	in.ApiInfoList = infoList
+	g.Dump(in)
 }

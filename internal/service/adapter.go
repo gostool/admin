@@ -12,7 +12,9 @@ type IAdapter interface {
 	LoadPolicy(model model.Model) error
 	SavePolicy(model model.Model) (err error)
 	AddPolicy(sec string, ptype string, rule []string) (err error)
+	AddPolicies(sec string, ptype string, rules [][]string) (err error)
 	RemovePolicy(sec string, ptype string, line []string) error
+	RemovePolicies(sec string, ptype string, lines [][]string) error
 	RemoveFilteredPolicy(sec string, ptype string, fieldIndex int, fieldValues ...string) error
 }
 
