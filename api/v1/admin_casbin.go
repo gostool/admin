@@ -7,7 +7,7 @@ import (
 
 type AdminCasbinListReq struct {
 	g.Meta `path:"/admin_casbin/list" method:"get" tags:"AdminCasbinService"`
-	RoleId int `json:"roleId"`
+	RoleId int `v:"required|min:1#id不能为空|id应当>=1" json:"roleId"`
 }
 type AdminCasbinListRes struct {
 	Count int                     `json:"count" dc:"记录总数"`
@@ -16,7 +16,7 @@ type AdminCasbinListRes struct {
 
 type AdminCasbinUpdateReq struct {
 	g.Meta      `path:"/admin_casbin/update" method:"post" tags:"AdminCasbinService"`
-	RoleId      int               `json:"roleId"`
+	RoleId      int               `v:"required|min:1#id不能为空|id应当>=1" json:"roleId"`
 	ApiInfoList []AdminCasbinAttr `json:"apiInfoList"`
 }
 type AdminCasbinUpdateRes struct {
