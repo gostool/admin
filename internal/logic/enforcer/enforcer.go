@@ -67,7 +67,6 @@ func (s *sEnforcer) Update(ctx context.Context, in model.EnforcerUpdateInput) (e
 	for _, v := range in.ApiInfoList {
 		rules = append(rules, []string{roleIdStr, v.Path, v.Method})
 	}
-	g.Dump("rules:", rules)
 	success, _ := s.enforcer.AddPolicies(rules)
 	if !success {
 		return consts.ErrUpdate
