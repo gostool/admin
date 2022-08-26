@@ -114,6 +114,13 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
+		Path:      "/api/admin_api/search",
+		Group:     "api",
+		Method:    "GET",
+		Detail:    "api search",
+		IsDeleted: consts.CREATED,
+	},
+	{
 		Path:      "/api/admin_api/create",
 		Group:     "api",
 		Method:    "POST",
