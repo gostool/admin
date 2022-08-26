@@ -43,6 +43,7 @@ func RegisterRouter(s *ghttp.Server, ctx context.Context, in cMainHttpInput) *gh
 			apiGroup.Middleware(
 				middleware.JwtAuth,
 				middleware.Record,
+				middleware.Casbin,
 			)
 			apiGroup.ALLMap(g.Map{
 				"/role/":         controller.Role,        // role

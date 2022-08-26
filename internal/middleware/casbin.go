@@ -13,8 +13,8 @@ import (
 // Casbin
 // RBAC 访问控制
 func Casbin(r *ghttp.Request) {
-	method := r.Request.Method        // 获取请求方法
-	url := r.Request.URL.RequestURI() // 获取请求的URI
+	method := r.Request.Method // 获取请求方法
+	url := r.Request.URL.Path  // 获取请求的URI
 	ctx := r.GetCtx()
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
 	logger.Debugf(ctx, "roleId:%v method:%v url:%v is not admin\n", roleId, method, url)

@@ -10,7 +10,6 @@ import (
 var apiList = []*entity.Api{
 	//role
 	{
-		Id:        1,
 		Path:      "/api/role/list",
 		Group:     "role",
 		Method:    "GET",
@@ -18,7 +17,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        2,
 		Path:      "/api/role/create",
 		Group:     "role",
 		Method:    "POST",
@@ -26,7 +24,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        3,
 		Path:      "/api/role/update",
 		Group:     "role",
 		Method:    "POST",
@@ -34,7 +31,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        4,
 		Path:      "/api/role/delete",
 		Group:     "role",
 		Method:    "POST",
@@ -42,17 +38,22 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        5,
 		Path:      "/api/role/detail",
 		Group:     "role",
 		Method:    "POST",
 		Detail:    "角色详情",
 		IsDeleted: consts.CREATED,
 	},
+	{
+		Path:      "/api/role/tree",
+		Group:     "role",
+		Method:    "GET",
+		Detail:    "tree详情",
+		IsDeleted: consts.CREATED,
+	},
 
 	// menu
 	{
-		Id:        6,
 		Path:      "/api/menu/list",
 		Group:     "menu",
 		Method:    "GET",
@@ -60,7 +61,13 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        7,
+		Path:      "/api/menu/tree",
+		Group:     "menu",
+		Method:    "GET",
+		Detail:    "菜单tree",
+		IsDeleted: consts.CREATED,
+	},
+	{
 		Path:      "/api/menu/create",
 		Group:     "menu",
 		Method:    "POST",
@@ -68,7 +75,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        8,
 		Path:      "/api/menu/update",
 		Group:     "menu",
 		Method:    "POST",
@@ -76,7 +82,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        9,
 		Path:      "/api/menu/delete",
 		Group:     "menu",
 		Method:    "POST",
@@ -84,7 +89,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        10,
 		Path:      "/api/menu/detail",
 		Group:     "menu",
 		Method:    "POST",
@@ -94,7 +98,6 @@ var apiList = []*entity.Api{
 
 	// log
 	{
-		Id:        11,
 		Path:      "/api/log/list",
 		Group:     "log",
 		Method:    "GET",
@@ -104,7 +107,6 @@ var apiList = []*entity.Api{
 
 	// api
 	{
-		Id:        12,
 		Path:      "/api/admin_api/list",
 		Group:     "api",
 		Method:    "GET",
@@ -112,7 +114,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        13,
 		Path:      "/api/admin_api/create",
 		Group:     "api",
 		Method:    "POST",
@@ -120,7 +121,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        14,
 		Path:      "/api/admin_api/update",
 		Group:     "api",
 		Method:    "POST",
@@ -128,7 +128,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        15,
 		Path:      "/api/admin_api/detail",
 		Group:     "api",
 		Method:    "POST",
@@ -136,7 +135,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        16,
 		Path:      "/api/admin_api/delete",
 		Group:     "api",
 		Method:    "POST",
@@ -145,7 +143,6 @@ var apiList = []*entity.Api{
 	},
 	// user
 	{
-		Id:        17,
 		Path:      "/api/admin_user/delete",
 		Group:     "user",
 		Method:    "POST",
@@ -153,7 +150,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        18,
 		Path:      "/api/admin_user/create",
 		Group:     "user",
 		Method:    "POST",
@@ -161,7 +157,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        19,
 		Path:      "/api/admin_user/detail",
 		Group:     "user",
 		Method:    "GET",
@@ -177,17 +172,82 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        21,
 		Path:      "/api/admin_user/update",
 		Group:     "user",
 		Method:    "POST",
 		Detail:    "user更新",
 		IsDeleted: consts.CREATED,
 	},
+	{
+		Path:      "/api/admin_casbin/list",
+		Group:     "casbin",
+		Method:    "GET",
+		Detail:    "casbin列表",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/admin_casbin/update",
+		Group:     "casbin",
+		Method:    "POST",
+		Detail:    "casbin更新",
+		IsDeleted: consts.CREATED,
+	},
+	// role_menu
+	{
+		Id:        24,
+		Path:      "/api/role_menu/tree",
+		Group:     "role_menu",
+		Method:    "GET",
+		Detail:    "role_menu tree",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/list",
+		Group:     "role_menu",
+		Method:    "GET",
+		Detail:    "role_menu列表",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/detail",
+		Group:     "role_menu",
+		Method:    "POST",
+		Detail:    "role_menu详情",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/update",
+		Group:     "role_menu",
+		Method:    "POST",
+		Detail:    "role_menu更新",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/delete",
+		Group:     "role_menu",
+		Method:    "POST",
+		Detail:    "role_menu删除",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/create",
+		Group:     "role_menu",
+		Method:    "POST",
+		Detail:    "role_menu创建",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/role_menu/tree",
+		Group:     "role_menu",
+		Method:    "POST",
+		Detail:    "role_menu treeById",
+		IsDeleted: consts.CREATED,
+	},
 }
 
 func apiInit(ctx context.Context) {
-	for _, obj := range apiList {
+	for i, obj := range apiList {
+		obj.Id = i + 1
 		result, err := service.AdminApi().Save(ctx, obj)
 		if err != nil {
 			logger.Fatal(ctx, err)
