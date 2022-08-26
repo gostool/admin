@@ -46,12 +46,12 @@ func (s *sEnforcer) Enforcer(ctx context.Context) (enforcer *casbin.SyncedEnforc
 	return s.enforcer
 }
 
-func (s *sEnforcer) List(ctx context.Context, in model.EnforcerListInput) (items []*serializer.Api, err error) {
+func (s *sEnforcer) List(ctx context.Context, in model.EnforcerListInput) (items []*serializer.CasbinApi, err error) {
 	roleIdStr := gconv.String(in.RoleId)
 	policyList := s.enforcer.GetFilteredPolicy(0, roleIdStr)
-	items = make([]*serializer.Api, 0, len(policyList))
+	items = make([]*serializer.CasbinApi, 0, len(policyList))
 	for _, v := range policyList {
-		items = append(items, &serializer.Api{
+		items = append(items, &serializer.CasbinApi{
 			Path:   v[1],
 			Method: v[2],
 		})

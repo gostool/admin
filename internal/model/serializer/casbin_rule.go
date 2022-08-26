@@ -10,3 +10,9 @@ type CasbinRule struct {
 	V4    string `json:"v4"    ` //
 	V5    string `json:"v5"    ` ///
 }
+
+type CasbinApi struct {
+	Id     int    `json:"id"        ` //
+	Path   string `json:"path"      ` // 请求路径
+	Method string `json:"method"    ` // 请求方式
+}
