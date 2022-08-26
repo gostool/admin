@@ -2,21 +2,63 @@ package enforcer
 
 import (
 	"admin/internal/consts"
+	"admin/internal/logic/adapter"
+	"admin/internal/model"
+	"admin/internal/model/serializer"
+	"admin/internal/service"
+	"context"
+	"github.com/casbin/casbin/v2"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sEnforcer struct {
+	enforcer *casbin.SyncedEnforcer
 }
 
 var logger *glog.Logger
 
 func init() {
 	logger = g.Log(consts.LoggerDebug)
-	//instance := New()
-	//service.RegisterEnforcer(instance)
+	instance := New()
+	service.RegisterEnforcer(instance)
 }
 
 func New() *sEnforcer {
-	return &sEnforcer{}
+	v := g.Cfg().MustGet(context.TODO(), "app")
+	conf := v.MapStrVar()
+	casbinConf := conf["casbin"].MapStrVar()
+	model := casbinConf["model"].String()
+	adapterInstance := adapter.New()
+	enforcer, err := casbin.NewSyncedEnforcer(model, adapterInstance)
+	if err != nil {
+		panic(err)
+	}
+	return &sEnforcer{
+		enforcer: enforcer,
+	}
+}
+
+func (s *sEnforcer) Enforcer(ctx context.Context) (enforcer *casbin.SyncedEnforcer) {
+	return s.enforcer
+}
+
+func (s *sEnforcer) List(ctx context.Context, in model.EnforcerListInput) (items []*serializer.Api, err error) {
+	roleIdStr := gconv.String(in.RoleId)
+	policyList := s.enforcer.GetFilteredPolicy(0, roleIdStr)
+	items = make([]*serializer.Api, 0, len(policyList))
+	for _, v := range policyList {
+		items = append(items, &serializer.Api{
+			Path:   v[1],
+			Method: v[2],
+		})
+	}
+	return items, nil
+}
+
+// Update 执行更新
+func (s *sEnforcer) Update(ctx context.Context, in model.EnforcerUpdateInput) (row int64, err error) {
+	//return s.update(ctx, in.ToWhereMap(), in.ToMap())
+	return
 }

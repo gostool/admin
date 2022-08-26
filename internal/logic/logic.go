@@ -8,6 +8,7 @@ import (
 	_ "admin/internal/logic/adapter"
 	_ "admin/internal/logic/admin_api"
 	_ "admin/internal/logic/casbin_rule"
+	_ "admin/internal/logic/enforcer"
 	_ "admin/internal/logic/log"
 	_ "admin/internal/logic/menu"
 	_ "admin/internal/logic/pool"
