@@ -11,6 +11,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
 	"github.com/gogf/gf/v2/util/gconv"
+	"time"
 )
 
 type sEnforcer struct {
@@ -32,6 +33,7 @@ func New() *sEnforcer {
 	model := casbinConf["model"].String()
 	adapterInstance := adapter.New()
 	enforcer, err := casbin.NewSyncedEnforcer(model, adapterInstance)
+	enforcer.StartAutoLoadPolicy(5 * time.Second)
 	if err != nil {
 		panic(err)
 	}
@@ -58,7 +60,21 @@ func (s *sEnforcer) List(ctx context.Context, in model.EnforcerListInput) (items
 }
 
 // Update 执行更新
-func (s *sEnforcer) Update(ctx context.Context, in model.EnforcerUpdateInput) (row int64, err error) {
-	//return s.update(ctx, in.ToWhereMap(), in.ToMap())
-	return
+func (s *sEnforcer) Update(ctx context.Context, in model.EnforcerUpdateInput) (err error) {
+	roleIdStr := gconv.String(in.RoleId)
+	s.Clear(0, roleIdStr)
+	rules := make([][]string, 0, len(in.ApiInfoList))
+	for _, v := range in.ApiInfoList {
+		rules = append(rules, []string{roleIdStr, v.Path, v.Method})
+	}
+	success, _ := s.enforcer.AddPolicies(rules)
+	if !success {
+		return consts.ErrUpdate
+	}
+	return nil
+}
+
+func (s *sEnforcer) Clear(v int, p ...string) bool {
+	success, _ := s.enforcer.RemoveFilteredPolicy(v, p...)
+	return success
 }

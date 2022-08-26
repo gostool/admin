@@ -15,7 +15,8 @@ import (
 type IEnforcer interface {
 	Enforcer(ctx context.Context) (enforcer *casbin.SyncedEnforcer)
 	List(ctx context.Context, in model.EnforcerListInput) (items []*serializer.Api, err error)
-	Update(ctx context.Context, in model.EnforcerUpdateInput) (row int64, err error)
+	Update(ctx context.Context, in model.EnforcerUpdateInput) (err error)
+	Clear(v int, p ...string) bool
 }
 
 var localEnforcer IEnforcer

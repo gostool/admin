@@ -3,6 +3,7 @@ package middleware
 import (
 	"admin/internal/common"
 	"admin/internal/consts"
+	"admin/internal/service"
 	"errors"
 	"github.com/gogf/gf/v2/container/gmap"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -18,11 +19,7 @@ func Casbin(r *ghttp.Request) {
 	roleId := common.GetVarFromCtx(ctx, consts.CtxUserRoleId).Int()
 	logger.Debugf(ctx, "roleId:%v method:%v url:%v is not admin\n", roleId, method, url)
 	data := gmap.Map{}
-	e, err := Casbin.GetEnforcer()
-	if err != nil {
-		logger.Errorf(ctx, "GetEnforcer err:%v\n", err)
-		JsonExit(r, consts.ErrCodeErr, consts.ErrMsgErr, data)
-	}
+	e := service.Enforcer().Enforcer(ctx)
 	success, err := e.Enforce(gconv.String(roleId), url, method)
 	if err != nil {
 		logger.Errorf(ctx, "Enforce err:%v\n", err)

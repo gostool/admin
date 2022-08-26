@@ -5,5 +5,6 @@ type EnforcerListInput struct {
 }
 
 type EnforcerUpdateInput struct {
-	Id int
+	RoleId      int
+	ApiInfoList []AdminApiAttr
 }
