@@ -69,3 +69,8 @@ func (r *CasbinRuleUpdateInput) ToMap() (data g.Map) {
 	}
 	return data
 }
+
+type AdminCasbinAttr struct {
+	Path   string `json:"path"   dc:"请求路径"` // 请求路径
+	Method string `json:"method" dc:"请求方式"` // 请求方式
+}

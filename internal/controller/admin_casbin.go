@@ -35,7 +35,8 @@ func (c *cAdminCasbin) Update(ctx context.Context, req *v1.AdminCasbinUpdateReq)
 	in := model.EnforcerUpdateInput{
 		RoleId: req.RoleId,
 	}
-	err = gconv.Struct(req.ApiInfoList, in.ApiInfoList)
+	infoList := make([]model.AdminCasbinAttr, len(req.ApiInfoList))
+	err = gconv.Struct(req.ApiInfoList, &infoList)
 	if err != nil {
 		return nil, err
 	}
