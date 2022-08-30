@@ -31,6 +31,7 @@ func New() *sEnforcer {
 	conf := v.MapStrVar()
 	casbinConf := conf["casbin"].MapStrVar()
 	model := casbinConf["model"].String()
+	logger.Infof(context.TODO(), "model:%v\n", casbinConf)
 	adapterInstance := adapter.New()
 	enforcer, err := casbin.NewSyncedEnforcer(model, adapterInstance)
 	enforcer.StartAutoLoadPolicy(5 * time.Second)
