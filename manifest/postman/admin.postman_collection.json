@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "b6500450-0670-480f-852a-c4cace61380b",
+		"name": "admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1385180"
+	},
+	"item": [
+		{
+			"name": "menu-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/menu/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"menu",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/menu/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"menu",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "log-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/log/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"log",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "status-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/status/list",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"status",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "menu-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/log/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"log",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin_user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/log/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"log",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "log-detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/log/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"log",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "log-delete",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyMSIsImV4cCI6MTY2MTA3Njg2NSwiaXNzIjoiMjEifQ.50KWbMPaLYF0yPmew7cJUuzl6JtEJtu5BtyZAYx4Wk4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://192.168.3.8:8199/api/menu/list?page=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"3",
+						"8"
+					],
+					"port": "8199",
+					"path": [
+						"api",
+						"menu",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
