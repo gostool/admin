@@ -7,3 +7,12 @@ Project Makefile Commands:
 - `make image`: Run `make build` to build image according `manifest/docker, and push image to your repository`.
 - `make image.push TAG=xxx`: Run `docker build` and `docker push` to build and push image according `manifest/docker`.
 - `make deploy TAG=xxx`: Run `kustomize build` to build and deploy deployment to kubernetes server group according `manifest/deploy`.
+
+
+
+### dist
+
+```
+npm run build
+ln -s ~/github/web/dist dist
+```
