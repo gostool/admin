@@ -20,8 +20,8 @@ all: build
 clean:
 	#go clean -i $(GO_FLAGS) $(SOURCE_DIR)
 	rm -f ./$(BINARY)
-	rm -f ./OUT_PATH/linux_amd64/$(BINARY)
-	rm -rf ./OUT_PATH/$(VERSION)
+	rm -f $(OUT_PATH)/linux_amd64/$(BINARY)
+	rm -rf $(OUT_PATH)/$(VERSION)
 	docker images | grep $(IMG_NAME) | sort | awk '{print $3}' | xargs docker rmi
 
 cleanAll:
