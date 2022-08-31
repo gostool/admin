@@ -44,15 +44,13 @@ img:
 
 imgR:
 	docker run  --rm -p 8199:8199 \
-	-v "`pwd`/manifest/config/config_docker.yaml":/app/config/config.yaml \
-	-v "`pwd`/manifest/config/rbac_model.conf":/app/config/rbac_model.conf \
+	-v "`pwd`/manifest/deploy/docker/":/app/config/ \
 	-v "`pwd`/dist/":/app/dist/ \
 	$(IMG_FULL_NAME)
 
 imgDebug:
 	docker run -it --rm -p 8199:8199 \
-	-v "`pwd`/manifest/config/config_docker.yaml":/app/config/config.yaml \
-	-v "`pwd`/manifest/config/rbac_model.conf":/app/config/rbac_model.conf \
+	-v "`pwd`/manifest/deploy/docker/":/app/config/ \
 	-v "`pwd`/dist/":/app/dist/ \
 	$(IMG_FULL_NAME) /bin/bash
 
