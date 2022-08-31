@@ -20,8 +20,8 @@ all: build
 clean:
 	#go clean -i $(GO_FLAGS) $(SOURCE_DIR)
 	rm -f ./$(BINARY)
-	rm -f ./bin/$(BINARY)
-	rm -rf ./bin/$(VERSION)
+	rm -f ./OUT_PATH/linux_amd64/$(BINARY)
+	rm -rf ./OUT_PATH/$(VERSION)
 	docker images | grep $(IMG_NAME) | sort | awk '{print $3}' | xargs docker rmi
 
 cleanAll:
@@ -32,10 +32,6 @@ cleanAll:
 fmt:
 	goimports -w ...
 
-doc:
-	gf pack public,template packed/data.go -y
-	gf swagger --pack -y
-
 build:
 	$(GF) build
 	cp $(OUT_PATH)/$(VERSION)/linux_amd64/main $(OUT_PATH)/linux_amd64/main
@@ -45,10 +41,6 @@ img:
 	make build
 	docker build -t $(IMG_FULL_NAME) . -f $(DOCKERFILE)
 	docker push $(IMG_FULL_NAME)
-
-#imgP:
-#	gf docker -t $(IMG_FULL_NAME
-#	gf docker -p -t $(IMG_FULL_NAME)
 
 imgR:
 	docker run  --rm -p 8199:8199 \
