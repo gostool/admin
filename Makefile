@@ -1,6 +1,6 @@
 APP = admin
 BINARY = main
-GF = ~/go-dev/bin/gf2
+GF = gf
 OUT_PATH = ./temp
 DOCKERFILE = ./manifest/docker/Dockerfile
 # 禁止使用hub.docker.com 必须使用私有仓库
