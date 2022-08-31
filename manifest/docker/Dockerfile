@@ -13,4 +13,4 @@ RUN chmod +x $WORKDIR/main
 #                                   START
 ###############################################################################
 WORKDIR $WORKDIR
-CMD ["app/main", "http"]
+CMD ["/app/main", "http"]
