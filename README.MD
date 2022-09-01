@@ -1,4 +1,4 @@
-# GoFrame Template For SingleRepo
+# Admin By GoFrame
 
 Project Makefile Commands: 
 - `make cli`: Install or Update to the latest GoFrame CLI tool.
@@ -8,8 +8,8 @@ Project Makefile Commands:
 - `make image.push TAG=xxx`: Run `docker build` and `docker push` to build and push image according `manifest/docker`.
 - `make deploy TAG=xxx`: Run `kustomize build` to build and deploy deployment to kubernetes server group according `manifest/deploy`.
 
-
-
+[doc](https://uqgd478det.feishu.cn/docs/doccnT5x7PDb83huaxNQAjTtw9e#uitve9)
+[online_demo](https://api.pyhuo.top/admin/)
 ### dist
 
 ```
