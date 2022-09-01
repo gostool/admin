@@ -9,7 +9,7 @@ Project Makefile Commands:
 - `make deploy TAG=xxx`: Run `kustomize build` to build and deploy deployment to kubernetes server group according `manifest/deploy`.
 
 [doc](https://uqgd478det.feishu.cn/docs/doccnT5x7PDb83huaxNQAjTtw9e#uitve9)
-
+[online_demo](https://api.pyhuo.top/admin/)
 ### dist
 
 ```
