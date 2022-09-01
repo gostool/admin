@@ -171,7 +171,6 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
-		Id:        20,
 		Path:      "/api/admin_user/list",
 		Group:     "user",
 		Method:    "GET",
@@ -183,6 +182,13 @@ var apiList = []*entity.Api{
 		Group:     "user",
 		Method:    "POST",
 		Detail:    "user更新",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/admin_user/patch",
+		Group:     "user",
+		Method:    "POST",
+		Detail:    "user patch",
 		IsDeleted: consts.CREATED,
 	},
 	{
@@ -201,7 +207,6 @@ var apiList = []*entity.Api{
 	},
 	// role_menu
 	{
-		Id:        24,
 		Path:      "/api/role_menu/tree",
 		Group:     "role_menu",
 		Method:    "GET",
@@ -248,6 +253,13 @@ var apiList = []*entity.Api{
 		Group:     "role_menu",
 		Method:    "POST",
 		Detail:    "role_menu treeById",
+		IsDeleted: consts.CREATED,
+	},
+	{
+		Path:      "/api/status/list",
+		Group:     "status",
+		Method:    "GET",
+		Detail:    "server status",
 		IsDeleted: consts.CREATED,
 	},
 }

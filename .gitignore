@@ -23,3 +23,5 @@ temp/
 **/*.yml
 **/*.toml
 logs/
+dist
+data
