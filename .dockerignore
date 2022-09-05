@@ -2,4 +2,4 @@
 data
 *.tpl
 *.md
-temp
+temp/0.0.*
