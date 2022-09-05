@@ -20,7 +20,7 @@ database:
   logger:
     Path:  /tmp/log/admin/sql
     Level: all
-    Stdout: true
+    Stdout: false
 
 app:
   casbin:

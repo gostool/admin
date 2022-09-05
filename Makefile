@@ -6,7 +6,7 @@ DOCKERFILE = ./manifest/docker/Dockerfile
 # 禁止使用hub.docker.com 必须使用私有仓库
 DOCKER_HUB = registry.cn-beijing.aliyuncs.com
 NAMESPACE = hyhbackend
-VERSION = 0.0.1.1
+VERSION = 0.0.1.2
 TAG = $(VERSION)
 # 必须小写
 IMG_NAME = admin
@@ -44,15 +44,13 @@ img:
 
 imgR:
 	docker run  --rm -p 8199:8199 \
-	-v "`pwd`/manifest/config/config_docker.yaml":/app/config/config.yaml \
-	-v "`pwd`/manifest/config/rbac_model.conf":/app/config/rbac_model.conf \
+	-v "`pwd`/manifest/deploy/docker/":/app/config/ \
 	-v "`pwd`/dist/":/app/dist/ \
 	$(IMG_FULL_NAME)
 
 imgDebug:
 	docker run -it --rm -p 8199:8199 \
-	-v "`pwd`/manifest/config/config_docker.yaml":/app/config/config.yaml \
-	-v "`pwd`/manifest/config/rbac_model.conf":/app/config/rbac_model.conf \
+	-v "`pwd`/manifest/deploy/docker/":/app/config/ \
 	-v "`pwd`/dist/":/app/dist/ \
 	$(IMG_FULL_NAME) /bin/bash
 
