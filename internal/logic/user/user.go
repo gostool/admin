@@ -188,7 +188,7 @@ func (s *sUser) List(ctx context.Context, in model.UserListInput) (items []*seri
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
-	err = dao.User.Ctx(ctx).WithAll().Where(query).Scan(&items)
+	err = dao.User.Ctx(ctx).WithAll().Page(in.Page, in.PageSize).Where(query).Scan(&items)
 	if err != nil {
 		return nil, err
 	}
