@@ -18,11 +18,11 @@ database:
     link:  "mysql:root:mysecretpassword@tcp(127.0.0.1:3306)/godb"
     debug:   true
   logger:
-    Path:  /tmp/log/admin/sq
+    Path:  /tmp/log/admin/sql
     Level: all
     Stdout: true
 
 app:
   casbin:
     model: ./manifest/config/rbac_model.conf
-    policy: ./manifest/config/rbac_policy.cs
+    policy: ./manifest/config/rbac_policy.csv
