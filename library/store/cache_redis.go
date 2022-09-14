@@ -25,9 +25,9 @@ func NewStoreCache(redis *gredis.Redis, ttl time.Duration) *Cache {
 		ttl:   ttl,
 	}
 }
-func (s Cache) Set(id string, value string) {
+func (s Cache) Set(id string, value string) error {
 	ctx := gctx.New()
-	s.cache.Set(ctx, id, value, s.ttl)
+	return s.cache.Set(ctx, id, value, s.ttl)
 }
 
 func (s Cache) Get(id string, clear bool) string {

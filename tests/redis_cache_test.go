@@ -63,16 +63,8 @@ func TestExampleCache_SetAdapter(t *testing.T) {
 }
 
 func TestCacheRedis(t *testing.T) {
-	redisConfig := &gredis.Config{
-		Address: "127.0.0.1:6379",
-		Db:      9,
-	}
-	redis, err := gredis.New(redisConfig)
-	if err != nil {
-		t.Fatal(err)
-	}
 	ttl := time.Second * 60 * 24
-	s := store.NewStoreCache(redis, ttl)
+	s := store.NewStoreCache(g.Redis(), ttl)
 	s.Set("1", "tp")
 	s.Verify("1", "tp", false)
 }
