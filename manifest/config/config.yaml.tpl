@@ -22,6 +22,11 @@ database:
     Level: all
     Stdout: true
 
+redis:
+  default:
+    address: 127.0.0.1:6379
+    db: 9
+
 app:
   casbin:
     model: ./manifest/config/rbac_model.conf
