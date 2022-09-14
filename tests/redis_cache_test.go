@@ -3,20 +3,37 @@ package tests
 import (
 	"fmt"
 	"github.com/gogf/gf/v2/database/gredis"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcache"
+	"github.com/gogf/gf/v2/os/gcfg"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/gogf/gf/v2/util/gconv"
 	"testing"
 	"time"
 )
 
+func init() {
+	ctx = gctx.New()
+	g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName("manifest/config/config.yaml")
+}
+
+func TestGfRedis(t *testing.T) {
+	v, _ := g.Redis().Do(ctx, "SET", "k", "v")
+	fmt.Println(v.String())
+}
+
 func TestExampleCache_SetAdapter(t *testing.T) {
+	v := g.Cfg().MustGet(ctx, "redis")
+	conf := v.MapStrVar()
+	redisConf := conf["default"].Map()
+	g.Dump(redisConf)
 	var (
 		err         error
 		ctx         = gctx.New()
 		cache       = gcache.New()
 		redisConfig = &gredis.Config{
-			Address: "127.0.0.1:6379",
-			Db:      9,
+			Address: gconv.String(redisConf["address"]),
+			Db:      gconv.Int(redisConf["db"]),
 		}
 		cacheKey   = `key`
 		cacheValue = `value`
