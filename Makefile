@@ -11,7 +11,7 @@ TAG = $(VERSION)
 # 必须小写
 IMG_NAME = admin
 IMG_FULL_NAME = $(DOCKER_HUB)/$(NAMESPACE)/$(IMG_NAME):$(TAG)
-
+SHELL := /bin/bash
 
 all: build
 
@@ -64,3 +64,6 @@ test:
 	go test -v ./testsdb/lib_file_test.go
 	go test -v ./testsdb/redis_test.go
 	go test -v ./testsdb/service_gps_test.go
+
+ansibleProd:
+	cd ~/github/ansible/  && ls -l && source venv/bin/activate && ansible-playbook -i inventories/prod playbooks/admin.yml -t app_docker -vvvv
