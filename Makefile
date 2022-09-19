@@ -6,7 +6,7 @@ DOCKERFILE = ./manifest/docker/Dockerfile
 # 禁止使用hub.docker.com 必须使用私有仓库
 DOCKER_HUB = registry.cn-beijing.aliyuncs.com
 NAMESPACE = hyhbackend
-VERSION = 0.0.1.4
+VERSION = 0.0.1.5
 TAG = $(VERSION)
 # 必须小写
 IMG_NAME = admin
