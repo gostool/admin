@@ -3,6 +3,7 @@ package tools
 import (
 	"admin/internal/consts"
 	"admin/internal/service"
+	"admin/library/store"
 	"context"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/glog"
@@ -10,12 +11,13 @@ import (
 )
 
 var (
-	captchaStore  = base64Captcha.DefaultMemStore
+	captchaStore  *store.Cache
 	captchaDriver = newDriver()
 	logger        *glog.Logger
 )
 
 func init() {
+	captchaStore = store.NewStoreCache(g.Redis(), 0)
 	logger = g.Log(consts.LoggerDebug)
 	instance := New()
 	service.RegisterTools(instance)

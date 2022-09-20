@@ -192,6 +192,13 @@ var apiList = []*entity.Api{
 		IsDeleted: consts.CREATED,
 	},
 	{
+		Path:      "/api/admin_user/register",
+		Group:     "user",
+		Method:    "POST",
+		Detail:    "user register",
+		IsDeleted: consts.CREATED,
+	},
+	{
 		Path:      "/api/admin_casbin/list",
 		Group:     "casbin",
 		Method:    "GET",

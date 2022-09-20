@@ -6,12 +6,12 @@ DOCKERFILE = ./manifest/docker/Dockerfile
 # 禁止使用hub.docker.com 必须使用私有仓库
 DOCKER_HUB = registry.cn-beijing.aliyuncs.com
 NAMESPACE = hyhbackend
-VERSION = 0.0.1.3
+VERSION = 0.0.1.5
 TAG = $(VERSION)
 # 必须小写
 IMG_NAME = admin
 IMG_FULL_NAME = $(DOCKER_HUB)/$(NAMESPACE)/$(IMG_NAME):$(TAG)
-
+SHELL := /bin/bash
 
 all: build
 
@@ -64,3 +64,6 @@ test:
 	go test -v ./testsdb/lib_file_test.go
 	go test -v ./testsdb/redis_test.go
 	go test -v ./testsdb/service_gps_test.go
+
+ansibleProd:
+	cd ~/github/ansible/  && ls -l && source venv/bin/activate && ansible-playbook -i inventories/prod playbooks/admin.yml -t app_docker -vvvv
