@@ -42,7 +42,7 @@ func (s *sAdminApi) Count(ctx context.Context) (data int, err error) {
 	return dao.Api.Ctx(ctx).Count(query)
 }
 
-func (s *sAdminApi) Search(ctx context.Context, in model.AdminApiSearchInput) (items []*serializer.Api, err error) {
+func (s *sAdminApi) Search(ctx context.Context, in model.AdminApiSearchInput) (cnt int, items []*serializer.Api, err error) {
 	query := g.Map{
 		"is_deleted": consts.CREATED,
 	}
@@ -59,31 +59,31 @@ func (s *sAdminApi) Search(ctx context.Context, in model.AdminApiSearchInput) (i
 	return s.search(ctx, in.Page, in.PageSize, in.OrderKey, in.Desc, query)
 }
 
-func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string, desc bool, query g.Map) (dataList []*serializer.Api, err error) {
+func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string, desc bool, query g.Map) (cnt int, dataList []*serializer.Api, err error) {
 	path, ok := query["path"]
 	if ok {
 		// 针对path 字段，like 查询
 		delete(query, "path")
 	}
-	m := dao.Api.Ctx(ctx).Fields(model.ApiFields).Where(query)
+	m := dao.Api.Ctx(ctx).Where(query)
 	if path != nil {
 		m = m.WhereLike("path", gconv.String(path)+"%")
 	}
-	cnt, err := m.Count()
+	cnt, err = m.Count()
 	if err != nil {
-		return dataList, err
+		return cnt, dataList, err
 	}
-	m = m.Page(page, limit)
+	m = m.Fields(model.ApiFields).Page(page, limit)
 	logger.Infof(ctx, "cnt:%v\n", cnt)
 	m, err = common.CheckOrderByKey(set, m, orderKey, desc)
 	if err != nil {
-		return nil, err
+		return cnt, nil, err
 	}
 	err = m.Scan(&dataList)
 	if err != nil {
-		return nil, err
+		return cnt, nil, err
 	}
-	return dataList, err
+	return cnt, dataList, err
 }
 
 func (s *sAdminApi) List(ctx context.Context, in model.AdminApiListInput) (items []*serializer.Api, err error) {

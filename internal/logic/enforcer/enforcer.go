@@ -34,10 +34,10 @@ func New() *sEnforcer {
 	logger.Infof(context.TODO(), "model:%v\n", casbinConf)
 	adapterInstance := adapter.New()
 	enforcer, err := casbin.NewSyncedEnforcer(model, adapterInstance)
-	enforcer.StartAutoLoadPolicy(5 * time.Second)
 	if err != nil {
 		panic(err)
 	}
+	enforcer.StartAutoLoadPolicy(5 * time.Second)
 	return &sEnforcer{
 		enforcer: enforcer,
 	}

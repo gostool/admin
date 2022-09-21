@@ -49,11 +49,7 @@ func (c *cAdminApi) Search(ctx context.Context, req *v1.AdminApiSearchListReq) (
 		Desc:     req.Desc == consts.Desc,
 	}
 	in.AdminApiSearchAttr = apiSearchAttr
-	items, err := service.AdminApi().Search(ctx, in)
-	if err != nil {
-		return res, err
-	}
-	cnt, err := service.AdminApi().Count(ctx)
+	cnt, items, err := service.AdminApi().Search(ctx, in)
 	if err != nil {
 		return res, err
 	}

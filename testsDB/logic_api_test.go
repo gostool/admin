@@ -22,6 +22,22 @@ func TestLogicApiList(t *testing.T) {
 	g.Dump(data)
 }
 
+func TestLogicApiSearch(t *testing.T) {
+	ctx := gctx.New()
+	r := admin_api.New()
+	in := model.AdminApiSearchInput{
+		Page:     1,
+		PageSize: 10,
+	}
+	in.Group = "user"
+	in.OrderKey = "id"
+	data, err := r.Search(ctx, in)
+	if err != nil {
+		t.Fatal(err)
+	}
+	g.Dump(data)
+}
+
 func TestLogicApiCreate(t *testing.T) {
 	ctx := gctx.New()
 	r := admin_api.New()
