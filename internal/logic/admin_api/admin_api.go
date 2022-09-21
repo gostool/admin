@@ -65,10 +65,16 @@ func (s *sAdminApi) search(ctx context.Context, page, limit int, orderKey string
 		// 针对path 字段，like 查询
 		delete(query, "path")
 	}
-	m := dao.Api.Ctx(ctx).Fields(model.ApiFields).Page(page, limit).Where(query)
+	m := dao.Api.Ctx(ctx).Fields(model.ApiFields).Where(query)
 	if path != nil {
 		m = m.WhereLike("path", gconv.String(path)+"%")
 	}
+	cnt, err := m.Count()
+	if err != nil {
+		return dataList, err
+	}
+	m = m.Page(page, limit)
+	logger.Infof(ctx, "cnt:%v\n", cnt)
 	m, err = common.CheckOrderByKey(set, m, orderKey, desc)
 	if err != nil {
 		return nil, err
