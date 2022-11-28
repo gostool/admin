@@ -2,10 +2,11 @@ package feishusdk
 
 import (
 	"context"
-	"github.com/gogf/gf/v2/encoding/gjson"
-	"github.com/gogf/gf/v2/frame/g"
 	"reflect"
 	"testing"
+
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 func TestNew(t *testing.T) {
@@ -35,7 +36,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestNotifyMessage_SendMsg(t *testing.T) {
-	resp, _ := gjson.LoadJson(`{\"StatusCode\":0,\"StatusMessage\":\"success\"}"`)
+	resp, _ := gjson.LoadJson(`{"StatusCode":0,"StatusMessage":"success"}"`)
 	type fields struct {
 		Webhook string
 	}
